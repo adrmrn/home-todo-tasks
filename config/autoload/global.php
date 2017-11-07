@@ -11,6 +11,16 @@
  * file.
  */
 
+use Zend\Db\Adapter\Adapter;
+use Zend\Db\Adapter\AdapterServiceFactory;
+
 return [
-    // ...
+    'service_manager' => [
+        'factories' => [
+            Adapter::class => AdapterServiceFactory::class,
+        ],
+        'abstract_factories' => [
+            'Zend\Db\Adapter\AdapterAbstractServiceFactory',
+        ],
+    ],
 ];

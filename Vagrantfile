@@ -7,7 +7,26 @@ VAGRANTFILE_API_VERSION = '2'
 # Install dependencies
 sudo add-apt-repository ppa:ondrej/php
 apt-get update
-apt-get install -y apache2 git curl php7.1 php7.1-bcmath php7.1-bz2 php7.1-cli php7.1-curl php7.1-intl php7.1-json php7.1-mbstring php7.1-opcache php7.1-soap php7.1-sqlite3 php7.1-xml php7.1-xsl php7.1-zip libapache2-mod-php7.1
+apt-get install software-properties-common
+apt-get install -y apache2 git curl php7.1 php7.1-bcmath php7.1-bz2 php7.1-cli php7.1-curl php7.1-intl \
+    php7.1-json php7.1-mbstring php7.1-opcache php7.1-soap php7.1-sqlite3 php7.1-xml php7.1-xsl php7.1-zip \
+    libapache2-mod-php7.1 postgresql-9.5 php7.1-pgsql
+
+# DB
+DBNAME=home_todo_tasks
+DBUSERNAME=db_user
+DBPASSWORD=db_pass
+DBHOST=localhost
+
+sudo -u postgres psql -c "ALTER USER postgres with encrypted password 'postgres'" -U postgres
+sudo -u postgres psql -c "CREATE ROLE "$DBUSERNAME" CREATEDB CREATEUSER LOGIN Encrypted PASSWORD '$DBPASSWORD';" -U postgres
+sudo service postgresql restart
+sudo -u postgres psql -c "CREATE DATABASE \"$DBNAME\"  WITH OWNER \"$DBUSERNAME\";" -U postgres
+
+cp /var/www/vagrant/pg_hba.conf /etc/postgresql/9.5/main/
+cp /var/www/vagrant/postgresql.conf /etc/postgresql/9.5/main/
+
+sudo service postgresql restart
 
 # Configure Apache
 echo '<VirtualHost *:80>
@@ -47,6 +66,7 @@ SCRIPT
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'bento/ubuntu-16.04'
   config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 5432, host: 5432, host_ip: "127.0.0.1"
   config.vm.synced_folder '.', '/var/www'
   config.vm.provision 'shell', inline: @script
 

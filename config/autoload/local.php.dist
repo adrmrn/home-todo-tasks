@@ -12,4 +12,12 @@
  */
 
 return [
+    'db' => [
+        'driver'   => 'Pdo',
+        'database' => 'home_todo_tasks',
+        'hostname' => 'localhost',
+        'dsn'      => 'pgsql:dbname=home_todo_tasks;host=localhost',
+        'username' => 'db_user',
+        'password' => 'db_pass',
+    ],
 ];
