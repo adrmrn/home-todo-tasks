@@ -4,29 +4,49 @@
 VAGRANTFILE_API_VERSION = '2'
 
 @script = <<SCRIPT
-# Install dependencies
-sudo add-apt-repository ppa:ondrej/php
+
+sudo su
+
+# Dependencies
+add-apt-repository ppa:ondrej/php
 apt-get update
 apt-get install software-properties-common
 apt-get install -y apache2 git curl php7.1 php7.1-bcmath php7.1-bz2 php7.1-cli php7.1-curl php7.1-intl \
     php7.1-json php7.1-mbstring php7.1-opcache php7.1-soap php7.1-sqlite3 php7.1-xml php7.1-xsl php7.1-zip \
-    libapache2-mod-php7.1 postgresql-9.5 php7.1-pgsql
+    libapache2-mod-php7.1 postgresql-9.5 php7.1-pgsql php7.1-fpm php7.1-xdebug
 
-# DB
-DBNAME=home_todo_tasks
-DBUSERNAME=db_user
-DBPASSWORD=db_pass
-DBHOST=localhost
+
+# Database
+DB_NAME=home_todo_tasks
+DB_USERNAME=pg_user
+DB_PASSWORD=pg_pass
+DB_HOST=localhost
 
 sudo -u postgres psql -c "ALTER USER postgres with encrypted password 'postgres'" -U postgres
-sudo -u postgres psql -c "CREATE ROLE "$DBUSERNAME" CREATEDB CREATEUSER LOGIN Encrypted PASSWORD '$DBPASSWORD';" -U postgres
-sudo service postgresql restart
-sudo -u postgres psql -c "CREATE DATABASE \"$DBNAME\"  WITH OWNER \"$DBUSERNAME\";" -U postgres
+sudo -u postgres psql -c "CREATE ROLE "$DB_USERNAME" CREATEDB CREATEUSER LOGIN Encrypted PASSWORD '$DB_PASSWORD';" -U postgres
+service postgresql restart
+sudo -u postgres psql -c "CREATE DATABASE \"$DB_NAME\"  WITH OWNER \"$DB_USERNAME\";" -U postgres
 
 cp /var/www/vagrant/pg_hba.conf /etc/postgresql/9.5/main/
 cp /var/www/vagrant/postgresql.conf /etc/postgresql/9.5/main/
 
-sudo service postgresql restart
+
+# FPM
+echo Listen=127.0.0.1:9000 >> /etc/php/7.1/fpm/pool.d/www.conf
+
+
+# Xdebug
+echo "xdebug.remote_enable = on" >> /etc/php/7.1/mods-available/xdebug.ini
+echo "xdebug.remote_connect_back = on" >> /etc/php/7.1/mods-available/xdebug.ini
+echo "xdebug.idekey = \"vagrant\"" >> /etc/php/7.1/mods-available/xdebug.ini
+echo "xdebug.remote_autostart = on" >> /etc/php/7.1/mods-available/xdebug.ini
+
+
+# Restart services
+service postgresql restart
+service php7.1-fpm restart
+service apache2 restart
+
 
 # Configure Apache
 echo '<VirtualHost *:80>
@@ -44,6 +64,7 @@ echo '<VirtualHost *:80>
 	ErrorLog ${APACHE_LOG_DIR}/error.log
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+
 a2enmod rewrite
 service apache2 restart
 
@@ -53,10 +74,12 @@ else
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 fi
 
+
 # Reset home directory of vagrant user
 if ! grep -q "cd /var/www" /home/vagrant/.profile; then
     echo "cd /var/www" >> /home/vagrant/.profile
 fi
+
 
 echo "** [ZF] Run the following command to install dependencies, if you have not already:"
 echo "    vagrant ssh -c 'composer install'"
