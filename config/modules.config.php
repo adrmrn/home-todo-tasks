@@ -34,7 +34,9 @@ return array(
     'ZF\\Rest',
     'ZF\\ContentValidation',
     'ZF\\Apigility',
+    'TacticianModule',
     'Application',
     'Api',
+    'User',
     'Shared',
 );
