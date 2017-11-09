@@ -36,4 +36,5 @@ return array(
     'ZF\\Apigility',
     'Application',
     'Api',
+    'Shared',
 );
