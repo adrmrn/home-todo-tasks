@@ -12,6 +12,7 @@
  */
 
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\Adapter\AdapterAbstractServiceFactory;
 use Zend\Db\Adapter\AdapterServiceFactory;
 
 return [
@@ -20,7 +21,7 @@ return [
             Adapter::class => AdapterServiceFactory::class,
         ],
         'abstract_factories' => [
-            'Zend\Db\Adapter\AdapterAbstractServiceFactory',
+            AdapterAbstractServiceFactory::class,
         ],
     ],
 ];

@@ -30,9 +30,9 @@
     "autoload": {
         "psr-4": {
             "Application\\": "module/Application/src/",
-            "Api\\": "module/Api/src/",
-            "Shared\\": "module/Shared/src/",
-            "User\\": "module/User/src/"
+            "Api\\": "module/Api/src/Api/",
+            "Shared\\": "module/Shared/src/Shared/",
+            "User\\": "module/User/src/User/"
         }
     },
     "autoload-dev": {
