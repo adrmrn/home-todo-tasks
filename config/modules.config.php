@@ -34,6 +34,8 @@ return array(
     'ZF\\Rest',
     'ZF\\ContentValidation',
     'ZF\\Apigility',
+    'Zend\\Mvc\\Console',
+    'ZfSimpleMigrations',
     'TacticianModule',
     'Application',
     'Api',

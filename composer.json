@@ -25,7 +25,8 @@
         "zendframework/zend-cache": "^2.7.1",
         "zendframework/zend-mvc-i18n": "^1.0",
         "mikemix/tactician-module": "^2.0",
-        "ramsey/uuid": "^3.7"
+        "ramsey/uuid": "^3.7",
+        "adamiecradek/zf-simple-migrations": "^1.0"
     },
     "autoload": {
         "psr-4": {
