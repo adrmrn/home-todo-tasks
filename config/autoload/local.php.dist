@@ -17,7 +17,7 @@ return [
         'database' => 'home_todo_tasks',
         'hostname' => 'localhost',
         'dsn'      => 'pgsql:dbname=home_todo_tasks;host=localhost',
-        'username' => 'db_user',
-        'password' => 'db_pass',
+        'username' => 'pg_user',
+        'password' => 'pg_pass',
     ],
 ];
