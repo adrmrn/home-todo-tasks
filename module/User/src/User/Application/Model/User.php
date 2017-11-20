@@ -24,21 +24,21 @@ class User
      */
     private $name;
     /**
-     * @var \Shared\Application\ValueObject\Email
+     * @var \User\Application\Model\Identity
      */
-    private $email;
+    private $identity;
 
     /**
      * User constructor.
      *
-     * @param string                                $name
-     * @param \Shared\Application\ValueObject\Email $email
-     * @param \Ramsey\Uuid\UuidInterface            $id
+     * @param string                           $name
+     * @param \User\Application\Model\Identity $identity
+     * @param \Ramsey\Uuid\UuidInterface|NULL  $id
      */
-    public function __construct(string $name, Email $email, UuidInterface $id = NULL)
+    public function __construct(string $name, Identity $identity, UuidInterface $id = NULL)
     {
-        $this->id    = (NULL !== $id) ? $id : Uuid::uuid4();
-        $this->name  = $name;
-        $this->email = $email;
+        $this->id       = (NULL !== $id) ? $id : Uuid::uuid4();
+        $this->name     = $name;
+        $this->identity = $identity;
     }
 }

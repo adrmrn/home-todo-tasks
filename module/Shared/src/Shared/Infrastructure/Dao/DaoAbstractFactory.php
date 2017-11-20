@@ -27,7 +27,9 @@ class DaoAbstractFactory implements AbstractFactoryInterface
      */
     public function canCreate(ContainerInterface $container, $requestedName)
     {
-        // TODO: Implement canCreate() method.
+        $test = $requestedName;
+
+        return false;
     }
 
     /**

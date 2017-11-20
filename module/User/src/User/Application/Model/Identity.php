@@ -9,12 +9,14 @@
 namespace User\Application\Model;
 
 
-class UserIdentity
+use Shared\Application\ValueObject\Email;
+
+class Identity
 {
     /**
-     * @var \User\Application\Model\User
+     * @var \Shared\Application\ValueObject\Email
      */
-    private $user;
+    private $email;
     /**
      * @var string
      */
@@ -25,17 +27,17 @@ class UserIdentity
     private $isActivated;
 
     /**
-     * UserIdentity constructor.
+     * Identity constructor.
      *
-     * @param \User\Application\Model\User $user
-     * @param string                       $activationCode
-     * @param bool                         $isActivated
+     * @param \Shared\Application\ValueObject\Email $email
+     * @param string                                $activationCode
+     * @param bool                                  $isActivated
      */
-    public function __construct(User $user, string $activationCode, bool $isActivated)
+    public function __construct(Email $email, bool $isActivated = FALSE, string $activationCode = NULL)
     {
-        $this->user           = $user;
-        $this->activationCode = $activationCode;
+        $this->email          = $email;
         $this->isActivated    = $isActivated;
+        $this->activationCode = $activationCode ?? bin2hex(random_bytes(32));
     }
 
     /**

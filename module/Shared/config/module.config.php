@@ -13,7 +13,7 @@ use Shared\Infrastructure\Dao\DaoAbstractFactory;
 return [
     'service_manager' => [
         'abstract_factories' => [
-//            DaoAbstractFactory::class,
+            DaoAbstractFactory::class,
         ],
         'invokables'         => [
 
