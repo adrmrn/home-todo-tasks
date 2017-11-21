@@ -46,8 +46,8 @@ class UserResource extends AbstractResourceListener
             CreateUserCommand::class,
             [
                 'name'     => $data['name'] ?? '',
-                'password' => $data['password'] ?? '',
                 'email'    => $data['email'] ?? '',
+                'password' => $data['password'] ?? '',
             ]
         );
         $this->commandBus->handle($command);

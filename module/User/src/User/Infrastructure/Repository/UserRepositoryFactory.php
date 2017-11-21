@@ -2,21 +2,21 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 09.11.17
- * Time: 18:29
+ * Date: 19.11.17
+ * Time: 14:01
  */
 
-namespace User\Application\Command\CreateUser;
+namespace User\Infrastructure\Repository;
 
 
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use User\Application\Service\UserCreatorService;
+use User\Infrastructure\Dao\UserDao;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class CreateUserCommandHandlerFactory implements FactoryInterface
+class UserRepositoryFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -33,8 +33,8 @@ class CreateUserCommandHandlerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL)
     {
-        return new CreateUserCommandHandler(
-            $container->get(UserCreatorService::class)
+        return new UserRepository(
+            $container->get(UserDao::class)
         );
     }
 }
