@@ -41,30 +41,6 @@ class CreateUserCommand implements CommandQueryInterface
     }
 
     /**
-     * @return array
-     */
-    protected function arraySerialize(): array
-    {
-        return [
-            'name'     => $this->name,
-            'email'    => $this->email,
-            'password' => $this->password,
-        ];
-    }
-
-    /**
-     * @param array $filteredData
-     *
-     * @return void
-     */
-    protected function overwriteInputData(array $filteredData)
-    {
-        foreach ($filteredData as $name => $value) {
-            $this->{$name} = $value;
-        }
-    }
-
-    /**
      * @return string
      */
     public function name(): string

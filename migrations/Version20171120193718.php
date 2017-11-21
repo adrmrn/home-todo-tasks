@@ -13,9 +13,11 @@ class Version20171120193718 extends AbstractMigration
     {
         $this->addSql('
             CREATE TABLE "user" (
-              user_id UUID,
+              id UUID,
               name VARCHAR(70) NOT NULL,
-              PRIMARY KEY (user_id)
+              email VARCHAR(255) NOT NULL UNIQUE,
+              password_hash VARCHAR(60) NOT NULL,
+              PRIMARY KEY (id)
             )
         ');
     }

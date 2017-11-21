@@ -10,6 +10,8 @@ namespace Shared\Infrastructure\Dao;
 
 
 use Zend\Db\Adapter\AdapterInterface;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\TableGateway\TableGatewayInterface;
 
 abstract class AbstractDao implements DaoInterface
 {
@@ -17,6 +19,10 @@ abstract class AbstractDao implements DaoInterface
      * @var \Zend\Db\Adapter\AdapterInterface
      */
     private $adapter;
+    /**
+     * @var \Zend\Db\TableGateway\TableGateway
+     */
+    private $tableGateway;
 
     /**
      * AbstractDao constructor.
@@ -25,8 +31,14 @@ abstract class AbstractDao implements DaoInterface
      */
     public function __construct(AdapterInterface $adapter)
     {
-        $this->adapter = $adapter;
+        $this->adapter      = $adapter;
+        $this->tableGateway = new TableGateway($this->tableName(), $adapter);
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function tableName(): string;
 
     /**
      * @return \Zend\Db\Adapter\AdapterInterface
@@ -34,5 +46,13 @@ abstract class AbstractDao implements DaoInterface
     public function adapter(): AdapterInterface
     {
         return $this->adapter;
+    }
+
+    /**
+     * @return \Zend\Db\TableGateway\TableGatewayInterface
+     */
+    public function tableGateway(): TableGatewayInterface
+    {
+        return $this->tableGateway;
     }
 }

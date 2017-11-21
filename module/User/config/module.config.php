@@ -24,9 +24,7 @@ return [
         'factories' => [
             CreateUserCommandHandler::class    => CreateUserCommandHandlerFactory::class,
             UserCreatorService::class          => UserCreatorServiceFactory::class,
-            IdentityCreatorService::class      => IdentityCreatorServiceFactory::class,
             UserRepositoryInterface::class     => UserRepositoryFactory::class,
-            IdentityRepositoryInterface::class => IdentityRepository::class,
         ],
     ],
     'tactician'       => [

@@ -9,29 +9,54 @@
 namespace User\Application\Service;
 
 
+use Shared\Application\ValueObject\Email;
+use User\Application\Model\Credentials\Credentials;
+use User\Application\Model\User;
+use User\Application\Persistence\Repository\UserRepositoryInterface;
+use User\Application\Utility\PasswordHasher;
+
 class UserCreatorService
 {
     /**
-     * @var \User\Application\Service\IdentityCreatorService
+     * @var \User\Application\Persistence\Repository\UserRepositoryInterface
      */
-    private $identityCreatorService;
+    private $userRepository;
 
     /**
      * UserCreatorService constructor.
      *
-     * @param \User\Application\Service\IdentityCreatorService $identityCreatorService
+     * @param \User\Application\Persistence\Repository\UserRepositoryInterface $userRepository
      */
-    public function __construct(IdentityCreatorService $identityCreatorService)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->identityCreatorService = $identityCreatorService;
+        $this->userRepository = $userRepository;
     }
 
+    /**
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     */
     public function createUser(string $name, string $email, string $password)
     {
-        $identity = $this->identityCreatorService->createIdentity($email, $password);
+        $email = new Email($email);
 
-        // create identity - identityService->createIdentity($email, $password)
-        // create user
-        // save user
+        if (FALSE === $this->userRepository->checkEmailIsUnique($email)) {
+            throw new \RuntimeException('Email taken', 409);
+        }
+
+        $hashedPassword = PasswordHasher::hash($password);
+
+        $user = new User(
+            $name,
+            new Credentials(
+                $email,
+                $hashedPassword
+            )
+        );
+
+        $this->userRepository->store($user);
+
+        // TODO: send event
     }
 }
