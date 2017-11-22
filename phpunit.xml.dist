@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit colors="true">
+<phpunit
+        colors="true"
+        verbose="true">
     <testsuites>
-        <testsuite name="ZendSkeletonApplication Test Suite">
-            <directory>./module/Application/test</directory>
+        <testsuite name="Home TODO Tasks - Test Suite">
+            <directory>./module</directory>
         </testsuite>
     </testsuites>
 </phpunit>

@@ -57,6 +57,8 @@
     "require-dev": {
         "zfcampus/zf-apigility-admin": "^1.5",
         "zfcampus/zf-asset-manager": "^1.0",
-        "zendframework/zend-developer-tools": "^1.1"
+        "zendframework/zend-developer-tools": "^1.1",
+        "zendframework/zend-test": "^3.1",
+        "phpunit/phpunit": "^6.4"
     }
 }
