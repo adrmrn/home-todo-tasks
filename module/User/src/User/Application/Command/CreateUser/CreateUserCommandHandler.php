@@ -35,7 +35,5 @@ class CreateUserCommandHandler
             $createUserCommand->email(),
             $createUserCommand->password()
         );
-
-        return ['user' => 'ok'];
     }
 }
