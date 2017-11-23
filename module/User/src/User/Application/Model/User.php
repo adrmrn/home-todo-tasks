@@ -66,4 +66,12 @@ class User
     {
         return $this->credentials;
     }
+
+    /**
+     * @param string $newName
+     */
+    public function rename(string $newName)
+    {
+        $this->name = $newName;
+    }
 }

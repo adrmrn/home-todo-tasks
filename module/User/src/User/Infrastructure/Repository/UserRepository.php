@@ -9,7 +9,11 @@
 namespace User\Infrastructure\Repository;
 
 
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Shared\Application\ValueObject\Email;
+use User\Application\Model\Credentials\Credentials;
+use User\Application\Model\Credentials\HashedPassword;
 use User\Application\Model\User;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
 use User\Infrastructure\Dao\UserDao;
@@ -42,6 +46,22 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
+     * @param \Ramsey\Uuid\UuidInterface $id
+     *
+     * @return \User\Application\Model\User
+     */
+    public function fetchById(UuidInterface $id): User
+    {
+        $result = $this->userDao->fetchById($id);
+
+        if (count($result) === 0) {
+            throw new \RuntimeException('User not found.', 404);
+        }
+
+        return $this->processRawData($result)[0];
+    }
+
+    /**
      * @param \Shared\Application\ValueObject\Email $email
      *
      * @return bool
@@ -51,5 +71,28 @@ class UserRepository implements UserRepositoryInterface
         $result = $this->userDao->fetchByEmail($email);
 
         return count($result) === 0;
+    }
+
+    /**
+     * @param array $rawData
+     *
+     * @return User[]
+     */
+    private function processRawData(array $rawData): array
+    {
+        $users = [];
+
+        foreach ($rawData as $userRawData) {
+            $users[] = new User(
+                $userRawData['name'],
+                new Credentials(
+                    new Email($userRawData['email']),
+                    new HashedPassword($userRawData['password_hash'])
+                ),
+                Uuid::fromString($userRawData['id'])
+            );
+        }
+
+        return $users;
     }
 }

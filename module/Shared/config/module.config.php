@@ -8,6 +8,8 @@
 
 use Shared\Application\Service\CommandQueryService;
 use Shared\Application\Service\CommandQueryServiceFactory;
+use Shared\Application\Service\JsonPatchResolver;
+use Shared\Application\Service\JsonPatchResolverFactory;
 use Shared\Infrastructure\Dao\DaoAbstractFactory;
 
 return [
@@ -20,6 +22,7 @@ return [
         ],
         'factories'          => [
             CommandQueryService::class => CommandQueryServiceFactory::class,
+            JsonPatchResolver::class   => JsonPatchResolverFactory::class,
         ],
     ],
 ];

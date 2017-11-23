@@ -4,6 +4,8 @@ namespace Api\V1\Rest\User;
 
 use League\Tactician\CommandBus;
 use Shared\Application\Service\CommandQueryService;
+use Shared\Application\Service\JsonPatchResolver;
+use User\Application\Command\ChangeUserName\ChangeUserNameCommand;
 use User\Application\Command\CreateUser\CreateUserCommand;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
@@ -11,24 +13,33 @@ use ZF\Rest\AbstractResourceListener;
 class UserResource extends AbstractResourceListener
 {
     /**
+     * @var \Shared\Application\Service\CommandQueryService
+     */
+    private $commandQueryService;
+    /**
      * @var \League\Tactician\CommandBus
      */
     private $commandBus;
     /**
-     * @var \Shared\Application\Service\CommandQueryService
+     * @var \Shared\Application\Service\JsonPatchResolver
      */
-    private $commandQueryService;
+    private $jsonPatchResolver;
 
     /**
      * UserResource constructor.
      *
      * @param \Shared\Application\Service\CommandQueryService $commandQueryService
      * @param \League\Tactician\CommandBus                    $commandBus
+     * @param \Shared\Application\Service\JsonPatchResolver   $jsonPatchResolver
      */
-    public function __construct(CommandQueryService $commandQueryService, CommandBus $commandBus)
+    public function __construct(CommandQueryService $commandQueryService, CommandBus $commandBus,
+                                JsonPatchResolver $jsonPatchResolver)
     {
         $this->commandQueryService = $commandQueryService;
         $this->commandBus          = $commandBus;
+        $this->jsonPatchResolver   = $jsonPatchResolver;
+
+        $this->jsonPatchResolver->addAction('replace', 'name', ChangeUserNameCommand::class, ['id', 'name']);
     }
 
     /**
@@ -104,16 +115,16 @@ class UserResource extends AbstractResourceListener
     }
 
     /**
-     * Patch (partial in-place update) a resource
+     * @param mixed $id
+     * @param mixed $request
      *
-     * @param  mixed $id
-     * @param  mixed $data
-     *
-     * @return ApiProblem|mixed
+     * @return void
      */
-    public function patch($id, $data)
+    public function patch($id, $request)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        $this->jsonPatchResolver->resolveActionsForRequest((array)$request, $id);
+
+        // TODO: grab event UserUpdated and return projection
     }
 
     /**
