@@ -9,6 +9,7 @@
 namespace User\Application\Persistence\Repository;
 
 
+use Ramsey\Uuid\UuidInterface;
 use Shared\Application\ValueObject\Email;
 use User\Application\Model\User;
 
@@ -20,6 +21,13 @@ interface UserRepositoryInterface
      * @return mixed
      */
     public function store(User $user);
+
+    /**
+     * @param \Ramsey\Uuid\UuidInterface $id
+     *
+     * @return \User\Application\Model\User
+     */
+    public function fetchById(UuidInterface $id): User;
 
     /**
      * @param \Shared\Application\ValueObject\Email $email

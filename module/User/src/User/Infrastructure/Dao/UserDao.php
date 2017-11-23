@@ -9,6 +9,7 @@
 namespace User\Infrastructure\Dao;
 
 
+use Ramsey\Uuid\UuidInterface;
 use Shared\Application\ValueObject\Email;
 use Shared\Infrastructure\Dao\AbstractDao;
 use User\Application\Model\User;
@@ -42,6 +43,18 @@ class UserDao extends AbstractDao
         if ($result === 0) {
             $this->tableGateway()->insert(array_merge($set, $where));
         }
+    }
+
+    /**
+     * @param \Ramsey\Uuid\UuidInterface $id
+     *
+     * @return array
+     */
+    public function fetchById(UuidInterface $id): array
+    {
+        $result = $this->tableGateway()->select(['id' => $id->toString()]);
+
+        return iterator_to_array($result);
     }
 
     /**
