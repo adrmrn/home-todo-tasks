@@ -16,7 +16,7 @@ apt-get install -y apache2 git curl php7.1 php7.1-bcmath php7.1-bz2 php7.1-cli p
     libapache2-mod-php7.1 postgresql-9.5 php7.1-pgsql php7.1-fpm php7.1-xdebug
 
 
-# Database
+# PostgreSQL
 DB_NAME=home_todo_tasks
 DB_USERNAME=pg_user
 DB_PASSWORD=pg_pass
@@ -29,6 +29,25 @@ sudo -u postgres psql -c "CREATE DATABASE \"$DB_NAME\"  WITH OWNER \"$DB_USERNAM
 
 cp /var/www/vagrant/pg_hba.conf /etc/postgresql/9.5/main/
 cp /var/www/vagrant/postgresql.conf /etc/postgresql/9.5/main/
+
+
+# MongoDB
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+apt-get update
+apt-get install -y mongodb-org
+
+cp /var/www/vagrant/mongod.conf /etc/
+service mongod start
+
+mkdir -p /data/db
+
+mongod --port 27017 --fork --logpath /var/log/mongodb.log
+mongo --port 27017 < /var/www/vagrant/mongodb_admin.js
+mongod --shutdown
+
+mongod --auth --port 27017 --fork --logpath /var/log/mongodb.log
+mongo --port 27017 -u "mongodb_admin" -p "mongodb_pass" --authenticationDatabase "admin" < /var/www/vagrant/mongodb_user.js
 
 
 # FPM
@@ -44,6 +63,7 @@ echo "xdebug.remote_autostart = on" >> /etc/php/7.1/mods-available/xdebug.ini
 
 # Restart services
 service postgresql restart
+service mongod restart
 service php7.1-fpm restart
 service apache2 restart
 
@@ -90,6 +110,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'bento/ubuntu-16.04'
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 5432, host: 5432, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 27017, host: 27117
   config.vm.synced_folder '.', '/var/www'
   config.vm.provision 'shell', inline: @script
 
