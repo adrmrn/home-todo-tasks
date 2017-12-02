@@ -26,7 +26,8 @@
         "zendframework/zend-mvc-i18n": "^1.0",
         "mikemix/tactician-module": "^2.0",
         "ramsey/uuid": "^3.7",
-        "adamiecradek/zf-simple-migrations": "^1.0"
+        "adamiecradek/zf-simple-migrations": "^1.0",
+        "mongodb/mongodb": "^1.2"
     },
     "autoload": {
         "psr-4": {

@@ -6,11 +6,15 @@
  * Time: 09:25
  */
 
+use MongoDB\Client;
+use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
 use Shared\Application\Service\CommandQueryService;
 use Shared\Application\Service\CommandQueryServiceFactory;
 use Shared\Application\Service\JsonPatchResolver;
 use Shared\Application\Service\JsonPatchResolverFactory;
 use Shared\Infrastructure\Dao\DaoAbstractFactory;
+use Shared\Infrastructure\MongoDB\ClientConfigFactory;
+use Shared\Infrastructure\MongoDB\MongoDBClientFactory;
 
 return [
     'service_manager' => [
@@ -21,8 +25,10 @@ return [
 
         ],
         'factories'          => [
-            CommandQueryService::class => CommandQueryServiceFactory::class,
-            JsonPatchResolver::class   => JsonPatchResolverFactory::class,
+            CommandQueryService::class    => CommandQueryServiceFactory::class,
+            JsonPatchResolver::class      => JsonPatchResolverFactory::class,
+            Client::class                 => ClientConfigFactory::class,
+            MongoDBClientInterface::class => MongoDBClientFactory::class,
         ],
     ],
 ];
