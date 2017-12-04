@@ -61,9 +61,27 @@ echo "xdebug.idekey = \"vagrant\"" >> /etc/php/7.1/mods-available/xdebug.ini
 echo "xdebug.remote_autostart = on" >> /etc/php/7.1/mods-available/xdebug.ini
 
 
+# RabbitMQ
+#wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+#dpkg -i erlang-solutions_1.0_all.deb
+#apt-get update
+#apt-get install -y erlang erlang-nox
+echo 'deb http://www.rabbitmq.com/debian/ testing main' | tee /etc/apt/sources.list.d/rabbitmq.list
+wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
+apt-get update
+apt-get install -y rabbitmq-server
+systemctl enable rabbitmq-server
+systemctl start rabbitmq-server
+rabbitmqctl add_user rabbitmq_admin rabbitmq_pass
+rabbitmqctl set_user_tags rabbitmq_admin administrator
+rabbitmqctl set_permissions -p / rabbitmq_admin ".*" ".*" ".*"
+rabbitmq-plugins enable rabbitmq_management
+
+
 # Restart services
 service postgresql restart
 service mongod restart
+systemctl restart rabbitmq-server
 service php7.1-fpm restart
 service apache2 restart
 
@@ -112,9 +130,9 @@ sudo su
 
 service postgresql restart
 service mongod restart
+systemctl restart rabbitmq-server
 service php7.1-fpm restart
 service apache2 restart
-composer install
 #php public/index.php migration apply
 
 SCRIPT
@@ -124,6 +142,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 5432, host: 5432, host_ip: "127.0.0.1"
   config.vm.network "forwarded_port", guest: 27017, host: 27117
+  config.vm.network "forwarded_port", guest: 15672, host: 15673
   config.vm.synced_folder '.', '/var/www'
   config.vm.provision 'shell', inline: @script
   config.vm.provision 'shell', inline: @script_restart, run: 'always'
