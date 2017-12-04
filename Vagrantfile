@@ -106,6 +106,19 @@ echo "    vagrant ssh -c 'composer install'"
 echo "** [ZF] Visit http://localhost:8080 in your browser for to view the application **"
 SCRIPT
 
+@script_restart = <<SCRIPT
+
+sudo su
+
+service postgresql restart
+service mongod restart
+service php7.1-fpm restart
+service apache2 restart
+composer install
+#php public/index.php migration apply
+
+SCRIPT
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'bento/ubuntu-16.04'
   config.vm.network "forwarded_port", guest: 80, host: 8080
@@ -113,6 +126,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 27017, host: 27117
   config.vm.synced_folder '.', '/var/www'
   config.vm.provision 'shell', inline: @script
+  config.vm.provision 'shell', inline: @script_restart, run: 'always'
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
