@@ -27,7 +27,6 @@ return [
         'factories'          => [
             CommandQueryService::class    => CommandQueryServiceFactory::class,
             JsonPatchResolver::class      => JsonPatchResolverFactory::class,
-            Client::class                 => ClientConfigFactory::class,
             MongoDBClientInterface::class => MongoDBClientFactory::class,
         ],
     ],

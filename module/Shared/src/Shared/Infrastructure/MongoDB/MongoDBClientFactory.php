@@ -33,9 +33,26 @@ class MongoDBClientFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL)
     {
+        if (FALSE === isset($container->get('config')['mongodb'])) {
+            throw new \RuntimeException('Config for MongoDB\Client is not provided.', 501);
+        }
+
+        $config = $container->get('config')['mongodb'];
+
+        $client = new Client(
+            sprintf(
+                'mongodb://%s:%s@%s:%s/%s',
+                $config['username'],
+                $config['password'],
+                $config['hostname'],
+                $config['port'],
+                $config['database']
+            )
+        );
+
         return new MongoDBClient(
-            $container->get(Client::class),
-            $container->get('config')['mongodb']['database']
+            $client,
+            $config['database']
         );
     }
 }
