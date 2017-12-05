@@ -16,12 +16,14 @@ use User\Application\Command\CreateUser\CreateUserCommandHandlerFactory;
 use User\Application\Command\CreateUser\CreateUserCommandInputFilter;
 use User\Application\Event\WorkerReceiver;
 use User\Application\Event\WorkerReceiverFactory;
+use User\Application\EventManager\EventListenerAggregate;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
 use User\Application\Service\UserCreatorService;
 use User\Application\Service\UserCreatorServiceFactory;
 use User\Application\Service\UserEditorService;
 use User\Application\Service\UserEditorServiceFactory;
 use User\Infrastructure\Repository\UserRepositoryFactory;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'service_manager' => [
@@ -36,6 +38,9 @@ return [
 
             // Repository
             UserRepositoryInterface::class      => UserRepositoryFactory::class,
+
+            // Event
+            EventListenerAggregate::class => InvokableFactory::class,
 
             WorkerReceiver::class => WorkerReceiverFactory::class,
         ],

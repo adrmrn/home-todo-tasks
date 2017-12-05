@@ -134,7 +134,7 @@ mongod --auth --port 27017 --fork --logpath /var/log/mongodb.log
 systemctl restart rabbitmq-server
 service php7.1-fpm restart
 service apache2 restart
-#php public/index.php migration apply
+php public/index.php migration apply
 
 SCRIPT
 

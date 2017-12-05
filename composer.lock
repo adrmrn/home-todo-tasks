@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "62f05c93310c81f6470a0112a69daffe",
+    "content-hash": "8ccc28be3a8c603325d4490e5d783360",
     "packages": [
         {
             "name": "adamiecradek/zf-simple-migrations",
@@ -204,6 +204,72 @@
                 "service layer"
             ],
             "time": "2016-02-20T11:14:36+00:00"
+        },
+        {
+            "name": "marc-mabe/php-enum",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/marc-mabe/php-enum.git",
+                "reference": "e756ea3f8e938f9197a756ad32d797b5455d316d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/marc-mabe/php-enum/zipball/e756ea3f8e938f9197a756ad32d797b5455d316d",
+                "reference": "e756ea3f8e938f9197a756ad32d797b5455d316d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-reflection": "*",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "lstrojny/functional-php": "1.2.* || 1.0.*",
+                "phpbench/phpbench": "@dev",
+                "phpunit/phpunit": "^5.7 || ^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev",
+                    "dev-2.x": "2.3-dev",
+                    "dev-1.x": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MabeEnum\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Marc Bennewitz",
+                    "email": "dev@mabe.berlin",
+                    "homepage": "http://mabe.berlin/",
+                    "role": "Lead"
+                }
+            ],
+            "description": "Simple and fast implementation of enumerations with native PHP>=5.6",
+            "homepage": "https://github.com/marc-mabe/php-enum",
+            "keywords": [
+                "enum",
+                "enum-map",
+                "enum-set",
+                "enumeration",
+                "enumerator",
+                "enummap",
+                "enumset",
+                "map",
+                "set",
+                "type",
+                "type-hint",
+                "typehint"
+            ],
+            "time": "2017-11-05T14:47:17+00:00"
         },
         {
             "name": "mikemix/tactician-module",

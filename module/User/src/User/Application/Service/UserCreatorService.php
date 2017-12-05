@@ -10,13 +10,18 @@ namespace User\Application\Service;
 
 
 use Shared\Application\ValueObject\Email;
+use User\Application\EventManager\EventStore;
 use User\Application\Model\Credentials\Credentials;
 use User\Application\Model\User;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
 use User\Application\Utility\PasswordHasher;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerAwareTrait;
 
-class UserCreatorService
+class UserCreatorService implements EventManagerAwareInterface
 {
+    use EventManagerAwareTrait;
+
     /**
      * @var \User\Application\Persistence\Repository\UserRepositoryInterface
      */
@@ -57,6 +62,11 @@ class UserCreatorService
 
         $this->userRepository->store($user);
 
-        // TODO: send event
+        $this->getEventManager()->trigger(
+            EventStore::USER_CREATED,
+            [
+                'user' => $user,
+            ]
+        );
     }
 }
