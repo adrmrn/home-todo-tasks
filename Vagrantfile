@@ -129,7 +129,8 @@ SCRIPT
 sudo su
 
 service postgresql restart
-service mongod restart
+mongod --shutdown
+mongod --auth --port 27017 --fork --logpath /var/log/mongodb.log
 systemctl restart rabbitmq-server
 service php7.1-fpm restart
 service apache2 restart
