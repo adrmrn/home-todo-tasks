@@ -27,14 +27,16 @@
         "mikemix/tactician-module": "^2.0",
         "ramsey/uuid": "^3.7",
         "adamiecradek/zf-simple-migrations": "^1.0",
-        "mongodb/mongodb": "^1.2"
+        "mongodb/mongodb": "^1.2",
+        "php-amqplib/php-amqplib": "^2.7"
     },
     "autoload": {
         "psr-4": {
             "Application\\": "module/Application/src/",
             "Api\\": "module/Api/src/Api/",
             "Shared\\": "module/Shared/src/Shared/",
-            "User\\": "module/User/src/User/"
+            "User\\": "module/User/src/User/",
+            "Cli\\": "module/Cli/src/Cli/"
         }
     },
     "autoload-dev": {

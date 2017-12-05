@@ -20,4 +20,11 @@ return [
         'username' => 'pg_user',
         'password' => 'pg_pass',
     ],
+    'mongodb' => [
+        'database' => 'home_todo_tasks',
+        'hostname' => '127.0.0.1',
+        'port'     => '27017',
+        'username' => 'mongodb_user',
+        'password' => 'mongodb_pass',
+    ],
 ];

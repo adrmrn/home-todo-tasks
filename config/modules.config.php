@@ -41,4 +41,5 @@ return array(
     'Api',
     'User',
     'Shared',
+    'Cli',
 );

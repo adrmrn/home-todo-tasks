@@ -62,10 +62,10 @@ echo "xdebug.remote_autostart = on" >> /etc/php/7.1/mods-available/xdebug.ini
 
 
 # RabbitMQ
-#wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
-#dpkg -i erlang-solutions_1.0_all.deb
-#apt-get update
-#apt-get install -y erlang erlang-nox
+wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+dpkg -i erlang-solutions_1.0_all.deb
+apt-get update
+apt-get install -y erlang erlang-nox
 echo 'deb http://www.rabbitmq.com/debian/ testing main' | tee /etc/apt/sources.list.d/rabbitmq.list
 wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
 apt-get update

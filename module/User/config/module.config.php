@@ -14,6 +14,8 @@ use User\Application\Command\CreateUser\CreateUserCommand;
 use User\Application\Command\CreateUser\CreateUserCommandHandler;
 use User\Application\Command\CreateUser\CreateUserCommandHandlerFactory;
 use User\Application\Command\CreateUser\CreateUserCommandInputFilter;
+use User\Application\Event\WorkerReceiver;
+use User\Application\Event\WorkerReceiverFactory;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
 use User\Application\Service\UserCreatorService;
 use User\Application\Service\UserCreatorServiceFactory;
@@ -34,6 +36,8 @@ return [
 
             // Repository
             UserRepositoryInterface::class      => UserRepositoryFactory::class,
+
+            WorkerReceiver::class => WorkerReceiverFactory::class,
         ],
     ],
     'tactician'       => [
