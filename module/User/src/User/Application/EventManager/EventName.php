@@ -11,7 +11,7 @@ namespace User\Application\EventManager;
 
 use MabeEnum\Enum;
 
-class EventStore extends Enum
+class EventName extends Enum
 {
     const USER_CREATED = 'user_created';
     const USER_UPDATED = 'user_updated';

@@ -5,6 +5,7 @@
  * The previous config file has been stored in ./config/modules.config.old
  */
 return array(
+    'Zend\Form',
     'Zend\\Cache',
     'Zend\\Db',
     'Zend\\Filter',
@@ -37,6 +38,8 @@ return array(
     'Zend\\Mvc\\Console',
     'ZfSimpleMigrations',
     'TacticianModule',
+    'DoctrineModule',
+    'DoctrineORMModule',
     'Application',
     'Api',
     'User',

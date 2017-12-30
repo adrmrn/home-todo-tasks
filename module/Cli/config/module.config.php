@@ -6,6 +6,8 @@
  * Time: 01:07
  */
 
+namespace Cli;
+
 use Cli\Controller\UserEventReceiverController;
 use Cli\Controller\UserEventReceiverControllerFactory;
 

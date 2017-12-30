@@ -6,14 +6,14 @@
  * Time: 09:25
  */
 
-use MongoDB\Client;
+namespace Shared;
+
 use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
 use Shared\Application\Service\CommandQueryService;
 use Shared\Application\Service\CommandQueryServiceFactory;
 use Shared\Application\Service\JsonPatchResolver;
 use Shared\Application\Service\JsonPatchResolverFactory;
 use Shared\Infrastructure\Dao\DaoAbstractFactory;
-use Shared\Infrastructure\MongoDB\ClientConfigFactory;
 use Shared\Infrastructure\MongoDB\MongoDBClientFactory;
 
 return [

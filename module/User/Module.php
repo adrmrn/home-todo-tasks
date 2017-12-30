@@ -10,6 +10,8 @@ namespace User;
 
 
 use User\Application\EventManager\EventListenerAggregate;
+use User\Application\Event\Publisher\EventPublisher;
+use User\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
@@ -39,6 +41,11 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
         $aggregate    = $e->getApplication()->getServiceManager()->get(EventListenerAggregate::class);
 
         $aggregate->attach($eventManager);
+
+        // TODO: create RabbitMQ publisher and inject to event publisher
+        EventPublisher::initialize(
+            $e->getApplication()->getServiceManager()->get(InMemoryEventPublisherAdapter::class)
+        );
 
         return [];
     }

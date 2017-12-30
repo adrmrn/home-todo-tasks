@@ -34,11 +34,10 @@ class User
      *
      * @param string                                          $name
      * @param \User\Application\Model\Credentials\Credentials $credentials
-     * @param \Ramsey\Uuid\UuidInterface|NULL                 $id
      */
-    public function __construct(string $name, Credentials $credentials, UuidInterface $id = NULL)
+    public function __construct(string $name, Credentials $credentials)
     {
-        $this->id          = (NULL !== $id) ? $id : Uuid::uuid4();
+        $this->id          = Uuid::uuid4();
         $this->name        = $name;
         $this->credentials = $credentials;
     }

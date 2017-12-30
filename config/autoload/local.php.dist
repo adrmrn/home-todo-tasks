@@ -12,7 +12,7 @@
  */
 
 return [
-    'db' => [
+    'db'       => [
         'driver'   => 'Pdo',
         'database' => 'home_todo_tasks',
         'hostname' => 'localhost',
@@ -20,11 +20,32 @@ return [
         'username' => 'pg_user',
         'password' => 'pg_pass',
     ],
-    'mongodb' => [
+    'mongodb'  => [
         'database' => 'home_todo_tasks',
         'hostname' => '127.0.0.1',
         'port'     => '27017',
         'username' => 'mongodb_user',
         'password' => 'mongodb_pass',
+    ],
+    'rabbitmq' => [
+        'hostname' => 'localhost',
+        'port'     => 5672,
+        'username' => 'rabbitmq_admin',
+        'password' => 'rabbitmq_pass',
+    ],
+    'doctrine' => [
+        'connection' => [
+            // default connection name
+            'orm_default' => [
+                'driverClass' => \Doctrine\DBAL\Driver\PDOPgSql\Driver::class,
+                'params'      => [
+                    'host'     => 'localhost',
+                    'port'     => '5432',
+                    'user'     => 'pg_user',
+                    'password' => 'pg_pass',
+                    'dbname'   => 'home_todo_tasks',
+                ],
+            ],
+        ],
     ],
 ];

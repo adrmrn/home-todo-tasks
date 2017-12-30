@@ -31,13 +31,13 @@ class EventListenerAggregate extends AbstractListenerAggregate implements Listen
     {
         $this->listeners[] = $events->getSharedManager()->attach(
             '*',
-            EventStore::USER_CREATED,
+            EventName::USER_CREATED,
             [$this, 'onUserCreated'],
             $priority
         );
         $this->listeners[] = $events->getSharedManager()->attach(
             '*',
-            EventStore::USER_UPDATED,
+            EventName::USER_UPDATED,
             [$this, 'onUserUpdated'],
             $priority
         );

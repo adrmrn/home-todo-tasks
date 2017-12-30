@@ -6,6 +6,8 @@
  * Time: 15:24
  */
 
+namespace User;
+
 use User\Application\Command\ChangeUserName\ChangeUserNameCommand;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandler;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandlerFactory;
@@ -17,6 +19,7 @@ use User\Application\Command\CreateUser\CreateUserCommandInputFilter;
 use User\Application\Event\WorkerReceiver;
 use User\Application\Event\WorkerReceiverFactory;
 use User\Application\EventManager\EventListenerAggregate;
+use User\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
 use User\Application\Service\UserCreatorService;
 use User\Application\Service\UserCreatorServiceFactory;
@@ -27,7 +30,7 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'service_manager' => [
-        'factories' => [
+        'factories'  => [
             // Command
             CreateUserCommandHandler::class     => CreateUserCommandHandlerFactory::class,
             ChangeUserNameCommandHandler::class => ChangeUserNameCommandHandlerFactory::class,
@@ -40,9 +43,12 @@ return [
             UserRepositoryInterface::class      => UserRepositoryFactory::class,
 
             // Event
-            EventListenerAggregate::class => InvokableFactory::class,
+            EventListenerAggregate::class       => InvokableFactory::class,
 
             WorkerReceiver::class => WorkerReceiverFactory::class,
+        ],
+        'invokables' => [
+            InMemoryEventPublisherAdapter::class,
         ],
     ],
     'tactician'       => [
@@ -61,5 +67,26 @@ return [
             ChangeUserNameCommandInputFilter::class,
         ],
         'factories'  => [],
+    ],
+    'doctrine'        => [
+        'driver' => [
+            // defines an annotation driver with two paths, and names it `my_annotation_driver`
+            __NAMESPACE__ . '_driver' => [
+                'class' => \Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver::class,
+                'cache' => 'array',
+                'paths' => [
+                    __DIR__ . '/../src/User/Infrastructure/Doctrine/Mapping' => 'User\Infrastructure\Doctrine\Mapping',
+                ],
+            ],
+
+            // default metadata driver, aggregates all other drivers into a single one.
+            // Override `orm_default` only if you know what you're doing
+            'orm_default'             => [
+                'drivers' => [
+                    // register `my_annotation_driver` for any entity under namespace `My\Namespace`
+                    __NAMESPACE__ . '\Application\Model' => __NAMESPACE__ . '_driver',
+                ],
+            ],
+        ],
     ],
 ];
