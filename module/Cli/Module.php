@@ -50,9 +50,9 @@ class Module implements ConfigProviderInterface, ConsoleUsageProviderInterface
     public function getConsoleUsage(AdapterInterface $console)
     {
         return [
-            'Test controller',
-            'test [<email>] [--verbose|-v]' => '',
-            ['[<email>]', 'User email'],
+            'Run event consumer',
+            'user event consumer' => '',
+            ['[--domain]', 'Module/domain name'],
         ];
     }
 }

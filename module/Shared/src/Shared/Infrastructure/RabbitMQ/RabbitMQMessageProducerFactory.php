@@ -2,11 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 04.12.17
- * Time: 15:40
+ * Date: 12.01.18
+ * Time: 19:39
  */
 
-namespace User\Application\Event;
+namespace Shared\Infrastructure\RabbitMQ;
 
 
 use Interop\Container\ContainerInterface;
@@ -16,7 +16,7 @@ use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class WorkerReceiverFactory implements FactoryInterface
+class RabbitMQMessageProducerFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -33,21 +33,8 @@ class WorkerReceiverFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL)
     {
-        if (FALSE === isset($container->get('config')['rabbitmq'])) {
-            throw new \RuntimeException('Config for RabbitMQ is not provided.', 501);
-        }
-
-        $config = $container->get('config')['rabbitmq'];
-
-        $connection = new AMQPStreamConnection(
-            $config['hostname'],
-            $config['port'],
-            $config['username'],
-            $config['password']
-        );
-
-        return new WorkerReceiver(
-            $connection
+        return new RabbitMQMessageProducer(
+            $container->get(AMQPStreamConnection::class)
         );
     }
 }

@@ -11,12 +11,12 @@ namespace Cli\Controller;
 
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use User\Application\Event\WorkerReceiver;
+use User\Infrastructure\RabbitMQ\RabbitMQMessageConsumer;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class UserEventReceiverControllerFactory implements FactoryInterface
+class UserEventConsumerControllerFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -33,8 +33,8 @@ class UserEventReceiverControllerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL)
     {
-        return new UserEventReceiverController(
-            $container->get(WorkerReceiver::class)
+        return new UserEventConsumerController(
+            $container->get(RabbitMQMessageConsumer::class)
         );
     }
 }

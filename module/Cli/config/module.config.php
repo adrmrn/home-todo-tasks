@@ -8,14 +8,13 @@
 
 namespace Cli;
 
-use Cli\Controller\UserEventReceiverController;
-use Cli\Controller\UserEventReceiverControllerFactory;
+use Cli\Controller\UserEventConsumerController;
+use Cli\Controller\UserEventConsumerControllerFactory;
 
 return [
     'controllers'     => [
         'factories' => [
-            UserEventReceiverController::class => UserEventReceiverControllerFactory::class
-            // InvokableFactory::class
+            UserEventConsumerController::class => UserEventConsumerControllerFactory::class,
         ],
     ],
     'service_manager' => [
@@ -24,12 +23,12 @@ return [
     'console'         => [
         'router' => [
             'routes' => [
-                'user event receiver' => [
+                'user event consumer' => [
                     'options' => [
-                        'route'    => 'user event receiver',
+                        'route'    => 'user event consumer',
                         'defaults' => [
-                            'controller' => UserEventReceiverController::class,
-                            'action'     => 'receiveEvent',
+                            'controller' => UserEventConsumerController::class,
+                            'action'     => 'consumeEvents',
                         ],
                     ],
                 ],

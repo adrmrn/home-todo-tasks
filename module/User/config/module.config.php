@@ -8,6 +8,7 @@
 
 namespace User;
 
+use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommand;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandler;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandlerFactory;
@@ -16,8 +17,10 @@ use User\Application\Command\CreateUser\CreateUserCommand;
 use User\Application\Command\CreateUser\CreateUserCommandHandler;
 use User\Application\Command\CreateUser\CreateUserCommandHandlerFactory;
 use User\Application\Command\CreateUser\CreateUserCommandInputFilter;
-use User\Application\Event\WorkerReceiver;
-use User\Application\Event\WorkerReceiverFactory;
+use User\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapter;
+use User\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapterFactory;
+use User\Infrastructure\RabbitMQ\RabbitMQMessageConsumer;
+use User\Infrastructure\RabbitMQ\RabbitMQMessageConsumerFactory;
 use User\Application\EventManager\EventListenerAggregate;
 use User\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
@@ -32,20 +35,20 @@ return [
     'service_manager' => [
         'factories'  => [
             // Command
-            CreateUserCommandHandler::class     => CreateUserCommandHandlerFactory::class,
-            ChangeUserNameCommandHandler::class => ChangeUserNameCommandHandlerFactory::class,
+            CreateUserCommandHandler::class      => CreateUserCommandHandlerFactory::class,
+            ChangeUserNameCommandHandler::class  => ChangeUserNameCommandHandlerFactory::class,
 
             // Service
-            UserCreatorService::class           => UserCreatorServiceFactory::class,
-            UserEditorService::class            => UserEditorServiceFactory::class,
+            UserCreatorService::class            => UserCreatorServiceFactory::class,
+            UserEditorService::class             => UserEditorServiceFactory::class,
 
             // Repository
-            UserRepositoryInterface::class      => UserRepositoryFactory::class,
+            UserRepositoryInterface::class       => UserRepositoryFactory::class,
 
             // Event
-            EventListenerAggregate::class       => InvokableFactory::class,
-
-            WorkerReceiver::class => WorkerReceiverFactory::class,
+            EventListenerAggregate::class        => InvokableFactory::class,
+            RabbitMQEventPublisherAdapter::class => RabbitMQEventPublisherAdapterFactory::class,
+            RabbitMQMessageConsumer::class       => RabbitMQMessageConsumerFactory::class,
         ],
         'invokables' => [
             InMemoryEventPublisherAdapter::class,
@@ -72,7 +75,7 @@ return [
         'driver' => [
             // defines an annotation driver with two paths, and names it `my_annotation_driver`
             __NAMESPACE__ . '_driver' => [
-                'class' => \Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver::class,
+                'class' => SimplifiedXmlDriver::class,
                 'cache' => 'array',
                 'paths' => [
                     __DIR__ . '/../src/User/Infrastructure/Doctrine/Mapping' => 'User\Infrastructure\Doctrine\Mapping',

@@ -9,6 +9,7 @@
 namespace User;
 
 
+use User\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapter;
 use User\Application\EventManager\EventListenerAggregate;
 use User\Application\Event\Publisher\EventPublisher;
 use User\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
@@ -42,9 +43,9 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
 
         $aggregate->attach($eventManager);
 
-        // TODO: create RabbitMQ publisher and inject to event publisher
         EventPublisher::initialize(
-            $e->getApplication()->getServiceManager()->get(InMemoryEventPublisherAdapter::class)
+            $e->getApplication()->getServiceManager()->get(InMemoryEventPublisherAdapter::class),
+            $e->getApplication()->getServiceManager()->get(RabbitMQEventPublisherAdapter::class)
         );
 
         return [];
