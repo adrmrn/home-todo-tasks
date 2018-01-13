@@ -9,23 +9,23 @@
 namespace Cli\Controller;
 
 
-use User\Infrastructure\RabbitMQ\RabbitMQMessageConsumer;
+use Shared\Application\Persistence\RabbitMQ\RabbitMQMessageConsumerInterface;
 use Zend\Console\Request;
 use Zend\Mvc\Console\Controller\AbstractConsoleController;
 
 class UserEventConsumerController extends AbstractConsoleController
 {
     /**
-     * @var \User\Infrastructure\RabbitMQ\RabbitMQMessageConsumer
+     * @var \Shared\Application\Persistence\RabbitMQ\RabbitMQMessageConsumerInterface
      */
     private $messageConsumer;
 
     /**
      * UserEventConsumerController constructor.
      *
-     * @param \User\Infrastructure\RabbitMQ\RabbitMQMessageConsumer $messageConsumer
+     * @param \Shared\Application\Persistence\RabbitMQ\RabbitMQMessageConsumerInterface $messageConsumer
      */
-    public function __construct(RabbitMQMessageConsumer $messageConsumer)
+    public function __construct(RabbitMQMessageConsumerInterface $messageConsumer)
     {
         $this->messageConsumer = $messageConsumer;
     }

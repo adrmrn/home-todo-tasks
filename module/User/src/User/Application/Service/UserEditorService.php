@@ -10,6 +10,7 @@ namespace User\Application\Service;
 
 
 use Ramsey\Uuid\Uuid;
+use User\Application\Event\Publisher\EventPublisher;
 use User\Application\EventManager\EventName;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
 use Zend\EventManager\EventManagerAwareInterface;
@@ -48,8 +49,9 @@ class UserEditorService implements EventManagerAwareInterface
 
         $this->userRepository->store($user);
 
-        $this->getEventManager()->trigger(
+        EventPublisher::publish(
             EventName::USER_UPDATED,
+            $user->id(),
             [
                 'user' => $user,
             ]

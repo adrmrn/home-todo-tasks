@@ -11,8 +11,9 @@ namespace Shared\Infrastructure\RabbitMQ;
 
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use Shared\Application\Persistence\RabbitMQ\RabbitMQMessagingInterface;
 
-abstract class AbstractRabbitMQMessaging
+abstract class AbstractRabbitMQMessaging implements RabbitMQMessagingInterface
 {
     /**
      * @var \PhpAmqpLib\Connection\AMQPStreamConnection

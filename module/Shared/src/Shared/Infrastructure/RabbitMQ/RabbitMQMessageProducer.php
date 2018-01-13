@@ -12,8 +12,9 @@ namespace Shared\Infrastructure\RabbitMQ;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use Shared\Application\Event\Event;
+use Shared\Application\Persistence\RabbitMQ\RabbitMQMessageProducerInterface;
 
-class RabbitMQMessageProducer extends AbstractRabbitMQMessaging
+class RabbitMQMessageProducer extends AbstractRabbitMQMessaging implements RabbitMQMessageProducerInterface
 {
     /**
      * AbstractRabbitMQPublisher constructor.

@@ -11,7 +11,7 @@ namespace User\Application\Event\Publisher\Adapter;
 
 use Shared\Application\Event\Event;
 use Shared\Application\Event\Publisher\Adapter\EventPublisherAdapterInterface;
-use Shared\Infrastructure\RabbitMQ\RabbitMQMessageProducer;
+use Shared\Application\Persistence\RabbitMQ\RabbitMQMessageProducerInterface;
 
 class RabbitMQEventPublisherAdapter implements EventPublisherAdapterInterface
 {
@@ -23,9 +23,9 @@ class RabbitMQEventPublisherAdapter implements EventPublisherAdapterInterface
     /**
      * RabbitMQEventPublisherAdapter constructor.
      *
-     * @param \Shared\Infrastructure\RabbitMQ\RabbitMQMessageProducer $messageProducer
+     * @param \Shared\Application\Persistence\RabbitMQ\RabbitMQMessageProducerInterface $messageProducer
      */
-    public function __construct(RabbitMQMessageProducer $messageProducer)
+    public function __construct(RabbitMQMessageProducerInterface $messageProducer)
     {
         $this->messageProducer = $messageProducer;
     }

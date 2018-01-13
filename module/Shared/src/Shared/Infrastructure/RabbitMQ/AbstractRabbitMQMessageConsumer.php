@@ -10,8 +10,9 @@ namespace Shared\Infrastructure\RabbitMQ;
 
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use Shared\Application\Persistence\RabbitMQ\RabbitMQMessageConsumerInterface;
 
-abstract class AbstractRabbitMQMessageConsumer extends AbstractRabbitMQMessaging
+abstract class AbstractRabbitMQMessageConsumer extends AbstractRabbitMQMessaging implements RabbitMQMessageConsumerInterface
 {
     /**
      * AbstractRabbitMQMessageConsumer constructor.
