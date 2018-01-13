@@ -12,7 +12,7 @@ class Version20171120193718 extends AbstractMigration
     public function up(MetadataInterface $schema)
     {
         $this->addSql('
-            CREATE TABLE "user" (
+            CREATE TABLE "user_" (
               id UUID,
               name VARCHAR(70) NOT NULL,
               email VARCHAR(255) NOT NULL UNIQUE,

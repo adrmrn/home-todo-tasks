@@ -17,6 +17,9 @@ class EmailTest extends TestCase
         $email = new Email('test@o2.pl');
 
         $this->assertEquals('test@o2.pl', $email->toString());
+        $this->assertEquals('test@o2.pl', $email); // test __toString() magic method
+        $this->assertEquals('test', $email->localPart());
+        $this->assertEquals('o2.pl', $email->domain());
     }
 
     /**
@@ -26,6 +29,6 @@ class EmailTest extends TestCase
      */
     public function testCreateInvalidEmail()
     {
-        new Email('i_am_sure_this_is_wrong_email_address');
+        new Email('invalid_email_address');
     }
 }

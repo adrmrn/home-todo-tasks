@@ -12,7 +12,6 @@
  */
 
 use Ramsey\Uuid\Doctrine\UuidType;
-use Shared\Infrastructure\Doctrine\Type\EmailType;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Adapter\AdapterAbstractServiceFactory;
 use Zend\Db\Adapter\AdapterServiceFactory;
@@ -31,7 +30,6 @@ return [
             'orm_default' => [
                 'types' => [
                     UuidType::NAME  => UuidType::class,
-                    EmailType::NAME => EmailType::class,
                 ],
             ],
         ],

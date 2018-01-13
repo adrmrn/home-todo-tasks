@@ -14,11 +14,7 @@ class Email
     /**
      * @var string
      */
-    private $name;
-    /**
-     * @var string
-     */
-    private $domain;
+    private $value;
 
     /**
      * Email constructor.
@@ -31,10 +27,7 @@ class Email
             throw new \InvalidArgumentException('Email is invalid.', 422);
         }
 
-        $emailParts = explode('@', $email, 2);
-
-        $this->name = $emailParts[0];
-        $this->domain = $emailParts[1];
+        $this->value = $email;
     }
 
     /**
@@ -42,6 +35,34 @@ class Email
      */
     public function toString(): string
     {
-        return sprintf('%s@%s', $this->name, $this->domain);
+        return $this->value;
+    }
+
+    /**
+     * @return string
+     */
+    public function localPart(): string
+    {
+        $emailParts = explode('@', $this->value, 2);
+
+        return $emailParts[0];
+    }
+
+    /**
+     * @return string
+     */
+    public function domain(): string
+    {
+        $emailParts = explode('@', $this->value, 2);
+
+        return $emailParts[1];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->toString();
     }
 }

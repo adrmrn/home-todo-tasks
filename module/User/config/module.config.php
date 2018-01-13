@@ -28,7 +28,7 @@ use User\Application\Service\UserCreatorService;
 use User\Application\Service\UserCreatorServiceFactory;
 use User\Application\Service\UserEditorService;
 use User\Application\Service\UserEditorServiceFactory;
-use User\Infrastructure\Repository\UserRepositoryFactory;
+use User\Infrastructure\Repository\DoctrineUserRepositoryFactory;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
@@ -43,7 +43,7 @@ return [
             UserEditorService::class             => UserEditorServiceFactory::class,
 
             // Repository
-            UserRepositoryInterface::class       => UserRepositoryFactory::class,
+            UserRepositoryInterface::class       => DoctrineUserRepositoryFactory::class,
 
             // Event
             EventListenerAggregate::class        => InvokableFactory::class,
@@ -78,7 +78,8 @@ return [
                 'class' => SimplifiedXmlDriver::class,
                 'cache' => 'array',
                 'paths' => [
-                    __DIR__ . '/../src/User/Infrastructure/Doctrine/Mapping' => 'User\Infrastructure\Doctrine\Mapping',
+                    __DIR__ . '/../src/User/Infrastructure/Doctrine/Mapping'             => 'User\Application\Model',
+                    __DIR__ . '/../src/User/Infrastructure/Doctrine/Mapping/Credentials' => 'User\Application\Model\Credentials',
                 ],
             ],
 
