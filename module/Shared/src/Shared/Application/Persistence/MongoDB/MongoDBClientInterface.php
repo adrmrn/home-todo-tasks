@@ -18,4 +18,13 @@ interface MongoDBClientInterface
      * @return void
      */
     public function save(string $collectionName, array $data);
+
+    /**
+     * @param string $collectionName
+     * @param array  $where
+     * @param array  $data
+     *
+     * @return void
+     */
+    public function update(string $collectionName, array $where, array $data);
 }

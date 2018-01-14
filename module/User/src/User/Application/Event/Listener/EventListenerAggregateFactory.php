@@ -2,41 +2,25 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 09.11.17
- * Time: 10:09
+ * Date: 13.01.18
+ * Time: 17:14
  */
 
-namespace Shared\Infrastructure\Dao;
+namespace User\Application\Event\Listener;
 
 
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use Zend\Db\Adapter\AdapterInterface;
+use Shared\Application\Event\Subscriber\EventSubscriberAggregate;
+use Shared\Application\Projector\ProjectorEventSubscriber;
+use User\Application\Projector\Projection\UserCreatedProjection;
+use User\Application\Projector\Projection\UserRenamedProjection;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\Factory\AbstractFactoryInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
-class DaoAbstractFactory implements AbstractFactoryInterface
+class EventListenerAggregateFactory implements FactoryInterface
 {
-    /**
-     * Can the factory create an instance for the service?
-     *
-     * @param  ContainerInterface $container
-     * @param  string             $requestedName
-     *
-     * @return bool
-     */
-    public function canCreate(ContainerInterface $container, $requestedName)
-    {
-        if (FALSE === class_exists($requestedName)) {
-            return FALSE;
-        }
-
-        $reflectionClass = new \ReflectionClass($requestedName);
-
-        return $reflectionClass->implementsInterface(DaoInterface::class);
-    }
-
     /**
      * Create an object
      *
@@ -52,8 +36,13 @@ class DaoAbstractFactory implements AbstractFactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL)
     {
-        return new $requestedName(
-            $container->get(AdapterInterface::class)
+        return new EventListenerAggregate(
+            new EventSubscriberAggregate(
+                new ProjectorEventSubscriber(
+                    $container->get(UserCreatedProjection::class),
+                    $container->get(UserRenamedProjection::class)
+                )
+            )
         );
     }
 }

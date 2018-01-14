@@ -39,7 +39,7 @@ class RabbitMQMessageProducer extends AbstractRabbitMQMessaging implements Rabbi
         $msg = new AMQPMessage(
             json_encode([
                 'domain' => $event->domain(),
-                'data'   => $event->data(),
+                'data'   => $event->jsonSerialize(),
             ])
         );
 

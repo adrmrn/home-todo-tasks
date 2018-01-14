@@ -26,7 +26,7 @@ class InMemoryEventPublisherAdapter implements EventPublisherAdapterInterface, E
         $this->getEventManager()->trigger(
             $event->name(),
             $event->domain(),
-            $event->data()
+            $event->jsonSerialize()
         );
     }
 }

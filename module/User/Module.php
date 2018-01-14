@@ -10,7 +10,7 @@ namespace User;
 
 
 use User\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapter;
-use User\Application\EventManager\EventListenerAggregate;
+use User\Application\Event\Listener\EventListenerAggregate;
 use User\Application\Event\Publisher\EventPublisher;
 use User\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
 use Zend\EventManager\EventInterface;

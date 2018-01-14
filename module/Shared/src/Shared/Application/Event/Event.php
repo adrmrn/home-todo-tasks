@@ -11,7 +11,7 @@ namespace Shared\Application\Event;
 
 use Ramsey\Uuid\UuidInterface;
 
-class Event
+class Event implements \JsonSerializable
 {
     /**
      * @var string
@@ -41,14 +41,16 @@ class Event
      * @param string                     $name
      * @param \Ramsey\Uuid\UuidInterface $entityId
      * @param array                      $data
+     * @param \DateTimeImmutable         $occuredAt
      */
-    public function __construct(string $domain, string $name, UuidInterface $entityId, array $data = [])
+    public function __construct(string $domain, string $name, UuidInterface $entityId, array $data = [],
+                                \DateTimeImmutable $occuredAt = NULL)
     {
         $this->domain    = $domain;
         $this->name      = $name;
         $this->entityId  = $entityId;
         $this->data      = $data;
-        $this->occuredAt = new \DateTimeImmutable();
+        $this->occuredAt = NULL === $occuredAt ? new \DateTimeImmutable() : $occuredAt;
     }
 
     /**
@@ -72,10 +74,23 @@ class Event
      */
     public function data(): array
     {
+        return $this->data;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link  http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize(): array
+    {
         return [
             'id'         => $this->entityId->toString(),
-            'data'       => $this->data,
+            'domain'     => $this->domain,
             'occured_at' => $this->occuredAt->format(DATE_ISO8601),
+            'data'       => $this->data,
         ];
     }
 }

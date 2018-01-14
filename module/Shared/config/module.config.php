@@ -13,6 +13,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Shared\Application\Factory\RabbitMQConnectionFactory;
 use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
 use Shared\Application\Persistence\RabbitMQ\RabbitMQMessageProducerInterface;
+use Shared\Application\Projector\Projection\ProjectionAbstractFactory;
 use Shared\Application\Service\CommandQueryService;
 use Shared\Application\Service\CommandQueryServiceFactory;
 use Shared\Application\Service\JsonPatchResolver;
@@ -24,7 +25,7 @@ use Shared\Infrastructure\RabbitMQ\RabbitMQMessageProducerFactory;
 return [
     'service_manager' => [
         'abstract_factories' => [
-            DaoAbstractFactory::class,
+            ProjectionAbstractFactory::class,
         ],
         'invokables'         => [
 

@@ -19,9 +19,10 @@ use User\Application\Command\CreateUser\CreateUserCommandHandlerFactory;
 use User\Application\Command\CreateUser\CreateUserCommandInputFilter;
 use User\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapter;
 use User\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapterFactory;
+use User\Application\Event\Listener\EventListenerAggregateFactory;
 use User\Infrastructure\RabbitMQ\RabbitMQMessageConsumer;
 use User\Infrastructure\RabbitMQ\RabbitMQMessageConsumerFactory;
-use User\Application\EventManager\EventListenerAggregate;
+use User\Application\Event\Listener\EventListenerAggregate;
 use User\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
 use User\Application\Service\UserCreatorService;
@@ -29,7 +30,6 @@ use User\Application\Service\UserCreatorServiceFactory;
 use User\Application\Service\UserEditorService;
 use User\Application\Service\UserEditorServiceFactory;
 use User\Infrastructure\Repository\DoctrineUserRepositoryFactory;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'service_manager' => [
@@ -46,7 +46,7 @@ return [
             UserRepositoryInterface::class       => DoctrineUserRepositoryFactory::class,
 
             // Event
-            EventListenerAggregate::class        => InvokableFactory::class,
+            EventListenerAggregate::class        => EventListenerAggregateFactory::class,
             RabbitMQEventPublisherAdapter::class => RabbitMQEventPublisherAdapterFactory::class,
             RabbitMQMessageConsumer::class       => RabbitMQMessageConsumerFactory::class,
         ],

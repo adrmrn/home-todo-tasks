@@ -6,7 +6,7 @@
  * Time: 21:32
  */
 
-namespace User\Application\EventManager;
+namespace User\Application\Event;
 
 
 use MabeEnum\Enum;
@@ -14,5 +14,5 @@ use MabeEnum\Enum;
 class EventName extends Enum
 {
     const USER_CREATED = 'user_created';
-    const USER_UPDATED = 'user_updated';
+    const USER_RENAMED = 'user_renamed';
 }

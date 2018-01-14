@@ -11,7 +11,7 @@ namespace User\Application\Service;
 
 use Shared\Application\ValueObject\Email;
 use User\Application\Event\Publisher\EventPublisher;
-use User\Application\EventManager\EventName;
+use User\Application\Event\EventName;
 use User\Application\Model\Credentials\Credentials;
 use User\Application\Model\User;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
@@ -67,7 +67,9 @@ class UserCreatorService implements EventManagerAwareInterface
             EventName::USER_CREATED,
             $user->id(),
             [
-                'user' => $user
+                'id'    => $user->id()->toString(),
+                'name'  => $user->name(),
+                'email' => $user->credentials()->email()->toString(),
             ]
         );
     }

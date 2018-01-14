@@ -49,6 +49,18 @@ class MongoDBClient implements MongoDBClientInterface
 
     /**
      * @param string $collectionName
+     * @param array  $where
+     * @param array  $data
+     */
+    public function update(string $collectionName, array $where, array $data)
+    {
+        $collection = $this->grabCollection($collectionName);
+
+        $collection->updateOne($where, ['$set' => $data]);
+    }
+
+    /**
+     * @param string $collectionName
      *
      * @return \MongoDB\Collection
      */
