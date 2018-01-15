@@ -9,6 +9,8 @@
 namespace Shared\Application\Service;
 
 use Shared\Application\CommandQuery\CommandQueryInterface;
+use Shared\Application\Exception\ValidationException;
+use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\InputFilterPluginManager;
 
 class CommandQueryService
@@ -57,8 +59,11 @@ class CommandQueryService
             $inputFilter->setData($arguments);
 
             if (FALSE === $inputFilter->isValid()) {
-                // TODO: create ValidationException with error map
-                throw new \InvalidArgumentException('Data for Command or Query seems to be invalid.', 422);
+                $exception = new ValidationException('Data for Command or Query seems to be invalid.', 422);
+                $exception->setAdditionalDetails([
+                    'messages' => $inputFilter->getMessages(),
+                ]);
+                throw $exception;
             }
 
             $tmpArguments = [];
@@ -86,9 +91,9 @@ class CommandQueryService
     /**
      * @param string $commandQueryName
      *
-     * @return \Zend\InputFilter\InputFilterInterface|\Zend\InputFilter\InputInterface
+     * @return \Zend\InputFilter\InputFilterInterface
      */
-    private function grabInputFilterForCommandQuery(string $commandQueryName)
+    private function grabInputFilterForCommandQuery(string $commandQueryName): InputFilterInterface
     {
         $inputFilterClass = $this->inputFilterMap[$commandQueryName];
 

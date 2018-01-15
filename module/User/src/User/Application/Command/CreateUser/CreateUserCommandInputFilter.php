@@ -21,8 +21,8 @@ class CreateUserCommandInputFilter extends InputFilter
      */
     public function init()
     {
-        $name = $this->getFactory()->createInput(new StringInputFilterProvider('name'));
-        $email = $this->getFactory()->createInput(new EmailInputFilterProvider('email'));
+        $name     = $this->getFactory()->createInput(new StringInputFilterProvider('name'));
+        $email    = $this->getFactory()->createInput(new EmailInputFilterProvider('email'));
         $password = $this->getFactory()->createInput(new PasswordInputFilterProvider('password'));
 
         $this->add($name)->add($email)->add($password);
