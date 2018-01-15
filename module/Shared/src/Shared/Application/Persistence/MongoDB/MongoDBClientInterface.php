@@ -27,4 +27,12 @@ interface MongoDBClientInterface
      * @return void
      */
     public function update(string $collectionName, array $where, array $data);
+
+    /**
+     * @param string $collectionName
+     * @param array  $where
+     *
+     * @return array
+     */
+    public function findOne(string $collectionName, array $where): array;
 }

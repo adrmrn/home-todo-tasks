@@ -20,6 +20,11 @@ use User\Application\Command\CreateUser\CreateUserCommandInputFilter;
 use User\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapter;
 use User\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapterFactory;
 use User\Application\Event\Listener\EventListenerAggregateFactory;
+use User\Application\Persistence\DataSource\UserDataSourceInterface;
+use User\Application\Query\FetchUserById\FetchUserByIdQuery;
+use User\Application\Query\FetchUserById\FetchUserByIdQueryHandler;
+use User\Application\Query\FetchUserById\FetchUserByIdQueryHandlerFactory;
+use User\Infrastructure\DataSource\UserDataSourceFactory;
 use User\Infrastructure\RabbitMQ\RabbitMQMessageConsumer;
 use User\Infrastructure\RabbitMQ\RabbitMQMessageConsumerFactory;
 use User\Application\Event\Listener\EventListenerAggregate;
@@ -38,6 +43,9 @@ return [
             CreateUserCommandHandler::class      => CreateUserCommandHandlerFactory::class,
             ChangeUserNameCommandHandler::class  => ChangeUserNameCommandHandlerFactory::class,
 
+            // Query
+            FetchUserByIdQueryHandler::class     => FetchUserByIdQueryHandlerFactory::class,
+
             // Service
             UserCreatorService::class            => UserCreatorServiceFactory::class,
             UserEditorService::class             => UserEditorServiceFactory::class,
@@ -49,6 +57,9 @@ return [
             EventListenerAggregate::class        => EventListenerAggregateFactory::class,
             RabbitMQEventPublisherAdapter::class => RabbitMQEventPublisherAdapterFactory::class,
             RabbitMQMessageConsumer::class       => RabbitMQMessageConsumerFactory::class,
+
+            // DataSource
+            UserDataSourceInterface::class       => UserDataSourceFactory::class,
         ],
         'invokables' => [
             InMemoryEventPublisherAdapter::class,
@@ -58,6 +69,7 @@ return [
         'handler-map'     => [
             CreateUserCommand::class     => CreateUserCommandHandler::class,
             ChangeUserNameCommand::class => ChangeUserNameCommandHandler::class,
+            FetchUserByIdQuery::class    => FetchUserByIdQueryHandler::class,
         ],
         'inputfilter-map' => [
             CreateUserCommand::class     => CreateUserCommandInputFilter::class,

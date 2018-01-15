@@ -10,9 +10,13 @@ namespace Shared\Application\Projector\Projection;
 
 
 use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerAwareTrait;
 
-abstract class AbstractProjection implements ProjectionInterface
+abstract class AbstractProjection implements ProjectionInterface, EventManagerAwareInterface
 {
+    use EventManagerAwareTrait;
+
     /**
      * @var \Shared\Application\Persistence\MongoDB\MongoDBClientInterface
      */

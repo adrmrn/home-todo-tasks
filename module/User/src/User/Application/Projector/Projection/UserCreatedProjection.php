@@ -12,6 +12,7 @@ namespace User\Application\Projector\Projection;
 use Shared\Application\Event\Event;
 use Shared\Application\Projector\Projection\AbstractProjection;
 use User\Application\Event\EventName;
+use User\Application\EventManager\ApplicationEventName;
 
 class UserCreatedProjection extends AbstractProjection
 {
@@ -27,6 +28,14 @@ class UserCreatedProjection extends AbstractProjection
             'name'  => $event->data()['name'],
             'email' => $event->data()['email'],
         ]);
+
+        $this->getEventManager()->trigger(
+            ApplicationEventName::USER_VIEW_CREATED,
+            $event->domain(),
+            [
+                'id' => $event->data()['id'],
+            ]
+        );
     }
 
     /**

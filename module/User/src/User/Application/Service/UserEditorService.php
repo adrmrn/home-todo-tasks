@@ -9,7 +9,7 @@
 namespace User\Application\Service;
 
 
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use User\Application\Event\Publisher\EventPublisher;
 use User\Application\Event\EventName;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
@@ -36,14 +36,12 @@ class UserEditorService implements EventManagerAwareInterface
     }
 
     /**
-     * @param string $userId
-     * @param string $newName
-     *
-     * @return void
+     * @param \Ramsey\Uuid\UuidInterface $userId
+     * @param string                     $newName
      */
-    public function changeUserName(string $userId, string $newName)
+    public function changeUserName(UuidInterface $userId, string $newName)
     {
-        $user = $this->userRepository->fetchById(Uuid::fromString($userId));
+        $user = $this->userRepository->fetchById($userId);
 
         $user->rename($newName);
 

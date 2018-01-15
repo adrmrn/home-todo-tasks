@@ -9,9 +9,11 @@
 namespace User\Application\Command\ChangeUserName;
 
 
-use Shared\Application\CommandQuery\CommandQueryInterface;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
+use Shared\Application\CommandQuery\CommandInterface;
 
-class ChangeUserNameCommand implements CommandQueryInterface
+class ChangeUserNameCommand implements CommandInterface
 {
     /**
      * @var string
@@ -35,11 +37,11 @@ class ChangeUserNameCommand implements CommandQueryInterface
     }
 
     /**
-     * @return string
+     * @return \Ramsey\Uuid\UuidInterface
      */
-    public function userId(): string
+    public function userId(): UuidInterface
     {
-        return $this->userId;
+        return Uuid::fromString($this->userId);
     }
 
     /**

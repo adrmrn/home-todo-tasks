@@ -7,6 +7,9 @@ use Shared\Application\Service\CommandQueryService;
 use Shared\Application\Service\JsonPatchResolver;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommand;
 use User\Application\Command\CreateUser\CreateUserCommand;
+use User\Application\EventManager\ApplicationEventName;
+use User\Application\Query\FetchUserById\FetchUserByIdQuery;
+use Zend\EventManager\EventInterface;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
@@ -53,6 +56,9 @@ class UserResource extends AbstractResourceListener
     {
         $data = (array)$data;
 
+        $entityId = NULL;
+        $this->attachIdHandler($entityId);
+
         $command = $this->commandQueryService->prepareCommandQuery(
             CreateUserCommand::class,
             [
@@ -63,7 +69,7 @@ class UserResource extends AbstractResourceListener
         );
         $this->commandBus->handle($command);
 
-        return ['user' => 'ok'];
+        return $this->fetch($entityId);
     }
 
     /**
@@ -99,7 +105,16 @@ class UserResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $query = $this->commandQueryService->prepareCommandQuery(
+            FetchUserByIdQuery::class,
+            [
+                'id' => (string)$id,
+            ]
+        );
+        $user  = $this->commandBus->handle($query);
+
+        /** @var \User\Application\Model\UserView $user */
+        return new UserEntity($user);
     }
 
     /**
@@ -118,13 +133,13 @@ class UserResource extends AbstractResourceListener
      * @param mixed $id
      * @param mixed $request
      *
-     * @return void
+     * @return mixed
      */
     public function patch($id, $request)
     {
-        $this->jsonPatchResolver->resolveActionsForRequest((array)$request, $id);
+        $this->jsonPatchResolver->resolveActionsForRequest((array)$request, (string)$id);
 
-        // TODO: grab event UserUpdated and return projection
+        return $this->fetch((string)$id);
     }
 
     /**
@@ -162,5 +177,25 @@ class UserResource extends AbstractResourceListener
     public function update($id, $data)
     {
         return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
+    private function attachIdHandler(&$id)
+    {
+        /** @var \Zend\EventManager\SharedEventManagerInterface $eventManager */
+        $eventManager = $this->getEvent()->getTarget()->getEventManager()->getSharedManager();
+        $eventManager->attach(
+            '*',
+            ApplicationEventName::USER_VIEW_CREATED,
+            function (EventInterface $event) use (&$id) {
+                $id = $event->getParam('id');
+            }
+        );
+
+        return $id;
     }
 }

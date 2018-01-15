@@ -9,9 +9,9 @@
 namespace User\Application\Command\CreateUser;
 
 
-use Shared\Application\CommandQuery\CommandQueryInterface;
+use Shared\Application\CommandQuery\CommandInterface;
 
-class CreateUserCommand implements CommandQueryInterface
+class CreateUserCommand implements CommandInterface
 {
     /**
      * @var string

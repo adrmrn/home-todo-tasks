@@ -61,6 +61,25 @@ class MongoDBClient implements MongoDBClientInterface
 
     /**
      * @param string $collectionName
+     * @param array  $where
+     *
+     * @return array
+     */
+    public function findOne(string $collectionName, array $where): array
+    {
+        $collection = $this->grabCollection($collectionName);
+
+        $result = $collection->findOne($where);
+
+        if (NULL === $result) {
+            return [];
+        }
+
+        return $result->getArrayCopy();
+    }
+
+    /**
+     * @param string $collectionName
      *
      * @return \MongoDB\Collection
      */

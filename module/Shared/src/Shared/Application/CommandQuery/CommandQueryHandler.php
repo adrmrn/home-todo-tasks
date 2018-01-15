@@ -14,7 +14,7 @@ interface CommandQueryHandler
     /**
      * @param \Shared\Application\CommandQuery\CommandQueryInterface $commandQuery
      *
-     * @return void
+     * @return mixed
      */
     public function handle(CommandQueryInterface $commandQuery);
 }
