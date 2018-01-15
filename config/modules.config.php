@@ -36,7 +36,6 @@ return array(
     'ZF\\ContentValidation',
     'ZF\\Apigility',
     'Zend\\Mvc\\Console',
-    'ZfSimpleMigrations',
     'TacticianModule',
     'DoctrineModule',
     'DoctrineORMModule',

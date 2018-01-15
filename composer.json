@@ -27,12 +27,13 @@
         "zendframework/zend-mvc-i18n": "^1.0",
         "mikemix/tactician-module": "^2.0",
         "ramsey/uuid": "^3.7",
-        "adamiecradek/zf-simple-migrations": "^1.0",
         "mongodb/mongodb": "^1.2",
         "php-amqplib/php-amqplib": "^2.7",
         "marc-mabe/php-enum": "^3.0",
         "doctrine/doctrine-orm-module": "^1.1",
-        "ramsey/uuid-doctrine": "^1.4"
+        "ramsey/uuid-doctrine": "^1.4",
+        "doctrine/migrations": "^1.6",
+        "zendframework/zend-mvc-console": "^1.1"
     },
     "autoload": {
         "psr-4": {

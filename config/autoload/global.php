@@ -33,6 +33,14 @@ return [
                 ],
             ],
         ],
+        'migrations_configuration' => [
+            'orm_default' => [
+                'directory' => __DIR__ . '/../../data/Migration',
+                'name'      => 'Doctrine Database Migrations',
+                'namespace' => 'Migration',
+                'table'     => 'migration',
+            ],
+        ],
     ],
     'view_manager' => [
         // Enable this in your application configuration in order to get full
