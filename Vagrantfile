@@ -16,6 +16,11 @@ apt-get install -y apache2 git curl php7.1 php7.1-bcmath php7.1-bz2 php7.1-cli p
     libapache2-mod-php7.1 postgresql-9.5 php7.1-pgsql php7.1-fpm php7.1-xdebug php7.1-mongo
 
 
+# Create directory for logs
+mkdir -p /var/log/home_todo_tasks && \
+chown -R vagrant:vagrant /var/log/home_todo_tasks
+
+
 # PostgreSQL
 DB_NAME=home_todo_tasks
 DB_USERNAME=pg_user
@@ -32,17 +37,28 @@ cp /var/www/vagrant/postgresql.conf /etc/postgresql/9.5/main/
 
 
 # MongoDB
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
-echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+#apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+#echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+#apt-get update
+#apt-get install -y mongodb-org
+wget http://repo.mongodb.org/apt/ubuntu/dists/xenial/mongodb-org/3.4/multiverse/binary-amd64/mongodb-org-mongos_3.4.10_amd64.deb
+dpkg -i mongodb-org-mongos_3.4.10_amd64.deb
+wget http://repo.mongodb.org/apt/ubuntu/dists/xenial/mongodb-org/3.4/multiverse/binary-amd64/mongodb-org-server_3.4.10_amd64.deb
+dpkg --force-all -i mongodb-org-server_3.4.10_amd64.deb
+wget http://repo.mongodb.org/apt/ubuntu/dists/xenial/mongodb-org/3.4/multiverse/binary-amd64/mongodb-org-shell_3.4.10_amd64.deb
+dpkg -i mongodb-org-shell_3.4.10_amd64.deb
+wget http://repo.mongodb.org/apt/ubuntu/dists/xenial/mongodb-org/3.4/multiverse/binary-amd64/mongodb-org-tools_3.4.10_amd64.deb
+dpkg -i mongodb-org-tools_3.4.10_amd64.deb
+wget http://repo.mongodb.org/apt/ubuntu/dists/xenial/mongodb-org/3.4/multiverse/binary-amd64/mongodb-org_3.4.10_amd64.deb
+dpkg -i mongodb-org_3.4.10_amd64.deb
 apt-get update
-apt-get install -y mongodb-org
 
 cp /var/www/vagrant/mongod.conf /etc/
 service mongod start
 
 mkdir -p /data/db
 
-mongod --port 27017 --fork --logpath /var/log/mongodb.log
+mongod --port 27017 --fork --logpath /var/log/home_todo_tasks/mongodb.log
 mongo --port 27017 < /var/www/vagrant/mongodb_admin.js
 mongod --shutdown
 
@@ -78,12 +94,22 @@ rabbitmqctl set_permissions -p / rabbitmq_admin ".*" ".*" ".*"
 rabbitmq-plugins enable rabbitmq_management
 
 
+# Supervisord
+apt-get install -y supervisor
+cp /var/www/vagrant/supervisord.conf /etc/supervisord.conf
+supervisord -c /etc/supervisord.conf
+
+
 # Restart services
 service postgresql restart
 service mongod restart
 systemctl restart rabbitmq-server
 service php7.1-fpm restart
 service apache2 restart
+
+
+# Run migrations
+/var/www/vendor/bin/doctrine-module migrations:migrate
 
 
 # Configure Apache
@@ -134,7 +160,10 @@ mongod --auth --port 27017 --fork --logpath /var/log/mongodb.log
 systemctl restart rabbitmq-server
 service php7.1-fpm restart
 service apache2 restart
-php /var/www/public/index.php migration apply
+/var/www/vendor/bin/doctrine-module migrations:migrate
+sudo pkill -f supervisord
+sleep 5s
+supervisord -c /etc/supervisord.conf
 
 SCRIPT
 
