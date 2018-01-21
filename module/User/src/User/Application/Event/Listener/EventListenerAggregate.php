@@ -67,9 +67,9 @@ class EventListenerAggregate extends AbstractListenerAggregate implements Listen
         $e = new Event(
             $event->getTarget(),
             $event->getName(),
-            Uuid::fromString($event->getParam('id')),
+            Uuid::fromString($event->getParam('entity_id')),
             $event->getParam('data'),
-            new \DateTimeImmutable($event->getParam('occured_at'))
+            new \DateTimeImmutable($event->getParam('occurred_at'))
         );
 
         $this->eventSubscriberAggregate->handle($e);

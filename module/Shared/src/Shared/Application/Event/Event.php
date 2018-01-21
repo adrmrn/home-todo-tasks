@@ -32,7 +32,11 @@ class Event implements \JsonSerializable
     /**
      * @var \DateTimeImmutable
      */
-    private $occuredAt;
+    private $occurredAt;
+    /**
+     * @var int
+     */
+    private $eventId;
 
     /**
      * Event constructor.
@@ -41,16 +45,16 @@ class Event implements \JsonSerializable
      * @param string                     $name
      * @param \Ramsey\Uuid\UuidInterface $entityId
      * @param array                      $data
-     * @param \DateTimeImmutable         $occuredAt
+     * @param \DateTimeImmutable         $occurredAt
      */
     public function __construct(string $domain, string $name, UuidInterface $entityId, array $data = [],
-                                \DateTimeImmutable $occuredAt = NULL)
+                                \DateTimeImmutable $occurredAt = NULL)
     {
-        $this->domain    = $domain;
-        $this->name      = $name;
-        $this->entityId  = $entityId;
-        $this->data      = $data;
-        $this->occuredAt = NULL === $occuredAt ? new \DateTimeImmutable() : $occuredAt;
+        $this->domain     = $domain;
+        $this->name       = $name;
+        $this->entityId   = $entityId;
+        $this->data       = $data;
+        $this->occurredAt = NULL === $occurredAt ? new \DateTimeImmutable() : $occurredAt;
     }
 
     /**
@@ -87,10 +91,11 @@ class Event implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'id'         => $this->entityId->toString(),
-            'domain'     => $this->domain,
-            'occured_at' => $this->occuredAt->format(DATE_ISO8601),
-            'data'       => $this->data,
+            'name'        => $this->name,
+            'domain'      => $this->domain,
+            'entity_id'   => $this->entityId->toString(),
+            'data'        => $this->data,
+            'occurred_at' => $this->occurredAt->format(DATE_ISO8601),
         ];
     }
 }

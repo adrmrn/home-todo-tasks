@@ -10,17 +10,20 @@ namespace Shared;
 
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use Shared\Application\Event\Subscriber\EventStoreEventSubscriber;
+use Shared\Application\Event\Subscriber\EventStoreEventSubscriberFactory;
 use Shared\Application\Factory\RabbitMQConnectionFactory;
 use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
 use Shared\Application\Persistence\RabbitMQ\RabbitMQMessageProducerInterface;
+use Shared\Application\Persistence\Repository\EventStoreRepositoryInterface;
 use Shared\Application\Projector\Projection\ProjectionAbstractFactory;
 use Shared\Application\Service\CommandQueryService;
 use Shared\Application\Service\CommandQueryServiceFactory;
 use Shared\Application\Service\JsonPatchResolver;
 use Shared\Application\Service\JsonPatchResolverFactory;
-use Shared\Infrastructure\Dao\DaoAbstractFactory;
 use Shared\Infrastructure\MongoDB\MongoDBClientFactory;
 use Shared\Infrastructure\RabbitMQ\RabbitMQMessageProducerFactory;
+use Shared\Infrastructure\Repository\DoctrineEventStoreRepositoryFactory;
 
 return [
     'service_manager' => [
@@ -40,6 +43,10 @@ return [
             // RabbitMQ
             AMQPStreamConnection::class             => RabbitMQConnectionFactory::class,
             RabbitMQMessageProducerInterface::class => RabbitMQMessageProducerFactory::class,
+
+            // Event
+            EventStoreRepositoryInterface::class    => DoctrineEventStoreRepositoryFactory::class,
+            EventStoreEventSubscriber::class        => EventStoreEventSubscriberFactory::class,
         ],
     ],
     'doctrine'        => [
@@ -49,7 +56,8 @@ return [
                 'class' => SimplifiedXmlDriver::class,
                 'cache' => 'array',
                 'paths' => [
-                    __DIR__ . '/../src/Shared/Infrastructure/Doctrine/Mapping' => 'Shared\Application\ValueObject',
+                    __DIR__ . '/../src/Shared/Infrastructure/Doctrine/Mapping/ValueObject' => 'Shared\Application\ValueObject',
+                    __DIR__ . '/../src/Shared/Infrastructure/Doctrine/Mapping/Event'       => 'Shared\Application\Event',
                 ],
             ],
 
@@ -59,6 +67,7 @@ return [
                 'drivers' => [
                     // register `my_annotation_driver` for any entity under namespace `My\Namespace`
                     __NAMESPACE__ . '\Application\ValueObject' => __NAMESPACE__ . '_driver',
+                    __NAMESPACE__ . '\Application\Event'       => __NAMESPACE__ . '_driver',
                 ],
             ],
         ],

@@ -2,25 +2,21 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 13.01.18
- * Time: 17:14
+ * Date: 21.01.18
+ * Time: 13:10
  */
 
-namespace User\Application\Event\Listener;
+namespace Shared\Infrastructure\Repository;
 
 
+use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use Shared\Application\Event\Subscriber\EventStoreEventSubscriber;
-use Shared\Application\Event\Subscriber\EventSubscriberAggregate;
-use Shared\Application\Projector\ProjectorEventSubscriber;
-use User\Application\Projector\Projection\UserCreatedProjection;
-use User\Application\Projector\Projection\UserRenamedProjection;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class EventListenerAggregateFactory implements FactoryInterface
+class DoctrineEventStoreRepositoryFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -37,14 +33,8 @@ class EventListenerAggregateFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL)
     {
-        return new EventListenerAggregate(
-            new EventSubscriberAggregate(
-                $container->get(EventStoreEventSubscriber::class),
-                new ProjectorEventSubscriber(
-                    $container->get(UserCreatedProjection::class),
-                    $container->get(UserRenamedProjection::class)
-                )
-            )
+        return new DoctrineEventStoreRepository(
+            $container->get(EntityManager::class)
         );
     }
 }
