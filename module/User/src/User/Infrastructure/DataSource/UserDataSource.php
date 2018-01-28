@@ -10,9 +10,10 @@ namespace User\Infrastructure\DataSource;
 
 
 use Ramsey\Uuid\UuidInterface;
+use Shared\Application\Persistence\Model\UserViewInterface;
 use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
-use User\Application\Model\UserView;
-use User\Application\Persistence\DataSource\UserDataSourceInterface;
+use User\Application\ViewModel\UserView;
+use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
 
 class UserDataSource implements UserDataSourceInterface
 {
@@ -34,9 +35,9 @@ class UserDataSource implements UserDataSourceInterface
     /**
      * @param \Ramsey\Uuid\UuidInterface $userId
      *
-     * @return \User\Application\Model\UserView
+     * @return \Shared\Application\Persistence\Model\UserViewInterface
      */
-    public function fetchById(UuidInterface $userId): UserView
+    public function fetchById(UuidInterface $userId): UserViewInterface
     {
         $result = $this->mongoDBClient->findOne('user', ['id' => $userId->toString()]);
 

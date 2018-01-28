@@ -65,14 +65,37 @@ class DoctrineUserRepository implements UserRepositoryInterface
     /**
      * @param \Shared\Application\ValueObject\Email $email
      *
+     * @return \User\Application\Model\User
+     */
+    public function fetchByEmail(Email $email): User
+    {
+        $user = $this->repository->findOneBy([
+            'credentials.email.value' => $email->toString(),
+        ]);
+
+        if (NULL === $user) {
+            throw new \RuntimeException('User not found', 404);
+        }
+
+        /** @var User $user */
+        return $user;
+    }
+
+    /**
+     * @param \Shared\Application\ValueObject\Email $email
+     *
      * @return bool
      */
     public function checkEmailIsUnique(Email $email): bool
     {
-        $user = $this->repository->findOneBy([
-            'credentials.email.value' => $email->toString()
-        ]);
+        try {
+            $this->fetchByEmail($email);
+        } catch (\Exception $exception) {
+            // 404 - User not found
+            // so email is unique
+            return TRUE;
+        }
 
-        return NULL === $user;
+        return FALSE;
     }
 }

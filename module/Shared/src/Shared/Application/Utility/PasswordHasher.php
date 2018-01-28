@@ -6,17 +6,17 @@
  * Time: 22:44
  */
 
-namespace User\Application\Utility;
+namespace Shared\Application\Utility;
 
 
-use User\Application\Model\Credentials\HashedPassword;
+use Shared\Application\ValueObject\HashedPassword;
 
 class PasswordHasher
 {
     /**
      * @param string $password
      *
-     * @return \User\Application\Model\Credentials\HashedPassword
+     * @return \Shared\Application\ValueObject\HashedPassword
      */
     public static function hash(string $password): HashedPassword
     {
@@ -24,12 +24,12 @@ class PasswordHasher
     }
 
     /**
-     * @param string                                             $password
-     * @param \User\Application\Model\Credentials\HashedPassword $hash
+     * @param string                                         $password
+     * @param \Shared\Application\ValueObject\HashedPassword $hash
      *
      * @return bool
      */
-    public static function verify(string $password, HashedPassword $hash)
+    public static function verify(string $password, HashedPassword $hash): bool
     {
         return password_verify($password, $hash->toString());
     }

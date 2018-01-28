@@ -9,10 +9,10 @@
 namespace User;
 
 
-use User\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapter;
+use Shared\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapter;
 use User\Application\Event\Listener\EventListenerAggregate;
 use User\Application\Event\Publisher\EventPublisher;
-use User\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
+use Shared\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;

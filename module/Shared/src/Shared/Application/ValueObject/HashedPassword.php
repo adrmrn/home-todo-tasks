@@ -6,7 +6,7 @@
  * Time: 22:26
  */
 
-namespace User\Application\Model\Credentials;
+namespace Shared\Application\ValueObject;
 
 
 class HashedPassword
@@ -30,6 +30,16 @@ class HashedPassword
         }
 
         $this->passwordHash = $passwordHash;
+    }
+
+    /**
+     * @param string $passwordHash
+     *
+     * @return \Shared\Application\ValueObject\HashedPassword
+     */
+    public static function fromString(string $passwordHash): self
+    {
+        return new self($passwordHash);
     }
 
     /**

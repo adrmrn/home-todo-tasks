@@ -9,6 +9,7 @@
 namespace User;
 
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
+use Shared\Application\Persistence\DataSource\CredentialsDataSourceInterface;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommand;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandler;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandlerFactory;
@@ -17,18 +18,16 @@ use User\Application\Command\CreateUser\CreateUserCommand;
 use User\Application\Command\CreateUser\CreateUserCommandHandler;
 use User\Application\Command\CreateUser\CreateUserCommandHandlerFactory;
 use User\Application\Command\CreateUser\CreateUserCommandInputFilter;
-use User\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapter;
-use User\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapterFactory;
 use User\Application\Event\Listener\EventListenerAggregateFactory;
-use User\Application\Persistence\DataSource\UserDataSourceInterface;
+use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
 use User\Application\Query\FetchUserById\FetchUserByIdQuery;
 use User\Application\Query\FetchUserById\FetchUserByIdQueryHandler;
 use User\Application\Query\FetchUserById\FetchUserByIdQueryHandlerFactory;
+use User\Infrastructure\DataSource\CredentialsDataSourceFactory;
 use User\Infrastructure\DataSource\UserDataSourceFactory;
 use User\Infrastructure\RabbitMQ\RabbitMQMessageConsumer;
 use User\Infrastructure\RabbitMQ\RabbitMQMessageConsumerFactory;
 use User\Application\Event\Listener\EventListenerAggregate;
-use User\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
 use User\Application\Service\UserCreatorService;
 use User\Application\Service\UserCreatorServiceFactory;
@@ -40,29 +39,28 @@ return [
     'service_manager' => [
         'factories'  => [
             // Command
-            CreateUserCommandHandler::class      => CreateUserCommandHandlerFactory::class,
-            ChangeUserNameCommandHandler::class  => ChangeUserNameCommandHandlerFactory::class,
+            CreateUserCommandHandler::class       => CreateUserCommandHandlerFactory::class,
+            ChangeUserNameCommandHandler::class   => ChangeUserNameCommandHandlerFactory::class,
 
             // Query
-            FetchUserByIdQueryHandler::class     => FetchUserByIdQueryHandlerFactory::class,
+            FetchUserByIdQueryHandler::class      => FetchUserByIdQueryHandlerFactory::class,
 
             // Service
-            UserCreatorService::class            => UserCreatorServiceFactory::class,
-            UserEditorService::class             => UserEditorServiceFactory::class,
+            UserCreatorService::class             => UserCreatorServiceFactory::class,
+            UserEditorService::class              => UserEditorServiceFactory::class,
 
             // Repository
-            UserRepositoryInterface::class       => DoctrineUserRepositoryFactory::class,
+            UserRepositoryInterface::class        => DoctrineUserRepositoryFactory::class,
 
             // Event
-            EventListenerAggregate::class        => EventListenerAggregateFactory::class,
-            RabbitMQEventPublisherAdapter::class => RabbitMQEventPublisherAdapterFactory::class,
-            RabbitMQMessageConsumer::class       => RabbitMQMessageConsumerFactory::class,
+            EventListenerAggregate::class         => EventListenerAggregateFactory::class,
+            RabbitMQMessageConsumer::class        => RabbitMQMessageConsumerFactory::class,
 
             // DataSource
-            UserDataSourceInterface::class       => UserDataSourceFactory::class,
+            UserDataSourceInterface::class        => UserDataSourceFactory::class,
+            CredentialsDataSourceInterface::class => CredentialsDataSourceFactory::class,
         ],
         'invokables' => [
-            InMemoryEventPublisherAdapter::class,
         ],
     ],
     'tactician'       => [

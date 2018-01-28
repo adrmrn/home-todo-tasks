@@ -11,7 +11,7 @@ namespace User\Application\Query\FetchUserById;
 
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use User\Application\Persistence\DataSource\UserDataSourceInterface;
+use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;

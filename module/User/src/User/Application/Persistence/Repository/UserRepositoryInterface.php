@@ -32,6 +32,13 @@ interface UserRepositoryInterface
     /**
      * @param \Shared\Application\ValueObject\Email $email
      *
+     * @return \User\Application\Model\User
+     */
+    public function fetchByEmail(Email $email): User;
+
+    /**
+     * @param \Shared\Application\ValueObject\Email $email
+     *
      * @return bool
      */
     public function checkEmailIsUnique(Email $email): bool;

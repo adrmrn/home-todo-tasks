@@ -6,11 +6,10 @@
  * Time: 15:08
  */
 
-namespace User\Application\Event\Publisher\Adapter;
+namespace Shared\Application\Event\Publisher\Adapter;
 
 
 use Shared\Application\Event\Event;
-use Shared\Application\Event\Publisher\Adapter\EventPublisherAdapterInterface;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
 

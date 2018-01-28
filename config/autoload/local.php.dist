@@ -12,6 +12,10 @@
  */
 
 return [
+    'auth'            => [
+        'issuer' => 'api-token-authentication',
+        'secret' => 'verysecret',
+    ],
     'db'       => [
         'driver'   => 'Pdo',
         'database' => 'home_todo_tasks',

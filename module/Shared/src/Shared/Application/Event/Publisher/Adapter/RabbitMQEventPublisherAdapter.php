@@ -6,11 +6,10 @@
  * Time: 12:03
  */
 
-namespace User\Application\Event\Publisher\Adapter;
+namespace Shared\Application\Event\Publisher\Adapter;
 
 
 use Shared\Application\Event\Event;
-use Shared\Application\Event\Publisher\Adapter\EventPublisherAdapterInterface;
 use Shared\Application\Persistence\RabbitMQ\RabbitMQMessageProducerInterface;
 
 class RabbitMQEventPublisherAdapter implements EventPublisherAdapterInterface

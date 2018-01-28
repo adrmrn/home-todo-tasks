@@ -59,6 +59,16 @@ class Email
     }
 
     /**
+     * @param string $email
+     *
+     * @return static
+     */
+    public static function fromString(string $email)
+    {
+        return new self($email);
+    }
+
+    /**
      * @return string
      */
     public function __toString()

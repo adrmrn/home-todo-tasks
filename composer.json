@@ -33,7 +33,8 @@
         "doctrine/doctrine-orm-module": "^1.1",
         "ramsey/uuid-doctrine": "^1.4",
         "doctrine/migrations": "^1.6",
-        "zendframework/zend-mvc-console": "^1.1"
+        "zendframework/zend-mvc-console": "^1.1",
+        "emarref/jwt": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -41,7 +42,8 @@
             "Api\\": "module/Api/src/Api/",
             "Shared\\": "module/Shared/src/Shared/",
             "User\\": "module/User/src/User/",
-            "Cli\\": "module/Cli/src/Cli/"
+            "Cli\\": "module/Cli/src/Cli/",
+            "Auth\\": "module/Auth/src/Auth/"
         }
     },
     "autoload-dev": {

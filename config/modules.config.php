@@ -4,7 +4,7 @@
  *
  * The previous config file has been stored in ./config/modules.config.old
  */
-return array(
+return [
     'Zend\Form',
     'Zend\\Cache',
     'Zend\\Db',
@@ -42,6 +42,7 @@ return array(
     'Application',
     'Api',
     'User',
-    'Shared',
     'Cli',
-);
+    'Shared',
+    'Auth',
+];

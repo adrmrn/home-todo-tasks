@@ -9,7 +9,8 @@
 namespace User\Application\Utility;
 
 use PHPUnit\Framework\TestCase;
-use User\Application\Model\Credentials\HashedPassword;
+use Shared\Application\Utility\PasswordHasher;
+use Shared\Application\ValueObject\HashedPassword;
 
 class PasswordHasherTest extends TestCase
 {

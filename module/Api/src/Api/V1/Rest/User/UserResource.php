@@ -113,7 +113,7 @@ class UserResource extends AbstractResourceListener
         );
         $user  = $this->commandBus->handle($query);
 
-        /** @var \User\Application\Model\UserView $user */
+        /** @var \User\Application\ViewModel\UserView $user */
         return new UserEntity($user);
     }
 

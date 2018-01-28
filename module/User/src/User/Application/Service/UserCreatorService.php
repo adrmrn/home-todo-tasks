@@ -15,7 +15,7 @@ use User\Application\Event\EventName;
 use User\Application\Model\Credentials\Credentials;
 use User\Application\Model\User;
 use User\Application\Persistence\Repository\UserRepositoryInterface;
-use User\Application\Utility\PasswordHasher;
+use Shared\Application\Utility\PasswordHasher;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
 
@@ -67,9 +67,10 @@ class UserCreatorService implements EventManagerAwareInterface
             EventName::USER_CREATED,
             $user->id(),
             [
-                'id'    => $user->id()->toString(),
-                'name'  => $user->name(),
-                'email' => $user->credentials()->email()->toString(),
+                'id'       => $user->id()->toString(),
+                'name'     => $user->name(),
+                'email'    => $user->credentials()->email()->toString(),
+                'password' => $user->credentials()->hashedPassword()->toString(),
             ]
         );
     }

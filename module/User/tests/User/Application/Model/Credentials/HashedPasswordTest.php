@@ -9,6 +9,7 @@
 namespace User\Application\Model\Credentials;
 
 use PHPUnit\Framework\TestCase;
+use Shared\Application\ValueObject\HashedPassword;
 
 class HashedPasswordTest extends TestCase
 {

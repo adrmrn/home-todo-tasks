@@ -10,8 +10,12 @@ namespace Shared;
 
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use Shared\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
+use Shared\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapter;
+use Shared\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapterFactory;
 use Shared\Application\Event\Subscriber\EventStoreEventSubscriber;
 use Shared\Application\Event\Subscriber\EventStoreEventSubscriberFactory;
+use Shared\Application\Factory\DefaultAuthenticationListenerOverwriteFactory;
 use Shared\Application\Factory\RabbitMQConnectionFactory;
 use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
 use Shared\Application\Persistence\RabbitMQ\RabbitMQMessageProducerInterface;
@@ -24,6 +28,7 @@ use Shared\Application\Service\JsonPatchResolverFactory;
 use Shared\Infrastructure\MongoDB\MongoDBClientFactory;
 use Shared\Infrastructure\RabbitMQ\RabbitMQMessageProducerFactory;
 use Shared\Infrastructure\Repository\DoctrineEventStoreRepositoryFactory;
+use ZF\MvcAuth\Authentication\DefaultAuthenticationListener;
 
 return [
     'service_manager' => [
@@ -31,7 +36,7 @@ return [
             ProjectionAbstractFactory::class,
         ],
         'invokables'         => [
-
+            InMemoryEventPublisherAdapter::class,
         ],
         'factories'          => [
             CommandQueryService::class              => CommandQueryServiceFactory::class,
@@ -43,10 +48,14 @@ return [
             // RabbitMQ
             AMQPStreamConnection::class             => RabbitMQConnectionFactory::class,
             RabbitMQMessageProducerInterface::class => RabbitMQMessageProducerFactory::class,
+            RabbitMQEventPublisherAdapter::class    => RabbitMQEventPublisherAdapterFactory::class,
 
             // Event
             EventStoreRepositoryInterface::class    => DoctrineEventStoreRepositoryFactory::class,
             EventStoreEventSubscriber::class        => EventStoreEventSubscriberFactory::class,
+
+            // Auth
+            DefaultAuthenticationListener::class    => DefaultAuthenticationListenerOverwriteFactory::class,
         ],
     ],
     'doctrine'        => [

@@ -10,6 +10,7 @@ namespace User\Application\Model\Credentials;
 
 
 use Shared\Application\ValueObject\Email;
+use Shared\Application\ValueObject\HashedPassword;
 
 class Credentials
 {
@@ -18,15 +19,15 @@ class Credentials
      */
     private $email;
     /**
-     * @var \User\Application\Model\Credentials\HashedPassword
+     * @var \Shared\Application\ValueObject\HashedPassword
      */
     private $hashedPassword;
 
     /**
      * Credentials constructor.
      *
-     * @param \Shared\Application\ValueObject\Email              $email
-     * @param \User\Application\Model\Credentials\HashedPassword $hashedPassword
+     * @param \Shared\Application\ValueObject\Email          $email
+     * @param \Shared\Application\ValueObject\HashedPassword $hashedPassword
      */
     public function __construct(Email $email, HashedPassword $hashedPassword)
     {
@@ -43,7 +44,7 @@ class Credentials
     }
 
     /**
-     * @return \User\Application\Model\Credentials\HashedPassword
+     * @return \Shared\Application\ValueObject\HashedPassword
      */
     public function hashedPassword(): HashedPassword
     {

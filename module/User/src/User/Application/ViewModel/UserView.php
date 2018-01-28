@@ -6,10 +6,12 @@
  * Time: 22:10
  */
 
-namespace User\Application\Model;
+namespace User\Application\ViewModel;
 
 
-class UserView
+use Shared\Application\Persistence\Model\UserViewInterface;
+
+class UserView implements UserViewInterface
 {
     /**
      * @var string
@@ -41,7 +43,7 @@ class UserView
     /**
      * @param array $data
      *
-     * @return \User\Application\Model\UserView
+     * @return \User\Application\ViewModel\UserView
      */
     public static function fromArray(array $data): self
     {

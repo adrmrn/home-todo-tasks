@@ -2,21 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 31.12.17
- * Time: 12:33
+ * Date: 28.01.18
+ * Time: 16:46
  */
 
-namespace User\Application\Event\Publisher\Adapter;
+namespace Auth\Application\Event\Listener;
 
 
+use Auth\Application\Projector\Projection\TokenCreatedProjection;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use Shared\Application\Persistence\RabbitMQ\RabbitMQMessageProducerInterface;
+use Shared\Application\Event\Subscriber\EventStoreEventSubscriber;
+use Shared\Application\Event\Subscriber\EventSubscriberAggregate;
+use Shared\Application\Projector\ProjectorEventSubscriber;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class RabbitMQEventPublisherAdapterFactory implements FactoryInterface
+class EventListenerAggregateFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -33,8 +36,13 @@ class RabbitMQEventPublisherAdapterFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL)
     {
-        return new RabbitMQEventPublisherAdapter(
-            $container->get(RabbitMQMessageProducerInterface::class)
+        return new EventListenerAggregate(
+            new EventSubscriberAggregate(
+                $container->get(EventStoreEventSubscriber::class),
+                new ProjectorEventSubscriber(
+                    $container->get(TokenCreatedProjection::class)
+                )
+            )
         );
     }
 }

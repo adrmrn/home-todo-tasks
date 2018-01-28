@@ -17,6 +17,15 @@ use Zend\Db\Adapter\AdapterAbstractServiceFactory;
 use Zend\Db\Adapter\AdapterServiceFactory;
 
 return [
+    'zf-mvc-auth'     => [
+        'authentication' => [
+            'types' => ['bearer'],
+        ],
+    ],
+    'auth'            => [
+        'issuer' => 'api-token-authentication', // TODO: set ENV() for production
+        'secret' => 'verysecret', // TODO: set ENV() for production
+    ],
     'service_manager' => [
         'factories'          => [
             Adapter::class => AdapterServiceFactory::class,
@@ -26,10 +35,10 @@ return [
         ],
     ],
     'doctrine'        => [
-        'configuration' => [
+        'configuration'            => [
             'orm_default' => [
                 'types' => [
-                    UuidType::NAME  => UuidType::class,
+                    UuidType::NAME => UuidType::class,
                 ],
             ],
         ],
@@ -42,9 +51,9 @@ return [
             ],
         ],
     ],
-    'view_manager' => [
+    'view_manager'    => [
         // Enable this in your application configuration in order to get full
         // exception stack traces in your API-Problem responses.
-        'display_exceptions' => false,
+        'display_exceptions' => FALSE,
     ],
 ];

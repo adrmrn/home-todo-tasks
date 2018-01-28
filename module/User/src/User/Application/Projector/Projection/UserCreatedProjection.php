@@ -23,10 +23,18 @@ class UserCreatedProjection extends AbstractProjection
      */
     public function project(Event $event)
     {
+        // save user
         $this->client()->save('user', [
             'id'    => $event->data()['id'],
             'name'  => $event->data()['name'],
             'email' => $event->data()['email'],
+        ]);
+
+        // save credentials
+        $this->client()->save('credentials', [
+            'user_id'  => $event->data()['id'],
+            'email'    => $event->data()['email'],
+            'password' => $event->data()['password'],
         ]);
 
         $this->getEventManager()->trigger(

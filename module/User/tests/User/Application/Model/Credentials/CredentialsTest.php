@@ -10,7 +10,8 @@ namespace User\Application\Model\Credentials;
 
 use PHPUnit\Framework\TestCase;
 use Shared\Application\ValueObject\Email;
-use User\Application\Utility\PasswordHasher;
+use Shared\Application\ValueObject\HashedPassword;
+use Shared\Application\Utility\PasswordHasher;
 
 class CredentialsTest extends TestCase
 {

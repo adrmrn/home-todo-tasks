@@ -11,19 +11,19 @@ namespace User\Application\Query\FetchUserById;
 
 use Shared\Application\CommandQuery\CommandQueryHandler;
 use Shared\Application\CommandQuery\CommandQueryInterface;
-use User\Application\Persistence\DataSource\UserDataSourceInterface;
+use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
 
 class FetchUserByIdQueryHandler implements CommandQueryHandler
 {
     /**
-     * @var \User\Application\Persistence\DataSource\UserDataSourceInterface
+     * @var \Shared\Application\Persistence\DataSource\UserDataSourceInterface
      */
     private $userDataSource;
 
     /**
      * FetchUserByIdQueryHandler constructor.
      *
-     * @param \User\Application\Persistence\DataSource\UserDataSourceInterface $userDataSource
+     * @param \Shared\Application\Persistence\DataSource\UserDataSourceInterface $userDataSource
      */
     public function __construct(UserDataSourceInterface $userDataSource)
     {
