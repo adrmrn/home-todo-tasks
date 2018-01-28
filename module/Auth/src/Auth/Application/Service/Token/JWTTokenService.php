@@ -106,8 +106,8 @@ class JWTTokenService implements JWTTokenGeneratorInterface, JWTTokenVerifierInt
 
         return new JWTToken(
             $serializedToken,
-            Uuid::fromString($token->getPayload()->findClaimByName('data')['user_id']),
-            $token->getPayload()->findClaimByName('iat')->getValue(),
+            Uuid::fromString($token->getPayload()->findClaimByName('data')->getValue()['user_id']),
+            (new \DateTime())->setTimestamp($token->getPayload()->findClaimByName('iat')->getValue()),
             $token->getPayload()->findClaimByName('data')->getValue()
         );
     }
