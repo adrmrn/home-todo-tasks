@@ -35,6 +35,15 @@ return array(
                     ),
                 ),
             ),
+            'api.rest.group' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/group[/:group_id]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\Group\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -42,6 +51,7 @@ return array(
             0 => 'api.rpc.health',
             1 => 'api.rest.user',
             2 => 'api.rest.authentication',
+            3 => 'api.rest.group',
         ),
     ),
     'zf-rpc' => array(
@@ -58,6 +68,7 @@ return array(
             'Api\\V1\\Rpc\\Health\\Controller' => 'Json',
             'Api\\V1\\Rest\\User\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\Authentication\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\Group\\Controller' => 'HalJson',
         ),
         'accept_whitelist' => array(
             'Api\\V1\\Rpc\\Health\\Controller' => array(
@@ -78,6 +89,11 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'Api\\V1\\Rest\\Group\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Api\\V1\\Rpc\\Health\\Controller' => array(
@@ -94,12 +110,17 @@ return array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ),
+            'Api\\V1\\Rest\\Group\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
         ),
     ),
     'service_manager' => array(
         'factories' => array(
             'Api\\V1\\Rest\\User\\UserResource' => 'Api\\V1\\Rest\\User\\UserResourceFactory',
             'Api\\V1\\Rest\\Authentication\\AuthenticationResource' => 'Api\\V1\\Rest\\Authentication\\AuthenticationResourceFactory',
+            'Api\\V1\\Rest\\Group\\GroupResource' => 'Api\\V1\\Rest\\Group\\GroupResourceFactory',
         ),
     ),
     'zf-rest' => array(
@@ -146,6 +167,25 @@ return array(
             'collection_class' => 'Api\\V1\\Rest\\Authentication\\AuthenticationCollection',
             'service_name' => 'Authentication',
         ),
+        'Api\\V1\\Rest\\Group\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\Group\\GroupResource',
+            'route_name' => 'api.rest.group',
+            'route_identifier_name' => 'group_id',
+            'collection_name' => 'group',
+            'entity_http_methods' => array(
+                0 => 'GET',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Api\\V1\\Rest\\Group\\GroupEntity',
+            'collection_class' => 'Api\\V1\\Rest\\Group\\GroupCollection',
+            'service_name' => 'Group',
+        ),
     ),
     'zf-hal' => array(
         'metadata_map' => array(
@@ -171,6 +211,18 @@ return array(
                 'entity_identifier_name' => 'token',
                 'route_name' => 'api.rest.authentication',
                 'route_identifier_name' => 'authentication_id',
+                'is_collection' => true,
+            ),
+            'Api\\V1\\Rest\\Group\\GroupEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'api.rest.group',
+                'route_identifier_name' => 'group_id',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
+            ),
+            'Api\\V1\\Rest\\Group\\GroupCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'api.rest.group',
+                'route_identifier_name' => 'group_id',
                 'is_collection' => true,
             ),
         ),
@@ -203,6 +255,22 @@ return array(
                 ),
                 'entity' => array(
                     'GET' => false,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+            ),
+            'Api\\V1\\Rest\\Group\\Controller' => array(
+                'collection' => array(
+                    'GET' => true,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => true,
                     'POST' => false,
                     'PUT' => false,
                     'PATCH' => false,

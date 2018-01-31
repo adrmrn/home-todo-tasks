@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping
+        xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+    <entity
+            name="Board\Domain\Model\Group"
+            table="group_">
+        <id
+                name="id"
+                column="id"
+                type="uuid">
+            <generator
+                    strategy="NONE">
+            </generator>
+        </id>
+        <field
+                name="name"
+                column="name"
+                type="string"
+                length="255"
+        />
+        <many-to-many field="members" target-entity="Board\Domain\Model\Member\Member">
+            <join-table name="groups_members">
+                <join-columns>
+                    <join-column name="group_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="member_id" referenced-column-name="id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

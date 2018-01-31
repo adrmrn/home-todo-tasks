@@ -43,6 +43,7 @@
             "Shared\\": "module/Shared/src/Shared/",
             "User\\": "module/User/src/User/",
             "Cli\\": "module/Cli/src/Cli/",
+            "Board\\": "module/Board/src/Board",
             "Auth\\": "module/Auth/src/Auth/"
         }
     },

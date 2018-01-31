@@ -44,5 +44,6 @@ return [
     'User',
     'Cli',
     'Shared',
+    'Board',
     'Auth',
 ];
