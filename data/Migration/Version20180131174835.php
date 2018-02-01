@@ -19,18 +19,11 @@ class Version20180131174835 extends AbstractMigration
         $groupTable->setPrimaryKey(['id']);
 
         // Member table
-        $memberTable = $schema->createTable('member');
-        $memberTable->addColumn('id', 'uuid');
+        $memberTable = $schema->createTable('membership');
+        $memberTable->addColumn('group_id', 'uuid');
+        $memberTable->addColumn('user_id', 'uuid');
         $memberTable->addColumn('role', 'string', ['notnull' => TRUE, 'length' => 70, 'default' => 'member']);
-        $memberTable->setPrimaryKey(['id']);
-
-        // GroupMember table
-        $groupMemberTable = $schema->createTable('groups_members');
-        $groupMemberTable->addColumn('group_id', 'uuid');
-        $groupMemberTable->addColumn('member_id', 'uuid');
-        $groupMemberTable->setPrimaryKey(['group_id', 'member_id']);
-        $groupMemberTable->addForeignKeyConstraint($groupTable, ['group_id'], ['id'], ['onDelete' => 'CASCADE'], 'group_id_fkey');
-        $groupMemberTable->addForeignKeyConstraint($memberTable, ['member_id'], ['id'], ['onDelete' => 'CASCADE'], 'member_id_fkey');
+        $memberTable->setPrimaryKey(['group_id', 'user_id']);
     }
 
     public function down(Schema $schema)
@@ -38,7 +31,6 @@ class Version20180131174835 extends AbstractMigration
         throw new \RuntimeException('No way to go down!');
 
         $schema->dropTable('group_');
-        $schema->dropTable('member');
-        $schema->dropTable('groups_members');
+        $schema->dropTable('membership');
     }
 }

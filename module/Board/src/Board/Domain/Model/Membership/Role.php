@@ -6,7 +6,7 @@
  * Time: 21:15
  */
 
-namespace Board\Domain\Model\Member;
+namespace Board\Domain\Model\Membership;
 
 
 use MabeEnum\Enum;

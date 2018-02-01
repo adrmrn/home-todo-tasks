@@ -39,7 +39,8 @@ class CreateGroupCommandHandler implements CommandQueryHandler
     {
         /** @var CreateGroupCommand $commandQuery */
         $this->groupCreatorService->createGroup(
-            $commandQuery->name()
+            $commandQuery->name(),
+            $commandQuery->creatorId()
         );
     }
 }

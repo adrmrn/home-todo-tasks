@@ -10,6 +10,7 @@ namespace Board\Application\Command\CreateGroup;
 
 
 use Shared\Application\InputFilter\StringInputFilterProvider;
+use Shared\Application\InputFilter\UuidInputFilterProvider;
 use Zend\InputFilter\InputFilter;
 
 class CreateGroupCommandInputFilter extends InputFilter
@@ -19,8 +20,9 @@ class CreateGroupCommandInputFilter extends InputFilter
      */
     public function init()
     {
-        $name = $this->getFactory()->createInput(new StringInputFilterProvider('name'));
+        $name      = $this->getFactory()->createInput(new StringInputFilterProvider('name'));
+        $creatorId = $this->getFactory()->createInput(new UuidInputFilterProvider('creator_id'));
 
-        $this->add($name);
+        $this->add($name)->add($creatorId);
     }
 }

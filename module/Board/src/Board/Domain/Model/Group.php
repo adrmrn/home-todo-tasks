@@ -9,7 +9,7 @@
 namespace Board\Domain\Model;
 
 
-use Board\Domain\Model\Member\Member;
+use Board\Domain\Model\Membership\Membership;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -25,9 +25,9 @@ class Group
      */
     private $name;
     /**
-     * @var Member[]
+     * @var \Doctrine\Common\Collections\ArrayCollection|\Board\Domain\Model\Membership\Membership[]
      */
-    private $members;
+    private $memberships;
 
     /**
      * Group constructor.
@@ -36,9 +36,9 @@ class Group
      */
     public function __construct(string $name)
     {
-        $this->id      = Uuid::uuid4();
-        $this->name    = $name;
-        $this->members = new ArrayCollection();
+        $this->id          = Uuid::uuid4();
+        $this->name        = $name;
+        $this->memberships = new ArrayCollection();
     }
 
     /**
@@ -58,10 +58,10 @@ class Group
     }
 
     /**
-     * @return Member[]
+     * @param \Board\Domain\Model\Membership\Membership $membership
      */
-    public function members(): ArrayCollection
+    public function addMembership(Membership $membership)
     {
-        return $this->members;
+        $this->memberships->add($membership);
     }
 }

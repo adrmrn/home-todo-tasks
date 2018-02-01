@@ -9,7 +9,7 @@
 namespace Board;
 
 
-use Board\Infrastructure\Doctrine\Type\MemberRoleType;
+use Board\Infrastructure\Doctrine\Type\MembershipRoleType;
 use Doctrine\DBAL\Types\Type;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
@@ -36,8 +36,7 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
      */
     public function onBootstrap(EventInterface $e)
     {
-        Type::addType(MemberRoleType::NAME, MemberRoleType::class);
-//        Type::addType('member_role', 'Board\Infrastructure\Doctrine\Type\MemberRoleType');
+        Type::addType(MembershipRoleType::NAME, MembershipRoleType::class);
 
         return [];
     }

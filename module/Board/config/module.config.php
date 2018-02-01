@@ -56,8 +56,8 @@ return [
                 'class' => SimplifiedXmlDriver::class,
                 'cache' => 'array',
                 'paths' => [
-                    __DIR__ . '/../src/Board/Infrastructure/Doctrine/Mapping'        => 'Board\Domain\Model',
-                    __DIR__ . '/../src/Board/Infrastructure/Doctrine/Mapping/Member' => 'Board\Domain\Model\Member',
+                    __DIR__ . '/../src/Board/Infrastructure/Doctrine/Mapping'            => 'Board\Domain\Model',
+                    __DIR__ . '/../src/Board/Infrastructure/Doctrine/Mapping/Membership' => 'Board\Domain\Model\Membership',
                 ],
             ],
 
@@ -66,8 +66,8 @@ return [
             'orm_default'             => [
                 'drivers' => [
                     // register `my_annotation_driver` for any entity under namespace `My\Namespace`
-                    __NAMESPACE__ . '\Domain\Model'        => __NAMESPACE__ . '_driver',
-                    __NAMESPACE__ . '\Domain\Model\Member' => __NAMESPACE__ . '_driver',
+                    __NAMESPACE__ . '\Domain\Model'            => __NAMESPACE__ . '_driver',
+                    __NAMESPACE__ . '\Domain\Model\Membership' => __NAMESPACE__ . '_driver',
                 ],
             ],
         ],

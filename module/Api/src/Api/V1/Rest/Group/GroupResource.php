@@ -58,7 +58,8 @@ class GroupResource extends AbstractResourceListener
         $command = $this->commandQueryService->prepareCommandQuery(
             CreateGroupCommand::class,
             [
-                'name' => $data['name'] ?? '',
+                'name'       => $data['name'] ?? '',
+                'creator_id' => $this->getIdentity()->getAuthenticationIdentity(),
             ]
         );
         $this->commandBus->handle($command);

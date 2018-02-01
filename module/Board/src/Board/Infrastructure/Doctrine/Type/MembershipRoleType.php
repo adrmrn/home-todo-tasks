@@ -9,29 +9,29 @@
 namespace Board\Infrastructure\Doctrine\Type;
 
 
-use Board\Domain\Model\Member\Role as MemberRole;
+use Board\Domain\Model\Membership\Role as MembershipRole;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 
-class MemberRoleType extends Type
+class MembershipRoleType extends Type
 {
-    const NAME = 'member_role';
+    const NAME = 'membership_role';
 
     /**
      * @param string                                    $value
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
      *
-     * @return MemberRole
+     * @return MembershipRole
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
         $value = parent::convertToPHPValue($value, $platform);
 
-        return MemberRole::get($value);
+        return MembershipRole::get($value);
     }
 
     /**
-     * @param MemberRole                                $value
+     * @param MembershipRole                            $value
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
      *
      * @return mixed

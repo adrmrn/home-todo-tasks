@@ -11,6 +11,9 @@ namespace Board\Application\Service;
 
 use Board\Application\Persistence\GroupRepositoryInterface;
 use Board\Domain\Model\Group;
+use Board\Domain\Model\Membership\Membership;
+use Board\Domain\Model\Membership\Role as MembershipRole;
+use Ramsey\Uuid\UuidInterface;
 
 class GroupCreatorService
 {
@@ -30,12 +33,15 @@ class GroupCreatorService
     }
 
     /**
-     * @param string $name
+     * @param string                     $name
+     * @param \Ramsey\Uuid\UuidInterface $creatorId
      */
-    public function createGroup(string $name)
+    public function createGroup(string $name, UuidInterface $creatorId)
     {
-        // TODO: add automatically first member
         $group = new Group($name);
+
+        $membership = new Membership($group, $creatorId, MembershipRole::get(MembershipRole::ADMIN));
+        $group->addMembership($membership);
 
         $this->groupRepository->store($group);
 
