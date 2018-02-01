@@ -9,8 +9,12 @@
 namespace Board;
 
 
+use Board\Application\Event\Listener\EventListenerAggregate;
+use Board\Application\Event\Publisher\EventPublisher;
 use Board\Infrastructure\Doctrine\Type\MembershipRoleType;
 use Doctrine\DBAL\Types\Type;
+use Shared\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
+use Shared\Application\Event\Publisher\Adapter\RabbitMQEventPublisherAdapter;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
@@ -36,6 +40,16 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
      */
     public function onBootstrap(EventInterface $e)
     {
+        $eventManager = $e->getApplication()->getEventManager();
+
+        $aggregate = $e->getApplication()->getServiceManager()->get(EventListenerAggregate::class);
+        $aggregate->attach($eventManager);
+
+        EventPublisher::initialize(
+            $e->getApplication()->getServiceManager()->get(InMemoryEventPublisherAdapter::class),
+            $e->getApplication()->getServiceManager()->get(RabbitMQEventPublisherAdapter::class)
+        );
+
         Type::addType(MembershipRoleType::NAME, MembershipRoleType::class);
 
         return [];

@@ -8,6 +8,8 @@
 
 namespace Board;
 
+use Board\Application\Event\Listener\EventListenerAggregate;
+use Board\Application\Event\Listener\EventListenerAggregateFactory;
 use Board\Application\Persistence\GroupRepositoryInterface;
 use Board\Infrastructure\Repository\DoctrineGroupRepositoryFactory;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
@@ -29,6 +31,9 @@ return [
 
             // Repository
             GroupRepositoryInterface::class  => DoctrineGroupRepositoryFactory::class,
+
+            // Event
+            EventListenerAggregate::class    => EventListenerAggregateFactory::class,
         ],
         'abstract_factories' => [
         ],

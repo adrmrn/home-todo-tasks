@@ -39,8 +39,8 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
     public function onBootstrap(EventInterface $e)
     {
         $eventManager = $e->getApplication()->getEventManager();
-        $aggregate    = $e->getApplication()->getServiceManager()->get(EventListenerAggregate::class);
 
+        $aggregate = $e->getApplication()->getServiceManager()->get(EventListenerAggregate::class);
         $aggregate->attach($eventManager);
 
         EventPublisher::initialize(

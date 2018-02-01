@@ -9,6 +9,8 @@
 namespace Board\Application\Service;
 
 
+use Board\Application\Event\EventName;
+use Board\Application\Event\Publisher\EventPublisher;
 use Board\Application\Persistence\GroupRepositoryInterface;
 use Board\Domain\Model\Group;
 use Board\Domain\Model\Membership\Membership;
@@ -45,6 +47,19 @@ class GroupCreatorService
 
         $this->groupRepository->store($group);
 
-        // TODO: send event
+        EventPublisher::publish(
+            EventName::GROUP_CREATED,
+            $group->id(),
+            [
+                'id'          => $group->id()->toString(),
+                'name'        => $group->name(),
+                'memberships' => [
+                    [
+                        'user_id' => $membership->id()->toString(),
+                        'role'    => $membership->role()->getValue(),
+                    ],
+                ],
+            ]
+        );
     }
 }
