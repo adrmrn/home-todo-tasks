@@ -11,11 +11,32 @@ namespace Board\Application\Projector\Projection;
 
 use Board\Application\Event\EventName;
 use Board\Application\EventManager\ApplicationEventName;
+use Ramsey\Uuid\Uuid;
 use Shared\Application\Event\Event;
+use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
+use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
 use Shared\Application\Projector\Projection\AbstractProjection;
 
 class BoardCreatedProjection extends AbstractProjection
 {
+    /**
+     * @var \Shared\Application\Persistence\DataSource\UserDataSourceInterface
+     */
+    private $userDataSource;
+
+    /**
+     * BoardCreatedProjection constructor.
+     *
+     * @param \Shared\Application\Persistence\MongoDB\MongoDBClientInterface     $mongoDBClient
+     * @param \Shared\Application\Persistence\DataSource\UserDataSourceInterface $userDataSource
+     */
+    public function __construct(MongoDBClientInterface $mongoDBClient, UserDataSourceInterface $userDataSource)
+    {
+        parent::__construct($mongoDBClient);
+
+        $this->userDataSource = $userDataSource;
+    }
+
     /**
      * @param \Shared\Application\Event\Event $event
      *
@@ -23,13 +44,21 @@ class BoardCreatedProjection extends AbstractProjection
      */
     public function project(Event $event)
     {
-        // TODO: get full data about user in membership
+        $userId = $event->data()['memberships'][0]['user_id'];
+        $user   = $this->userDataSource->fetchById(Uuid::fromString($userId));
 
-        // save group
+        $membership = [
+            'user' => [
+                'id'   => $user->id(),
+                'name' => $user->name(),
+            ],
+            'role' => $event->data()['memberships'][0]['role'],
+        ];
+
         $this->client()->save('group', [
             'id'          => $event->data()['id'],
             'name'        => $event->data()['name'],
-            'memberships' => $event->data()['memberships'],
+            'memberships' => [$membership],
         ]);
 
         $this->getEventManager()->trigger(

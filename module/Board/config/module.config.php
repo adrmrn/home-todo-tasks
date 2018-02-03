@@ -11,6 +11,8 @@ namespace Board;
 use Board\Application\Event\Listener\EventListenerAggregate;
 use Board\Application\Event\Listener\EventListenerAggregateFactory;
 use Board\Application\Persistence\GroupRepositoryInterface;
+use Board\Application\Projector\Projection\BoardCreatedProjection;
+use Board\Application\Projector\Projection\BoardCreatedProjectionFactory;
 use Board\Infrastructure\Repository\DoctrineGroupRepositoryFactory;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use Board\Application\Command\CreateGroup\CreateGroupCommand;
@@ -34,6 +36,9 @@ return [
 
             // Event
             EventListenerAggregate::class    => EventListenerAggregateFactory::class,
+
+            // Projector
+            BoardCreatedProjection::class    => BoardCreatedProjectionFactory::class,
         ],
         'abstract_factories' => [
         ],

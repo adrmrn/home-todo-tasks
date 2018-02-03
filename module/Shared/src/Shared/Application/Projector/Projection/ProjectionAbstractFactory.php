@@ -33,8 +33,22 @@ class ProjectionAbstractFactory implements AbstractFactoryInterface
         }
 
         $reflectionClass = new \ReflectionClass($requestedName);
+        if (FALSE === $reflectionClass->implementsInterface(ProjectionInterface::class)) {
+            return FALSE;
+        }
 
-        return $reflectionClass->implementsInterface(ProjectionInterface::class);
+        return FALSE === $this->isFactoryDefinedForClass($container, $requestedName);
+    }
+
+    /**
+     * @param \Interop\Container\ContainerInterface $container
+     * @param                                       $requestedName
+     *
+     * @return bool
+     */
+    private function isFactoryDefinedForClass(ContainerInterface $container, $requestedName): bool
+    {
+        return TRUE === array_key_exists($requestedName, $container->get('config')['service_manager']['factories']);
     }
 
     /**
