@@ -27,6 +27,10 @@ class FetchUserByIdQuery implements QueryInterface
      */
     public function __construct(string $userId)
     {
+        if (FALSE === Uuid::isValid($userId)) {
+            throw new \RuntimeException('User ID is invalid', 422);
+        }
+
         $this->userId = $userId;
     }
 

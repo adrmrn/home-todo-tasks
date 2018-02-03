@@ -8,8 +8,10 @@
 
 namespace User;
 
+use Board\Infrastructure\DataSource\GroupDataSourceFactory;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use Shared\Application\Persistence\DataSource\CredentialsDataSourceInterface;
+use Shared\Application\Persistence\DataSource\GroupDataSourceInterface;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommand;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandler;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandlerFactory;
@@ -59,14 +61,18 @@ return [
             // DataSource
             UserDataSourceInterface::class        => UserDataSourceFactory::class,
             CredentialsDataSourceInterface::class => CredentialsDataSourceFactory::class,
+            GroupDataSourceInterface::class       => GroupDataSourceFactory::class,
         ],
         'invokables' => [
         ],
     ],
     'tactician'       => [
         'handler-map'     => [
+            // Command
             CreateUserCommand::class     => CreateUserCommandHandler::class,
             ChangeUserNameCommand::class => ChangeUserNameCommandHandler::class,
+
+            // Query
             FetchUserByIdQuery::class    => FetchUserByIdQueryHandler::class,
         ],
         'inputfilter-map' => [

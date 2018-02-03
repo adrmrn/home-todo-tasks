@@ -4,6 +4,7 @@ namespace Api\V1\Rest\Group;
 
 use Board\Application\Command\CreateGroup\CreateGroupCommand;
 use Board\Application\EventManager\ApplicationEventName;
+use Board\Application\Query\FetchGroupById\FetchGroupByIdQuery;
 use League\Tactician\CommandBus;
 use Shared\Application\Service\CommandQueryService;
 use Shared\Application\Service\JsonPatchResolver;
@@ -100,7 +101,15 @@ class GroupResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $query = $this->commandQueryService->prepareCommandQuery(
+            FetchGroupByIdQuery::class,
+            [
+                'id' => (string)$id,
+            ]
+        );
+        $user  = $this->commandBus->handle($query);
+
+        return new GroupEntity($user);
     }
 
     /**

@@ -2,21 +2,21 @@
 
 namespace Api\V1\Rest\User;
 
-use User\Application\ViewModel\UserView;
+use Shared\Application\Persistence\Model\UserViewInterface;
 
 class UserEntity extends \ArrayObject
 {
     /**
-     * @var \User\Application\ViewModel\UserView
+     * @var \Shared\Application\Persistence\Model\UserViewInterface
      */
     private $user;
 
     /**
      * UserEntity constructor.
      *
-     * @param \User\Application\ViewModel\UserView $user
+     * @param \Shared\Application\Persistence\Model\UserViewInterface $user
      */
-    public function __construct(UserView $user)
+    public function __construct(UserViewInterface $user)
     {
         $this->user = $user;
     }

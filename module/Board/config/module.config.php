@@ -13,6 +13,9 @@ use Board\Application\Event\Listener\EventListenerAggregateFactory;
 use Board\Application\Persistence\GroupRepositoryInterface;
 use Board\Application\Projector\Projection\BoardCreatedProjection;
 use Board\Application\Projector\Projection\BoardCreatedProjectionFactory;
+use Board\Application\Query\FetchGroupById\FetchGroupByIdQuery;
+use Board\Application\Query\FetchGroupById\FetchGroupByIdQueryHandler;
+use Board\Application\Query\FetchGroupById\FetchGroupByIdQueryHandlerFactory;
 use Board\Infrastructure\Repository\DoctrineGroupRepositoryFactory;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use Board\Application\Command\CreateGroup\CreateGroupCommand;
@@ -26,19 +29,22 @@ return [
     'service_manager' => [
         'factories'          => [
             // Command
-            CreateGroupCommandHandler::class => CreateGroupCommandHandlerFactory::class,
+            CreateGroupCommandHandler::class  => CreateGroupCommandHandlerFactory::class,
+
+            // Query
+            FetchGroupByIdQueryHandler::class => FetchGroupByIdQueryHandlerFactory::class,
 
             // Service
-            GroupCreatorService::class       => GroupCreatorServiceFactory::class,
+            GroupCreatorService::class        => GroupCreatorServiceFactory::class,
 
             // Repository
-            GroupRepositoryInterface::class  => DoctrineGroupRepositoryFactory::class,
+            GroupRepositoryInterface::class   => DoctrineGroupRepositoryFactory::class,
 
             // Event
-            EventListenerAggregate::class    => EventListenerAggregateFactory::class,
+            EventListenerAggregate::class     => EventListenerAggregateFactory::class,
 
             // Projector
-            BoardCreatedProjection::class    => BoardCreatedProjectionFactory::class,
+            BoardCreatedProjection::class     => BoardCreatedProjectionFactory::class,
         ],
         'abstract_factories' => [
         ],
@@ -47,7 +53,11 @@ return [
     ],
     'tactician'       => [
         'handler-map'     => [
-            CreateGroupCommand::class => CreateGroupCommandHandler::class,
+            // Command
+            CreateGroupCommand::class  => CreateGroupCommandHandler::class,
+
+            // Query
+            FetchGroupByIdQuery::class => FetchGroupByIdQueryHandler::class,
         ],
         'inputfilter-map' => [
             CreateGroupCommand::class => CreateGroupCommandInputFilter::class,
