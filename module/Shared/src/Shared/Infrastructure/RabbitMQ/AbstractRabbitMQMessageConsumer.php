@@ -10,18 +10,31 @@ namespace Shared\Infrastructure\RabbitMQ;
 
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+use Ramsey\Uuid\Uuid;
+use Shared\Application\Event\Event;
+use Shared\Application\Event\Subscriber\EventSubscriberAggregateInterface;
 use Shared\Application\Persistence\RabbitMQ\RabbitMQMessageConsumerInterface;
 
 abstract class AbstractRabbitMQMessageConsumer extends AbstractRabbitMQMessaging implements RabbitMQMessageConsumerInterface
 {
     /**
+     * @var \Shared\Application\Event\Subscriber\EventSubscriberAggregateInterface
+     */
+    private $eventSubscriberAggregate;
+
+    /**
      * AbstractRabbitMQMessageConsumer constructor.
      *
-     * @param \PhpAmqpLib\Connection\AMQPStreamConnection $connection
+     * @param \PhpAmqpLib\Connection\AMQPStreamConnection                            $connection
+     * @param \Shared\Application\Event\Subscriber\EventSubscriberAggregateInterface $eventSubscriberAggregate
      */
-    public function __construct(AMQPStreamConnection $connection)
+    public function __construct(AMQPStreamConnection $connection,
+                                EventSubscriberAggregateInterface $eventSubscriberAggregate)
     {
         parent::__construct($connection);
+
+        $this->eventSubscriberAggregate = $eventSubscriberAggregate;
 
         // Exchange
         $this->channel()->exchange_declare('events', 'fanout', FALSE, TRUE, FALSE);
@@ -38,16 +51,34 @@ abstract class AbstractRabbitMQMessageConsumer extends AbstractRabbitMQMessaging
     {
         $channel = $this->channel();
 
-        $callback = function ($msg) {
-            echo ' [x] ', $msg->body, "\n";
-        };
-        $channel->basic_consume(sprintf('%s.events', $this->domain()), '', FALSE, TRUE, FALSE, FALSE, $callback);
+        $channel->basic_consume(sprintf('%s.events', $this->domain()), '', FALSE, TRUE, FALSE, FALSE, [$this, 'handleCallback']);
 
         while (count($channel->callbacks)) {
             $channel->wait();
         }
 
         $this->close();
+    }
+
+    /**
+     * @param $msg
+     */
+    public function handleCallback(AMQPMessage $msg)
+    {
+        echo sprintf(" [ %s - DOMAIN HANDLER ] %s \n", strtoupper($this->domain()), $msg->body);
+
+        $msg = json_decode($msg->body, TRUE);
+
+        // build event from body
+        $event = new Event(
+            $msg['data']['domain'],
+            $msg['data']['name'],
+            Uuid::fromString($msg['data']['entity_id']),
+            $msg['data']['data'],
+            new \DateTimeImmutable($msg['data']['occurred_at'])
+        );
+
+        $this->eventSubscriberAggregate->handle($event);
     }
 
     /**

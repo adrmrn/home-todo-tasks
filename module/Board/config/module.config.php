@@ -19,6 +19,8 @@ use Board\Application\Query\FetchGroupById\FetchGroupByIdQueryHandlerFactory;
 use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQuery;
 use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQueryHandler;
 use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQueryHandlerFactory;
+use Board\Infrastructure\RabbitMQ\RabbitMQMessageConsumer;
+use Board\Infrastructure\RabbitMQ\RabbitMQMessageConsumerFactory;
 use Board\Infrastructure\Repository\DoctrineGroupRepositoryFactory;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use Board\Application\Command\CreateGroup\CreateGroupCommand;
@@ -46,6 +48,7 @@ return [
 
             // Event
             EventListenerAggregate::class                 => EventListenerAggregateFactory::class,
+            RabbitMQMessageConsumer::class                => RabbitMQMessageConsumerFactory::class,
 
             // Projector
             BoardCreatedProjection::class                 => BoardCreatedProjectionFactory::class,

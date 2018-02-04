@@ -2,22 +2,21 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 04.12.17
- * Time: 15:40
+ * Date: 04.02.18
+ * Time: 14:41
  */
 
-namespace User\Infrastructure\RabbitMQ;
+namespace Cli\Controller;
 
 
+use Board\Infrastructure\RabbitMQ\RabbitMQMessageConsumer;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
-use Shared\Application\Event\Subscriber\EventSubscriberAggregate;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class RabbitMQMessageConsumerFactory implements FactoryInterface
+class BoardEventConsumerControllerFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -34,9 +33,8 @@ class RabbitMQMessageConsumerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL)
     {
-        return new RabbitMQMessageConsumer(
-            $container->get(AMQPStreamConnection::class),
-            new EventSubscriberAggregate()
+        return new BoardEventConsumerController(
+            $container->get(RabbitMQMessageConsumer::class)
         );
     }
 }

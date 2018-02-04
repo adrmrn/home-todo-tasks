@@ -56,7 +56,7 @@ class MongoDBClient implements MongoDBClientInterface
     {
         $collection = $this->grabCollection($collectionName);
 
-        $collection->updateOne($filter, ['$set' => $data]);
+        $collection->updateMany($filter, ['$set' => $data]);
     }
 
     /**
