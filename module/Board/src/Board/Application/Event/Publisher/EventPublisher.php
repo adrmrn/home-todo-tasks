@@ -12,8 +12,9 @@ namespace Board\Application\Event\Publisher;
 use Ramsey\Uuid\UuidInterface;
 use Shared\Application\Event\Event;
 use Shared\Application\Event\Publisher\Adapter\EventPublisherAdapterInterface;
+use Shared\Application\Event\Publisher\EventPublisherAggregateInterface;
 
-class EventPublisher
+class EventPublisher implements EventPublisherAggregateInterface
 {
     const DOMAIN_NAME = 'board';
 
