@@ -25,6 +25,9 @@ use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
 use User\Application\Query\FetchUserById\FetchUserByIdQuery;
 use User\Application\Query\FetchUserById\FetchUserByIdQueryHandler;
 use User\Application\Query\FetchUserById\FetchUserByIdQueryHandlerFactory;
+use User\Application\Query\FetchUsersBySpecification\FetchUsersBySpecificationQuery;
+use User\Application\Query\FetchUsersBySpecification\FetchUsersBySpecificationQueryHandler;
+use User\Application\Query\FetchUsersBySpecification\FetchUsersBySpecificationQueryHandlerFactory;
 use User\Infrastructure\DataSource\CredentialsDataSourceFactory;
 use User\Infrastructure\DataSource\UserDataSourceFactory;
 use User\Infrastructure\RabbitMQ\RabbitMQMessageConsumer;
@@ -41,27 +44,28 @@ return [
     'service_manager' => [
         'factories'  => [
             // Command
-            CreateUserCommandHandler::class       => CreateUserCommandHandlerFactory::class,
-            ChangeUserNameCommandHandler::class   => ChangeUserNameCommandHandlerFactory::class,
+            CreateUserCommandHandler::class              => CreateUserCommandHandlerFactory::class,
+            ChangeUserNameCommandHandler::class          => ChangeUserNameCommandHandlerFactory::class,
 
             // Query
-            FetchUserByIdQueryHandler::class      => FetchUserByIdQueryHandlerFactory::class,
+            FetchUserByIdQueryHandler::class             => FetchUserByIdQueryHandlerFactory::class,
+            FetchUsersBySpecificationQueryHandler::class => FetchUsersBySpecificationQueryHandlerFactory::class,
 
             // Service
-            UserCreatorService::class             => UserCreatorServiceFactory::class,
-            UserEditorService::class              => UserEditorServiceFactory::class,
+            UserCreatorService::class                    => UserCreatorServiceFactory::class,
+            UserEditorService::class                     => UserEditorServiceFactory::class,
 
             // Repository
-            UserRepositoryInterface::class        => DoctrineUserRepositoryFactory::class,
+            UserRepositoryInterface::class               => DoctrineUserRepositoryFactory::class,
 
             // Event
-            EventListenerAggregate::class         => EventListenerAggregateFactory::class,
-            RabbitMQMessageConsumer::class        => RabbitMQMessageConsumerFactory::class,
+            EventListenerAggregate::class                => EventListenerAggregateFactory::class,
+            RabbitMQMessageConsumer::class               => RabbitMQMessageConsumerFactory::class,
 
             // DataSource
-            UserDataSourceInterface::class        => UserDataSourceFactory::class,
-            CredentialsDataSourceInterface::class => CredentialsDataSourceFactory::class,
-            GroupDataSourceInterface::class       => GroupDataSourceFactory::class,
+            UserDataSourceInterface::class               => UserDataSourceFactory::class,
+            CredentialsDataSourceInterface::class        => CredentialsDataSourceFactory::class,
+            GroupDataSourceInterface::class              => GroupDataSourceFactory::class,
         ],
         'invokables' => [
         ],
@@ -69,11 +73,12 @@ return [
     'tactician'       => [
         'handler-map'     => [
             // Command
-            CreateUserCommand::class     => CreateUserCommandHandler::class,
-            ChangeUserNameCommand::class => ChangeUserNameCommandHandler::class,
+            CreateUserCommand::class              => CreateUserCommandHandler::class,
+            ChangeUserNameCommand::class          => ChangeUserNameCommandHandler::class,
 
             // Query
-            FetchUserByIdQuery::class    => FetchUserByIdQueryHandler::class,
+            FetchUserByIdQuery::class             => FetchUserByIdQueryHandler::class,
+            FetchUsersBySpecificationQuery::class => FetchUsersBySpecificationQueryHandler::class,
         ],
         'inputfilter-map' => [
             CreateUserCommand::class     => CreateUserCommandInputFilter::class,

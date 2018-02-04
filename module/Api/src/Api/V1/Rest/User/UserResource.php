@@ -9,6 +9,7 @@ use User\Application\Command\ChangeUserName\ChangeUserNameCommand;
 use User\Application\Command\CreateUser\CreateUserCommand;
 use User\Application\EventManager\ApplicationEventName;
 use User\Application\Query\FetchUserById\FetchUserByIdQuery;
+use User\Application\Query\FetchUsersBySpecification\FetchUsersBySpecificationQuery;
 use Zend\EventManager\EventInterface;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
@@ -126,7 +127,15 @@ class UserResource extends AbstractResourceListener
      */
     public function fetchAll($params = [])
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $query  = $this->commandQueryService->prepareCommandQuery(
+            FetchUsersBySpecificationQuery::class,
+            [
+                'params' => (array)$params,
+            ]
+        );
+        $groups = $this->commandBus->handle($query);
+
+        return new UserCollection($groups);
     }
 
     /**
