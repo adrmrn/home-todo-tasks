@@ -6,7 +6,7 @@
  * Time: 14:55
  */
 
-namespace Shared\Application\Event\Subscriber;
+namespace Shared\Application\EventManager;
 
 
 use Interop\Container\ContainerInterface;

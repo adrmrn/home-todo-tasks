@@ -12,7 +12,7 @@ namespace Board\Application\Event\Listener;
 use Board\Application\Projector\Projection\BoardCreatedProjection;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use Shared\Application\Event\Subscriber\EventStoreEventSubscriber;
+use Shared\Application\EventManager\EventStoreEventSubscriber;
 use Shared\Application\Event\Subscriber\EventSubscriberAggregate;
 use Shared\Application\Projector\ProjectorEventSubscriber;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;

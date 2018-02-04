@@ -11,7 +11,7 @@ namespace User\Application\Event\Listener;
 
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use Shared\Application\Event\Subscriber\EventStoreEventSubscriber;
+use Shared\Application\EventManager\EventStoreEventSubscriber;
 use Shared\Application\Event\Subscriber\EventSubscriberAggregate;
 use Shared\Application\Projector\ProjectorEventSubscriber;
 use User\Application\Projector\Projection\UserCreatedProjection;

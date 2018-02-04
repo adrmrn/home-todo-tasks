@@ -6,10 +6,11 @@
  * Time: 14:55
  */
 
-namespace Shared\Application\Event\Subscriber;
+namespace Shared\Application\EventManager;
 
 
 use Shared\Application\Event\Event;
+use Shared\Application\Event\Subscriber\EventSubscriber;
 use Shared\Application\Persistence\Repository\EventStoreRepositoryInterface;
 
 class EventStoreEventSubscriber implements EventSubscriber
