@@ -5,6 +5,7 @@ namespace Api\V1\Rest\Group;
 use Board\Application\Command\CreateGroup\CreateGroupCommand;
 use Board\Application\EventManager\ApplicationEventName;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQuery;
+use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQuery;
 use League\Tactician\CommandBus;
 use Shared\Application\Service\CommandQueryService;
 use Shared\Application\Service\JsonPatchResolver;
@@ -121,7 +122,15 @@ class GroupResource extends AbstractResourceListener
      */
     public function fetchAll($params = [])
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $query  = $this->commandQueryService->prepareCommandQuery(
+            FetchGroupsBySpecificationQuery::class,
+            [
+                'params' => (array)$params,
+            ]
+        );
+        $groups = $this->commandBus->handle($query);
+
+        return new GroupCollection($groups);
     }
 
     /**

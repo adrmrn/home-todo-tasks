@@ -49,33 +49,63 @@ class MongoDBClient implements MongoDBClientInterface
 
     /**
      * @param string $collectionName
-     * @param array  $where
+     * @param array  $filter
      * @param array  $data
      */
-    public function update(string $collectionName, array $where, array $data)
+    public function update(string $collectionName, array $filter, array $data)
     {
         $collection = $this->grabCollection($collectionName);
 
-        $collection->updateOne($where, ['$set' => $data]);
+        $collection->updateOne($filter, ['$set' => $data]);
     }
 
     /**
      * @param string $collectionName
-     * @param array  $where
+     * @param array  $filter
      *
      * @return array
      */
-    public function findOne(string $collectionName, array $where): array
+    public function findOne(string $collectionName, array $filter): array
     {
         $collection = $this->grabCollection($collectionName);
 
-        $result = $collection->findOne($where);
+        $result = $collection->findOne($filter);
 
         if (NULL === $result) {
             return [];
         }
 
         return $result->getArrayCopy();
+    }
+
+    /**
+     * @param string $collectionName
+     * @param array  $filter
+     * @param array  $options
+     *
+     * @return array
+     */
+    public function find(string $collectionName, array $filter, array $options = []): array
+    {
+        $collection = $this->grabCollection($collectionName);
+
+        $result = $collection->find($filter, $options);
+
+        return $result->toArray();
+    }
+
+    /**
+     * @param string $collectionName
+     * @param array  $filter
+     * @param array  $options
+     *
+     * @return int
+     */
+    public function count(string $collectionName, array $filter, array $options = []): int
+    {
+        $collection = $this->grabCollection($collectionName);
+
+        return $collection->count($filter, $options);
     }
 
     /**

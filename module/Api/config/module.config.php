@@ -179,7 +179,11 @@ return array(
                 0 => 'GET',
                 1 => 'POST',
             ),
-            'collection_query_whitelist' => array(),
+            'collection_query_whitelist' => array(
+                0 => 'name',
+                1 => 'sort_by',
+                2 => 'sort_direction',
+            ),
             'page_size' => 25,
             'page_size_param' => null,
             'entity_class' => 'Api\\V1\\Rest\\Group\\GroupEntity',

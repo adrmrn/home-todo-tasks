@@ -16,6 +16,9 @@ use Board\Application\Projector\Projection\BoardCreatedProjectionFactory;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQuery;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQueryHandler;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQueryHandlerFactory;
+use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQuery;
+use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQueryHandler;
+use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQueryHandlerFactory;
 use Board\Infrastructure\Repository\DoctrineGroupRepositoryFactory;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use Board\Application\Command\CreateGroup\CreateGroupCommand;
@@ -29,22 +32,23 @@ return [
     'service_manager' => [
         'factories'          => [
             // Command
-            CreateGroupCommandHandler::class  => CreateGroupCommandHandlerFactory::class,
+            CreateGroupCommandHandler::class              => CreateGroupCommandHandlerFactory::class,
 
             // Query
-            FetchGroupByIdQueryHandler::class => FetchGroupByIdQueryHandlerFactory::class,
+            FetchGroupByIdQueryHandler::class             => FetchGroupByIdQueryHandlerFactory::class,
+            FetchGroupsBySpecificationQueryHandler::class => FetchGroupsBySpecificationQueryHandlerFactory::class,
 
             // Service
-            GroupCreatorService::class        => GroupCreatorServiceFactory::class,
+            GroupCreatorService::class                    => GroupCreatorServiceFactory::class,
 
             // Repository
-            GroupRepositoryInterface::class   => DoctrineGroupRepositoryFactory::class,
+            GroupRepositoryInterface::class               => DoctrineGroupRepositoryFactory::class,
 
             // Event
-            EventListenerAggregate::class     => EventListenerAggregateFactory::class,
+            EventListenerAggregate::class                 => EventListenerAggregateFactory::class,
 
             // Projector
-            BoardCreatedProjection::class     => BoardCreatedProjectionFactory::class,
+            BoardCreatedProjection::class                 => BoardCreatedProjectionFactory::class,
         ],
         'abstract_factories' => [
         ],
@@ -54,10 +58,11 @@ return [
     'tactician'       => [
         'handler-map'     => [
             // Command
-            CreateGroupCommand::class  => CreateGroupCommandHandler::class,
+            CreateGroupCommand::class              => CreateGroupCommandHandler::class,
 
             // Query
-            FetchGroupByIdQuery::class => FetchGroupByIdQueryHandler::class,
+            FetchGroupByIdQuery::class             => FetchGroupByIdQueryHandler::class,
+            FetchGroupsBySpecificationQuery::class => FetchGroupsBySpecificationQueryHandler::class,
         ],
         'inputfilter-map' => [
             CreateGroupCommand::class => CreateGroupCommandInputFilter::class,
