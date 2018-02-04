@@ -13,7 +13,7 @@ use Auth\Application\Adapter\AuthenticationJWTAdapterFactory;
 use Auth\Application\Command\AuthenticateUser\AuthenticateUserCommand;
 use Auth\Application\Command\AuthenticateUser\AuthenticateUserCommandHandler;
 use Auth\Application\Command\AuthenticateUser\AuthenticateUserCommandHandlerFactory;
-use Auth\Application\Command\AuthenticateUser\AuthenticateUserCommandInputFilter;
+use Auth\Application\Command\AuthenticateUser\AuthenticateUserCommandValidator;
 use Auth\Application\Event\Listener\EventListenerAggregate;
 use Auth\Application\Event\Listener\EventListenerAggregateFactory;
 use Auth\Application\Service\Token\JWTTokenGeneratorInterface;
@@ -47,12 +47,12 @@ return [
             AuthenticateUserCommand::class => AuthenticateUserCommandHandler::class,
         ],
         'inputfilter-map' => [
-            AuthenticateUserCommand::class => AuthenticateUserCommandInputFilter::class,
+            AuthenticateUserCommand::class => AuthenticateUserCommandValidator::class,
         ],
     ],
     'input_filters'   => [
         'invokables' => [
-            AuthenticateUserCommandInputFilter::class,
+            AuthenticateUserCommandValidator::class,
         ],
         'factories'  => [
         ],

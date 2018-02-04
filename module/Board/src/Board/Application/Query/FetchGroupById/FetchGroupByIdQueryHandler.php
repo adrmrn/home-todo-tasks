@@ -9,11 +9,11 @@
 namespace Board\Application\Query\FetchGroupById;
 
 
-use Shared\Application\CommandQuery\CommandQueryHandler;
 use Shared\Application\CommandQuery\CommandQueryInterface;
+use Shared\Application\CommandQuery\Handler\QueryHandlerInterface;
 use Shared\Application\Persistence\DataSource\GroupDataSourceInterface;
 
-class FetchGroupByIdQueryHandler implements CommandQueryHandler
+class FetchGroupByIdQueryHandler implements QueryHandlerInterface
 {
     /**
      * @var \Shared\Application\Persistence\DataSource\GroupDataSourceInterface

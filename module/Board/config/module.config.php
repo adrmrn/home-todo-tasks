@@ -26,7 +26,7 @@ use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use Board\Application\Command\CreateGroup\CreateGroupCommand;
 use Board\Application\Command\CreateGroup\CreateGroupCommandHandler;
 use Board\Application\Command\CreateGroup\CreateGroupCommandHandlerFactory;
-use Board\Application\Command\CreateGroup\CreateGroupCommandInputFilter;
+use Board\Application\Command\CreateGroup\CreateGroupCommandValidator;
 use Board\Application\Service\GroupCreatorService;
 use Board\Application\Service\GroupCreatorServiceFactory;
 
@@ -68,12 +68,12 @@ return [
             FetchGroupsBySpecificationQuery::class => FetchGroupsBySpecificationQueryHandler::class,
         ],
         'inputfilter-map' => [
-            CreateGroupCommand::class => CreateGroupCommandInputFilter::class,
+            CreateGroupCommand::class => CreateGroupCommandValidator::class,
         ],
     ],
     'input_filters'   => [
         'invokables' => [
-            CreateGroupCommandInputFilter::class,
+            CreateGroupCommandValidator::class,
         ],
         'factories'  => [],
     ],

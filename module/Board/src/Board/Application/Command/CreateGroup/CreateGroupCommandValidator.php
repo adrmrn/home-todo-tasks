@@ -13,7 +13,7 @@ use Shared\Application\InputFilter\StringInputFilterProvider;
 use Shared\Application\InputFilter\UuidInputFilterProvider;
 use Zend\InputFilter\InputFilter;
 
-class CreateGroupCommandInputFilter extends InputFilter
+class CreateGroupCommandValidator extends InputFilter
 {
     /**
      * @return void

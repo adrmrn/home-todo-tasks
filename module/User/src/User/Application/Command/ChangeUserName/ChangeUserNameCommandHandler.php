@@ -9,11 +9,11 @@
 namespace User\Application\Command\ChangeUserName;
 
 
-use Shared\Application\CommandQuery\CommandQueryHandler;
+use Shared\Application\CommandQuery\Handler\CommandHandlerInterface;
 use Shared\Application\CommandQuery\CommandQueryInterface;
 use User\Application\Service\UserEditorService;
 
-class ChangeUserNameCommandHandler implements CommandQueryHandler
+class ChangeUserNameCommandHandler implements CommandHandlerInterface
 {
     /**
      * @var \User\Application\Service\UserEditorService
@@ -33,7 +33,7 @@ class ChangeUserNameCommandHandler implements CommandQueryHandler
     /**
      * @param \Shared\Application\CommandQuery\CommandQueryInterface $commandQuery
      */
-    public function handle(CommandQueryInterface $commandQuery)
+    public function handle(CommandQueryInterface $commandQuery): void
     {
         /** @var ChangeUserNameCommand $commandQuery */
         $this->userEditorService->changeUserName(

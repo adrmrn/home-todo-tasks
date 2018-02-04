@@ -10,10 +10,10 @@ namespace Board\Application\Command\CreateGroup;
 
 
 use Board\Application\Service\GroupCreatorService;
-use Shared\Application\CommandQuery\CommandQueryHandler;
+use Shared\Application\CommandQuery\Handler\CommandHandlerInterface;
 use Shared\Application\CommandQuery\CommandQueryInterface;
 
-class CreateGroupCommandHandler implements CommandQueryHandler
+class CreateGroupCommandHandler implements CommandHandlerInterface
 {
     /**
      * @var \Board\Application\Service\GroupCreatorService
@@ -32,10 +32,8 @@ class CreateGroupCommandHandler implements CommandQueryHandler
 
     /**
      * @param \Shared\Application\CommandQuery\CommandQueryInterface $commandQuery
-     *
-     * @return mixed
      */
-    public function handle(CommandQueryInterface $commandQuery)
+    public function handle(CommandQueryInterface $commandQuery): void
     {
         /** @var CreateGroupCommand $commandQuery */
         $this->groupCreatorService->createGroup(

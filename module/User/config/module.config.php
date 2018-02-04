@@ -15,11 +15,11 @@ use Shared\Application\Persistence\DataSource\GroupDataSourceInterface;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommand;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandler;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandlerFactory;
-use User\Application\Command\ChangeUserName\ChangeUserNameCommandInputFilter;
+use User\Application\Command\ChangeUserName\ChangeUserNameCommandValidator;
 use User\Application\Command\CreateUser\CreateUserCommand;
 use User\Application\Command\CreateUser\CreateUserCommandHandler;
 use User\Application\Command\CreateUser\CreateUserCommandHandlerFactory;
-use User\Application\Command\CreateUser\CreateUserCommandInputFilter;
+use User\Application\Command\CreateUser\CreateUserCommandValidator;
 use User\Application\Event\Listener\EventListenerAggregateFactory;
 use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
 use User\Application\Query\FetchUserById\FetchUserByIdQuery;
@@ -81,14 +81,14 @@ return [
             FetchUsersBySpecificationQuery::class => FetchUsersBySpecificationQueryHandler::class,
         ],
         'inputfilter-map' => [
-            CreateUserCommand::class     => CreateUserCommandInputFilter::class,
-            ChangeUserNameCommand::class => ChangeUserNameCommandInputFilter::class,
+            CreateUserCommand::class     => CreateUserCommandValidator::class,
+            ChangeUserNameCommand::class => ChangeUserNameCommandValidator::class,
         ],
     ],
     'input_filters'   => [
         'invokables' => [
-            CreateUserCommandInputFilter::class,
-            ChangeUserNameCommandInputFilter::class,
+            CreateUserCommandValidator::class,
+            ChangeUserNameCommandValidator::class,
         ],
         'factories'  => [],
     ],

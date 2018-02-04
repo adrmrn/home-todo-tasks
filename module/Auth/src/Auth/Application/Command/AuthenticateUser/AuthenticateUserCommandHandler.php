@@ -10,10 +10,10 @@ namespace Auth\Application\Command\AuthenticateUser;
 
 
 use Auth\Application\Service\UserAuthenticationService;
-use Shared\Application\CommandQuery\CommandQueryHandler;
+use Shared\Application\CommandQuery\Handler\CommandHandlerInterface;
 use Shared\Application\CommandQuery\CommandQueryInterface;
 
-class AuthenticateUserCommandHandler implements CommandQueryHandler
+class AuthenticateUserCommandHandler implements CommandHandlerInterface
 {
     /**
      * @var \Auth\Application\Service\UserAuthenticationService
@@ -32,10 +32,8 @@ class AuthenticateUserCommandHandler implements CommandQueryHandler
 
     /**
      * @param \Shared\Application\CommandQuery\CommandQueryInterface $commandQuery
-     *
-     * @return void
      */
-    public function handle(CommandQueryInterface $commandQuery)
+    public function handle(CommandQueryInterface $commandQuery): void
     {
         /** @var AuthenticateUserCommand $commandQuery */
         $this->userAuthenticationService->authenticate(

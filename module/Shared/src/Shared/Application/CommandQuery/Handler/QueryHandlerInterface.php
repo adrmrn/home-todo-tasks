@@ -2,14 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 23.11.17
- * Time: 22:03
+ * Date: 04.02.18
+ * Time: 18:54
  */
 
-namespace Shared\Application\CommandQuery;
+namespace Shared\Application\CommandQuery\Handler;
 
 
-interface CommandQueryHandler
+use Shared\Application\CommandQuery\CommandQueryInterface;
+
+interface QueryHandlerInterface extends CommandQueryHandlerInterface
 {
     /**
      * @param \Shared\Application\CommandQuery\CommandQueryInterface $commandQuery

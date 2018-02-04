@@ -2,27 +2,29 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 24.01.18
- * Time: 21:38
+ * Date: 10.11.17
+ * Time: 13:20
  */
 
-namespace Auth\Application\Command\AuthenticateUser;
+namespace User\Application\Command\CreateUser;
 
 
 use Shared\Application\InputFilter\EmailInputFilterProvider;
 use Shared\Application\InputFilter\PasswordInputFilterProvider;
+use Shared\Application\InputFilter\StringInputFilterProvider;
 use Zend\InputFilter\InputFilter;
 
-class AuthenticateUserCommandInputFilter extends InputFilter
+class CreateUserCommandValidator extends InputFilter
 {
     /**
      * @return void
      */
     public function init()
     {
+        $name     = $this->getFactory()->createInput(new StringInputFilterProvider('name'));
         $email    = $this->getFactory()->createInput(new EmailInputFilterProvider('email'));
         $password = $this->getFactory()->createInput(new PasswordInputFilterProvider('password'));
 
-        $this->add($email)->add($password);
+        $this->add($name)->add($email)->add($password);
     }
 }

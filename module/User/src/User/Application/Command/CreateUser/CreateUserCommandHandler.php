@@ -9,11 +9,11 @@
 namespace User\Application\Command\CreateUser;
 
 
-use Shared\Application\CommandQuery\CommandQueryHandler;
+use Shared\Application\CommandQuery\Handler\CommandHandlerInterface;
 use Shared\Application\CommandQuery\CommandQueryInterface;
 use User\Application\Service\UserCreatorService;
 
-class CreateUserCommandHandler implements CommandQueryHandler
+class CreateUserCommandHandler implements CommandHandlerInterface
 {
     /**
      * @var \User\Application\Service\UserCreatorService
@@ -30,7 +30,10 @@ class CreateUserCommandHandler implements CommandQueryHandler
         $this->userCreatorService = $userCreatorService;
     }
 
-    public function handle(CommandQueryInterface $commandQuery)
+    /**
+     * @param \Shared\Application\CommandQuery\CommandQueryInterface $commandQuery
+     */
+    public function handle(CommandQueryInterface $commandQuery): void
     {
         /** @var CreateUserCommand $commandQuery */
         $this->userCreatorService->createUser(

@@ -9,11 +9,11 @@
 namespace User\Application\Query\FetchUserById;
 
 
-use Shared\Application\CommandQuery\CommandQueryHandler;
 use Shared\Application\CommandQuery\CommandQueryInterface;
+use Shared\Application\CommandQuery\Handler\QueryHandlerInterface;
 use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
 
-class FetchUserByIdQueryHandler implements CommandQueryHandler
+class FetchUserByIdQueryHandler implements QueryHandlerInterface
 {
     /**
      * @var \Shared\Application\Persistence\DataSource\UserDataSourceInterface

@@ -11,11 +11,11 @@ namespace Board\Application\Query\FetchGroupsBySpecification;
 
 use Board\Application\Paginator\GroupCollectionAdapter;
 use Board\Infrastructure\DataSource\Specification\GroupSpecification;
-use Shared\Application\CommandQuery\CommandQueryHandler;
 use Shared\Application\CommandQuery\CommandQueryInterface;
+use Shared\Application\CommandQuery\Handler\QueryHandlerInterface;
 use Shared\Application\Persistence\DataSource\GroupDataSourceInterface;
 
-class FetchGroupsBySpecificationQueryHandler implements CommandQueryHandler
+class FetchGroupsBySpecificationQueryHandler implements QueryHandlerInterface
 {
     /**
      * @var \Shared\Application\Persistence\DataSource\GroupDataSourceInterface

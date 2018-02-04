@@ -9,13 +9,13 @@
 namespace User\Application\Query\FetchUsersBySpecification;
 
 
-use Shared\Application\CommandQuery\CommandQueryHandler;
 use Shared\Application\CommandQuery\CommandQueryInterface;
+use Shared\Application\CommandQuery\Handler\QueryHandlerInterface;
 use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
 use User\Application\Paginator\UserCollectionAdapter;
 use User\Infrastructure\DataSource\Specification\UserSpecification;
 
-class FetchUsersBySpecificationQueryHandler implements CommandQueryHandler
+class FetchUsersBySpecificationQueryHandler implements QueryHandlerInterface
 {
     /**
      * @var \Shared\Application\Persistence\DataSource\UserDataSourceInterface
