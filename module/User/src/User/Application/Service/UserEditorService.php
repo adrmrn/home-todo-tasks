@@ -35,11 +35,7 @@ class UserEditorService implements EventManagerAwareInterface
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * @param \Ramsey\Uuid\UuidInterface $userId
-     * @param string                     $newName
-     */
-    public function changeUserName(UuidInterface $userId, string $newName)
+    public function changeUserName(UuidInterface $userId, string $newName): void
     {
         $user = $this->userRepository->fetchById($userId);
 

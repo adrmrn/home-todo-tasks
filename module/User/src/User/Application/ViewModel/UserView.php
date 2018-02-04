@@ -40,11 +40,6 @@ class UserView implements UserViewInterface
         $this->email = $email;
     }
 
-    /**
-     * @param array $data
-     *
-     * @return \User\Application\ViewModel\UserView
-     */
     public static function fromArray(array $data): self
     {
         return new static(
@@ -54,25 +49,16 @@ class UserView implements UserViewInterface
         );
     }
 
-    /**
-     * @return string
-     */
     public function id(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function name(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function email(): string
     {
         return $this->email;

@@ -18,5 +18,5 @@ interface EventStoreRepositoryInterface
      *
      * @return void
      */
-    public function store(Event $event);
+    public function store(Event $event): void;
 }

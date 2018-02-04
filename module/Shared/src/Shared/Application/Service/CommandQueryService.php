@@ -36,13 +36,7 @@ class CommandQueryService
         $this->inputFilterMap           = $inputFilterMap;
     }
 
-    /**
-     * @param string $commandQueryName
-     * @param array  $arguments
-     *
-     * @return object
-     */
-    public function prepareCommandQuery(string $commandQueryName, array $arguments)
+    public function prepareCommandQuery(string $commandQueryName, array $arguments): CommandQueryInterface
     {
         if (FALSE === class_exists($commandQueryName)) {
             throw new \RuntimeException('Command or Query does not exist.', 501);
@@ -75,24 +69,15 @@ class CommandQueryService
 
         $commandQuery = $reflection->newInstanceArgs($arguments);
 
+        /** @var CommandQueryInterface $commandQuery */
         return $commandQuery;
     }
 
-    /**
-     * @param string $commandQueryName
-     *
-     * @return bool
-     */
     private function issetInputFilterForCommandQuery(string $commandQueryName): bool
     {
         return TRUE === isset($this->inputFilterMap[$commandQueryName]);
     }
 
-    /**
-     * @param string $commandQueryName
-     *
-     * @return \Zend\InputFilter\InputFilterInterface
-     */
     private function grabInputFilterForCommandQuery(string $commandQueryName): InputFilterInterface
     {
         $inputFilterClass = $this->inputFilterMap[$commandQueryName];

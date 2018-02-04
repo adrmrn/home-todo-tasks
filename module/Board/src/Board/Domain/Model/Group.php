@@ -41,26 +41,17 @@ class Group
         $this->memberships = new ArrayCollection();
     }
 
-    /**
-     * @return \Ramsey\Uuid\UuidInterface
-     */
     public function id(): UuidInterface
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function name(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param \Board\Domain\Model\Membership\Membership $membership
-     */
-    public function addMembership(Membership $membership)
+    public function addMembership(Membership $membership): void
     {
         $this->memberships->add($membership);
     }

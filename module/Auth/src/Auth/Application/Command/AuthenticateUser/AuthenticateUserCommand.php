@@ -34,17 +34,11 @@ class AuthenticateUserCommand implements CommandInterface
         $this->password = $password;
     }
 
-    /**
-     * @return string
-     */
     public function email(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     public function password(): string
     {
         return $this->password;

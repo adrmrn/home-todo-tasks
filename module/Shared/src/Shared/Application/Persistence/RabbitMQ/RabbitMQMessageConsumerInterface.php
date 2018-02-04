@@ -9,10 +9,17 @@
 namespace Shared\Application\Persistence\RabbitMQ;
 
 
+use PhpAmqpLib\Message\AMQPMessage;
+
 interface RabbitMQMessageConsumerInterface
 {
     /**
      * @return void
      */
-    public function listen();
+    public function listen(): void;
+
+    /**
+     * @param \PhpAmqpLib\Message\AMQPMessage $message
+     */
+    public function handleCallback(AMQPMessage $message): void;
 }

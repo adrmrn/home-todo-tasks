@@ -36,17 +36,11 @@ class CreateGroupCommand implements CommandInterface
         $this->creatorId = $creatorId;
     }
 
-    /**
-     * @return string
-     */
     public function name(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return \Ramsey\Uuid\UuidInterface
-     */
     public function creatorId(): UuidInterface
     {
         return Uuid::fromString($this->creatorId);

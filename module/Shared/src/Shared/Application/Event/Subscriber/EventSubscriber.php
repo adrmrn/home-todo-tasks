@@ -18,7 +18,7 @@ interface EventSubscriber
      *
      * @return void
      */
-    public function handle(Event $event);
+    public function handle(Event $event): void;
 
     /**
      * @param \Shared\Application\Event\Event $event

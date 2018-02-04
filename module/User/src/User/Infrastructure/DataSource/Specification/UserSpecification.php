@@ -35,10 +35,7 @@ class UserSpecification implements MongoDBSpecification, PaginatorAwareInterface
         $this->prepareOptions($params);
     }
 
-    /**
-     * @param array $params
-     */
-    private function prepareFilters(array $params)
+    private function prepareFilters(array $params): void
     {
         if (TRUE === isset($params['name'])) {
             $this->filters['name'] = new Regex($params['name'], 'i');
@@ -49,10 +46,7 @@ class UserSpecification implements MongoDBSpecification, PaginatorAwareInterface
         }
     }
 
-    /**
-     * @param array $params
-     */
-    private function prepareOptions(array $params)
+    private function prepareOptions(array $params): void
     {
         if (TRUE === isset($params['sort_by'])) {
             $sortDirection = 1;
@@ -67,17 +61,11 @@ class UserSpecification implements MongoDBSpecification, PaginatorAwareInterface
         }
     }
 
-    /**
-     * @return array
-     */
     public function filtersToClauses(): array
     {
         return $this->filters;
     }
 
-    /**
-     * @return array
-     */
     public function optionsToClauses(): array
     {
         return $this->options;
@@ -88,7 +76,7 @@ class UserSpecification implements MongoDBSpecification, PaginatorAwareInterface
      *
      * @return void
      */
-    public function setOffset(int $offset)
+    public function setOffset(int $offset): void
     {
         $this->options['skip'] = $offset;
     }
@@ -98,7 +86,7 @@ class UserSpecification implements MongoDBSpecification, PaginatorAwareInterface
      *
      * @return void
      */
-    public function setLimit(int $limit)
+    public function setLimit(int $limit): void
     {
         $this->options['limit'] = $limit;
     }

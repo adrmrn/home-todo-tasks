@@ -40,11 +40,6 @@ class CredentialsView implements CredentialsViewInterface
         $this->password = $password;
     }
 
-    /**
-     * @param array $data
-     *
-     * @return \User\Application\ViewModel\Credentials\CredentialsView
-     */
     public static function fromArray(array $data): self
     {
         return new static(
@@ -54,25 +49,16 @@ class CredentialsView implements CredentialsViewInterface
         );
     }
 
-    /**
-     * @return string
-     */
     public function userId(): string
     {
         return $this->userId;
     }
 
-    /**
-     * @return string
-     */
     public function email(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     public function password(): string
     {
         return $this->password;

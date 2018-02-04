@@ -37,12 +37,7 @@ class BoardCreatedProjection extends AbstractProjection
         $this->userDataSource = $userDataSource;
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     *
-     * @return void
-     */
-    public function project(Event $event)
+    public function project(Event $event): void
     {
         $userId = $event->data()['memberships'][0]['user_id'];
         $user   = $this->userDataSource->fetchById(Uuid::fromString($userId));
@@ -70,11 +65,6 @@ class BoardCreatedProjection extends AbstractProjection
         );
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     *
-     * @return bool
-     */
     public function isSubscribedTo(Event $event): bool
     {
         return $event->name() === EventName::GROUP_CREATED;

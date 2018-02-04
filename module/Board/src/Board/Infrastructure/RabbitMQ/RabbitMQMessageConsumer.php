@@ -13,9 +13,6 @@ use Shared\Infrastructure\RabbitMQ\AbstractRabbitMQMessageConsumer;
 
 class RabbitMQMessageConsumer extends AbstractRabbitMQMessageConsumer
 {
-    /**
-     * @return string
-     */
     protected function domain(): string
     {
         return 'board';

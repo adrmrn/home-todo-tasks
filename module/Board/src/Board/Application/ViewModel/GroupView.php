@@ -40,11 +40,6 @@ class GroupView implements GroupViewInterface
         $this->memberships = $memberships;
     }
 
-    /**
-     * @param array $data
-     *
-     * @return \Board\Application\ViewModel\GroupView
-     */
     public static function fromArray(array $data): self
     {
         return new static(
@@ -54,25 +49,16 @@ class GroupView implements GroupViewInterface
         );
     }
 
-    /**
-     * @return string
-     */
     public function id(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function name(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return array
-     */
     public function memberships(): array
     {
         return $this->memberships;

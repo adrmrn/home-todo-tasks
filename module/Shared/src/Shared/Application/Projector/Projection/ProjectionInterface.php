@@ -18,7 +18,7 @@ interface ProjectionInterface
      *
      * @return void
      */
-    public function project(Event $event);
+    public function project(Event $event): void;
 
     /**
      * @param \Shared\Application\Event\Event $event

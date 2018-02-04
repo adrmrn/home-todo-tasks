@@ -32,9 +32,6 @@ class EventPublisher
         $this->publishers = $publishers;
     }
 
-    /**
-     * @return \Board\Application\Event\Publisher\EventPublisher
-     */
     private static function instance(): EventPublisher
     {
         if (NULL === static::$instance) {
@@ -44,12 +41,7 @@ class EventPublisher
         return static::$instance;
     }
 
-    /**
-     * @param string                     $eventName
-     * @param \Ramsey\Uuid\UuidInterface $entityId
-     * @param array                      $data
-     */
-    public static function publish(string $eventName, UuidInterface $entityId, array $data = [])
+    public static function publish(string $eventName, UuidInterface $entityId, array $data = []): void
     {
         $event = new Event(
             static::DOMAIN_NAME,
@@ -63,10 +55,7 @@ class EventPublisher
         }
     }
 
-    /**
-     * @param \Shared\Application\Event\Publisher\Adapter\EventPublisherAdapterInterface[] ...$publishers
-     */
-    public static function initialize(EventPublisherAdapterInterface ...$publishers)
+    public static function initialize(EventPublisherAdapterInterface ...$publishers): void
     {
         if (NULL !== static::$instance) {
             throw new \LogicException('EventPublisher can be initialized once');

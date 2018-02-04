@@ -34,22 +34,12 @@ class DoctrineUserRepository implements UserRepositoryInterface
         $this->repository    = $entityManager->getRepository(User::class);
     }
 
-    /**
-     * @param \User\Application\Model\User $user
-     *
-     * @return void
-     */
-    public function store(User $user)
+    public function store(User $user): void
     {
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
 
-    /**
-     * @param \Ramsey\Uuid\UuidInterface $id
-     *
-     * @return \User\Application\Model\User
-     */
     public function fetchById(UuidInterface $id): User
     {
         $user = $this->repository->find($id);
@@ -62,11 +52,6 @@ class DoctrineUserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    /**
-     * @param \Shared\Application\ValueObject\Email $email
-     *
-     * @return \User\Application\Model\User
-     */
     public function fetchByEmail(Email $email): User
     {
         $user = $this->repository->findOneBy([
@@ -81,11 +66,6 @@ class DoctrineUserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    /**
-     * @param \Shared\Application\ValueObject\Email $email
-     *
-     * @return bool
-     */
     public function checkEmailIsUnique(Email $email): bool
     {
         try {

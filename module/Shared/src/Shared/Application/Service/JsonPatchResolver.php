@@ -47,13 +47,7 @@ class JsonPatchResolver
         $this->commandBus          = $commandBus;
     }
 
-    /**
-     * @param string $operation
-     * @param string $path
-     * @param string $commandClassName
-     * @param array  $allowedValues
-     */
-    public function addAction(string $operation, string $path, string $commandClassName, array $allowedValues = [])
+    public function addAction(string $operation, string $path, string $commandClassName, array $allowedValues = []): void
     {
         if (FALSE === $this->isActionValid($operation, $path, $commandClassName)) {
             throw new \RuntimeException('Provided action seems to be malformed.', 501);
@@ -65,7 +59,7 @@ class JsonPatchResolver
         ];
     }
 
-    public function resolveActionsForRequest(array $request, string $entityId)
+    public function resolveActionsForRequest(array $request, string $entityId): void
     {
         if (FALSE === isset($request['actions'])) {
             throw new \RuntimeException('Provided PATCH data seems to be malformed. Provide "actions" array', 501);
@@ -76,7 +70,7 @@ class JsonPatchResolver
         }
     }
 
-    private function executeAction(array $actionData, string $entityId)
+    private function executeAction(array $actionData, string $entityId): void
     {
         if (FALSE === $this->isRequestValid($actionData)) {
             throw new \RuntimeException('Provided PATCH request seems to be invalid. Provide "op", "path" and "value"', 422);
@@ -97,13 +91,6 @@ class JsonPatchResolver
         $this->commandBus->handle($command);
     }
 
-    /**
-     * @param string $operation
-     * @param string $path
-     * @param string $commandClass
-     *
-     * @return bool
-     */
     private function isActionValid(string $operation, string $path, string $commandClass): bool
     {
         if (TRUE === empty($operation) && TRUE === empty($path)) {
@@ -117,33 +104,16 @@ class JsonPatchResolver
         return TRUE === class_exists($commandClass);
     }
 
-    /**
-     * @param array $data
-     *
-     * @return bool
-     */
     private function isRequestValid(array $data): bool
     {
         return (TRUE === isset($data['op'], $data['path'], $data['value']));
     }
 
-    /**
-     * @param string $operation
-     * @param string $path
-     *
-     * @return bool
-     */
     private function hasAction(string $operation, string $path): bool
     {
         return TRUE === isset($this->actionsList[$path][$operation]);
     }
 
-    /**
-     * @param array $allowedValues
-     * @param array $rawValues
-     *
-     * @return array
-     */
     private function prepareArgumentsForPatch(array $allowedValues, array $rawValues): array
     {
         $arguments = [];

@@ -36,35 +36,20 @@ class MongoDBClient implements MongoDBClientInterface
         $this->database = $database;
     }
 
-    /**
-     * @param string $collectionName
-     * @param array  $data
-     */
-    public function save(string $collectionName, array $data)
+    public function save(string $collectionName, array $data): void
     {
         $collection = $this->grabCollection($collectionName);
 
         $collection->insertOne($data);
     }
 
-    /**
-     * @param string $collectionName
-     * @param array  $filter
-     * @param array  $data
-     */
-    public function update(string $collectionName, array $filter, array $data)
+    public function update(string $collectionName, array $filter, array $data): void
     {
         $collection = $this->grabCollection($collectionName);
 
         $collection->updateMany($filter, ['$set' => $data]);
     }
 
-    /**
-     * @param string $collectionName
-     * @param array  $filter
-     *
-     * @return array
-     */
     public function findOne(string $collectionName, array $filter): array
     {
         $collection = $this->grabCollection($collectionName);
@@ -78,13 +63,6 @@ class MongoDBClient implements MongoDBClientInterface
         return $result->getArrayCopy();
     }
 
-    /**
-     * @param string $collectionName
-     * @param array  $filter
-     * @param array  $options
-     *
-     * @return array
-     */
     public function find(string $collectionName, array $filter, array $options = []): array
     {
         $collection = $this->grabCollection($collectionName);
@@ -94,13 +72,6 @@ class MongoDBClient implements MongoDBClientInterface
         return $result->toArray();
     }
 
-    /**
-     * @param string $collectionName
-     * @param array  $filter
-     * @param array  $options
-     *
-     * @return int
-     */
     public function count(string $collectionName, array $filter, array $options = []): int
     {
         $collection = $this->grabCollection($collectionName);
@@ -108,11 +79,6 @@ class MongoDBClient implements MongoDBClientInterface
         return $collection->count($filter, $options);
     }
 
-    /**
-     * @param string $collectionName
-     *
-     * @return \MongoDB\Collection
-     */
     private function grabCollection(string $collectionName): Collection
     {
         return $this->client->selectCollection($this->database, $collectionName);

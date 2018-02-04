@@ -48,33 +48,21 @@ class JWTToken
         $this->data     = $data;
     }
 
-    /**
-     * @return string
-     */
     public function token(): string
     {
         return $this->token;
     }
 
-    /**
-     * @return \Ramsey\Uuid\UuidInterface
-     */
     public function userId(): UuidInterface
     {
         return $this->userId;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function issuedAt(): \DateTime
     {
         return $this->issuedAt;
     }
 
-    /**
-     * @return array
-     */
     public function data(): array
     {
         return $this->data;

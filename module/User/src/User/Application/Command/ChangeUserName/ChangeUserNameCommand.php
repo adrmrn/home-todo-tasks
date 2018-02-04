@@ -36,17 +36,11 @@ class ChangeUserNameCommand implements CommandInterface
         $this->name   = $name;
     }
 
-    /**
-     * @return \Ramsey\Uuid\UuidInterface
-     */
     public function userId(): UuidInterface
     {
         return Uuid::fromString($this->userId);
     }
 
-    /**
-     * @return string
-     */
     public function name(): string
     {
         return $this->name;

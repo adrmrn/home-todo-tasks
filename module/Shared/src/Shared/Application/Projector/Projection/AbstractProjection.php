@@ -32,9 +32,6 @@ abstract class AbstractProjection implements ProjectionInterface, EventManagerAw
         $this->mongoDBClient = $mongoDBClient;
     }
 
-    /**
-     * @return \Shared\Application\Persistence\MongoDB\MongoDBClientInterface
-     */
     protected function client(): MongoDBClientInterface
     {
         return $this->mongoDBClient;

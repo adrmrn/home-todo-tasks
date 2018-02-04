@@ -32,10 +32,7 @@ class DoctrineEventStoreRepository implements EventStoreRepositoryInterface
         $this->repository    = $entityManager->getRepository(Event::class);
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     */
-    public function store(Event $event)
+    public function store(Event $event): void
     {
         $this->entityManager->persist($event);
         $this->entityManager->flush();

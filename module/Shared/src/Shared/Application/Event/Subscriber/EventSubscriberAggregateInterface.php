@@ -18,5 +18,5 @@ interface EventSubscriberAggregateInterface
      *
      * @return void
      */
-    public function handle(Event $event);
+    public function handle(Event $event): void;
 }

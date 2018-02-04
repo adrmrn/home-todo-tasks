@@ -17,10 +17,7 @@ class InMemoryEventPublisherAdapter implements EventPublisherAdapterInterface, E
 {
     use EventManagerAwareTrait;
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     */
-    public function publish(Event $event)
+    public function publish(Event $event): void
     {
         $this->getEventManager()->trigger(
             $event->name(),

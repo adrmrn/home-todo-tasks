@@ -35,17 +35,11 @@ class Credentials
         $this->hashedPassword = $hashedPassword;
     }
 
-    /**
-     * @return \Shared\Application\ValueObject\Email
-     */
     public function email(): Email
     {
         return $this->email;
     }
 
-    /**
-     * @return \Shared\Application\ValueObject\HashedPassword
-     */
     public function hashedPassword(): HashedPassword
     {
         return $this->hashedPassword;

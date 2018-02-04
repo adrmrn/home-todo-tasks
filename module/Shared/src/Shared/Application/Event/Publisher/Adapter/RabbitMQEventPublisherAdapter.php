@@ -29,12 +29,7 @@ class RabbitMQEventPublisherAdapter implements EventPublisherAdapterInterface
         $this->messageProducer = $messageProducer;
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     *
-     * @return void
-     */
-    public function publish(Event $event)
+    public function publish(Event $event): void
     {
         $this->messageProducer->send($event);
     }

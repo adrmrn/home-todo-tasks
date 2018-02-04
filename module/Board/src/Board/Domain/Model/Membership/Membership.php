@@ -41,17 +41,11 @@ class Membership
         $this->group  = $group;
     }
 
-    /**
-     * @return \Ramsey\Uuid\UuidInterface
-     */
     public function id(): UuidInterface
     {
         return $this->userId;
     }
 
-    /**
-     * @return \Board\Domain\Model\Membership\Role
-     */
     public function role(): Role
     {
         return $this->role;

@@ -30,21 +30,11 @@ class EventStoreEventSubscriber implements EventSubscriber
         $this->eventStoreRepository = $eventStoreRepository;
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     *
-     * @return void
-     */
-    public function handle(Event $event)
+    public function handle(Event $event): void
     {
         $this->eventStoreRepository->store($event);
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     *
-     * @return bool
-     */
     public function isSubscribedTo(Event $event): bool
     {
         return TRUE;

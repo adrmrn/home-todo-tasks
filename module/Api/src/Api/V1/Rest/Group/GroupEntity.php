@@ -21,9 +21,6 @@ class GroupEntity extends \ArrayObject
         $this->group = $group;
     }
 
-    /**
-     * @return array
-     */
     public function getArrayCopy(): array
     {
         return [

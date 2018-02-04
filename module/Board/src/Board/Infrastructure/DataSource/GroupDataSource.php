@@ -33,11 +33,6 @@ class GroupDataSource implements GroupDataSourceInterface
         $this->mongoDBClient = $mongoDBClient;
     }
 
-    /**
-     * @param \Ramsey\Uuid\UuidInterface $groupId
-     *
-     * @return \Shared\Application\Persistence\Model\GroupViewInterface
-     */
     public function fetchById(UuidInterface $groupId): GroupViewInterface
     {
         $result = $this->mongoDBClient->findOne('group', ['id' => $groupId->toString()]);
@@ -52,7 +47,7 @@ class GroupDataSource implements GroupDataSourceInterface
     /**
      * @param \Shared\Application\Persistence\Specification\MongoDBSpecification $specification
      *
-     * @return array
+     * @return GroupViewInterface[]
      */
     public function fetchBySpecification(MongoDBSpecification $specification): array
     {
@@ -73,11 +68,6 @@ class GroupDataSource implements GroupDataSourceInterface
         return $groups;
     }
 
-    /**
-     * @param \Shared\Application\Persistence\Specification\MongoDBSpecification $specification
-     *
-     * @return int
-     */
     public function countBySpecification(MongoDBSpecification $specification): int
     {
         return $this->mongoDBClient->count(
@@ -87,11 +77,6 @@ class GroupDataSource implements GroupDataSourceInterface
         );
     }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
     private function prepareRawArray(array $data): array
     {
         $memberships = [];

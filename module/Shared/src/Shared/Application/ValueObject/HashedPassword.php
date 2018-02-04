@@ -32,19 +32,11 @@ class HashedPassword
         $this->passwordHash = $passwordHash;
     }
 
-    /**
-     * @param string $passwordHash
-     *
-     * @return \Shared\Application\ValueObject\HashedPassword
-     */
     public static function fromString(string $passwordHash): self
     {
         return new self($passwordHash);
     }
 
-    /**
-     * @return string
-     */
     public function toString(): string
     {
         return $this->passwordHash;

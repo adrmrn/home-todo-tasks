@@ -42,11 +42,6 @@ class JWTTokenService implements JWTTokenGeneratorInterface, JWTTokenVerifierInt
         $this->secret = $secret;
     }
 
-    /**
-     * @param \Ramsey\Uuid\UuidInterface $userId
-     *
-     * @return \Auth\Application\ValueObject\JWTToken
-     */
     public function generateToken(UuidInterface $userId): JWTToken
     {
         $token = new Token();
@@ -70,11 +65,6 @@ class JWTTokenService implements JWTTokenGeneratorInterface, JWTTokenVerifierInt
         );
     }
 
-    /**
-     * @param string $token
-     *
-     * @return bool
-     */
     public function isTokenVerified(string $token): bool
     {
         $jwt   = new Jwt();
@@ -94,11 +84,6 @@ class JWTTokenService implements JWTTokenGeneratorInterface, JWTTokenVerifierInt
         return TRUE;
     }
 
-    /**
-     * @param string $serializedToken
-     *
-     * @return \Auth\Application\ValueObject\JWTToken
-     */
     public function deserializeToken(string $serializedToken): JWTToken
     {
         $jwt   = new Jwt();

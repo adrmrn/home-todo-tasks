@@ -29,10 +29,7 @@ class RabbitMQMessageProducer extends AbstractRabbitMQMessaging implements Rabbi
         $this->channel()->exchange_declare('events', 'fanout', FALSE, TRUE, FALSE);
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     */
-    public function send(Event $event)
+    public function send(Event $event): void
     {
         $channel = $this->channel();
 

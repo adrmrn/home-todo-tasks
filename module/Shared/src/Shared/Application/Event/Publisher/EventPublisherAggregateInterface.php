@@ -19,7 +19,7 @@ interface EventPublisherAggregateInterface
      *
      * @return void
      */
-    public static function initialize(EventPublisherAdapterInterface ...$publishers);
+    public static function initialize(EventPublisherAdapterInterface ...$publishers): void;
 
     /**
      * @param string                     $eventName
@@ -28,5 +28,5 @@ interface EventPublisherAggregateInterface
      *
      * @return void
      */
-    public static function publish(string $eventName, UuidInterface $entityId, array $data = []);
+    public static function publish(string $eventName, UuidInterface $entityId, array $data = []): void;
 }

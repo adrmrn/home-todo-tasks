@@ -43,8 +43,6 @@ class PasswordInputFilterProvider implements InputProviderInterface
      */
     public function getInputSpecification()
     {
-        // TODO: improve validation logic for password if needed
-
         return [
             'name'       => $this->inputName,
             'required'   => $this->isRequired,

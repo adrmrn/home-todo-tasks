@@ -56,7 +56,7 @@ class EventListenerAggregate extends AbstractListenerAggregate implements Listen
         );
     }
 
-    public function onEvent(EventInterface $event)
+    public function onEvent(EventInterface $event): void
     {
         $e = new Event(
             $event->getTarget(),

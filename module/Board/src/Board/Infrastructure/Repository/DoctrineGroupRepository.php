@@ -36,20 +36,12 @@ class DoctrineGroupRepository implements GroupRepositoryInterface
         $this->repository    = $entityManager->getRepository(Group::class);
     }
 
-    /**
-     * @param \Board\Domain\Model\Group $group
-     */
-    public function store(Group $group)
+    public function store(Group $group): void
     {
         $this->entityManager->persist($group);
         $this->entityManager->flush();
     }
 
-    /**
-     * @param \Ramsey\Uuid\UuidInterface $id
-     *
-     * @return \Board\Domain\Model\Group|null|object
-     */
     public function fetchById(UuidInterface $id): Group
     {
         $group = $this->repository->find($id);

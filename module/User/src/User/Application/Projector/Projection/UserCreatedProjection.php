@@ -16,12 +16,7 @@ use User\Application\EventManager\ApplicationEventName;
 
 class UserCreatedProjection extends AbstractProjection
 {
-    /**
-     * @param \Shared\Application\Event\Event $event
-     *
-     * @return void
-     */
-    public function project(Event $event)
+    public function project(Event $event): void
     {
         // save user
         $this->client()->save('user', [
@@ -46,11 +41,6 @@ class UserCreatedProjection extends AbstractProjection
         );
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     *
-     * @return bool
-     */
     public function isSubscribedTo(Event $event): bool
     {
         return $event->name() === EventName::USER_CREATED;

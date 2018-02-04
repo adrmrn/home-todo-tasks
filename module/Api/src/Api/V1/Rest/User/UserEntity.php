@@ -21,9 +21,6 @@ class UserEntity extends \ArrayObject
         $this->user = $user;
     }
 
-    /**
-     * @return array
-     */
     public function getArrayCopy(): array
     {
         return [

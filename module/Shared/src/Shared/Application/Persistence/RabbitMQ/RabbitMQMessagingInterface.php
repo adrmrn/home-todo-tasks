@@ -21,5 +21,5 @@ interface RabbitMQMessagingInterface
     /**
      * @return void
      */
-    public function close();
+    public function close(): void;
 }

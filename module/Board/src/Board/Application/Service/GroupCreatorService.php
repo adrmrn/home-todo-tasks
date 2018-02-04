@@ -34,11 +34,7 @@ class GroupCreatorService
         $this->groupRepository = $groupRepository;
     }
 
-    /**
-     * @param string                     $name
-     * @param \Ramsey\Uuid\UuidInterface $creatorId
-     */
-    public function createGroup(string $name, UuidInterface $creatorId)
+    public function createGroup(string $name, UuidInterface $creatorId): void
     {
         $group = new Group($name);
 

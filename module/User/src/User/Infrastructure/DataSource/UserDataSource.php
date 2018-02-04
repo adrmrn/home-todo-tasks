@@ -33,11 +33,6 @@ class UserDataSource implements UserDataSourceInterface
         $this->mongoDBClient = $mongoDBClient;
     }
 
-    /**
-     * @param \Ramsey\Uuid\UuidInterface $userId
-     *
-     * @return \Shared\Application\Persistence\Model\UserViewInterface
-     */
     public function fetchById(UuidInterface $userId): UserViewInterface
     {
         $result = $this->mongoDBClient->findOne('user', ['id' => $userId->toString()]);
@@ -52,7 +47,7 @@ class UserDataSource implements UserDataSourceInterface
     /**
      * @param \Shared\Application\Persistence\Specification\MongoDBSpecification $specification
      *
-     * @return array
+     * @return UserViewInterface[]
      */
     public function fetchBySpecification(MongoDBSpecification $specification): array
     {
@@ -71,11 +66,6 @@ class UserDataSource implements UserDataSourceInterface
         return $users;
     }
 
-    /**
-     * @param \Shared\Application\Persistence\Specification\MongoDBSpecification $specification
-     *
-     * @return int
-     */
     public function countBySpecification(MongoDBSpecification $specification): int
     {
         return $this->mongoDBClient->count(

@@ -42,34 +42,22 @@ class User
         $this->credentials = $credentials;
     }
 
-    /**
-     * @return \Ramsey\Uuid\UuidInterface
-     */
     public function id(): UuidInterface
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function name(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return \User\Application\Model\Credentials\Credentials
-     */
     public function credentials(): Credentials
     {
         return $this->credentials;
     }
 
-    /**
-     * @param string $newName
-     */
-    public function rename(string $newName)
+    public function rename(string $newName): void
     {
         $this->name = $newName;
     }

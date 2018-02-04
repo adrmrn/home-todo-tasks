@@ -18,9 +18,9 @@ interface UserRepositoryInterface
     /**
      * @param \User\Application\Model\User $user
      *
-     * @return mixed
+     * @return void
      */
-    public function store(User $user);
+    public function store(User $user): void;
 
     /**
      * @param \Ramsey\Uuid\UuidInterface $id

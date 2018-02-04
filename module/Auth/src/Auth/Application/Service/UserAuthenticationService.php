@@ -42,11 +42,7 @@ class UserAuthenticationService
         $this->JWTTokenGenerator     = $JWTTokenGenerator;
     }
 
-    /**
-     * @param string $email
-     * @param string $password
-     */
-    public function authenticate(string $email, string $password)
+    public function authenticate(string $email, string $password): void
     {
         $credentials = $this->credentialsDataSource->fetchByEmail(Email::fromString($email));
 

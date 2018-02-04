@@ -34,9 +34,6 @@ class FetchUserByIdQuery implements QueryInterface
         $this->userId = $userId;
     }
 
-    /**
-     * @return \Ramsey\Uuid\UuidInterface
-     */
     public function userId(): UuidInterface
     {
         return Uuid::fromString($this->userId);

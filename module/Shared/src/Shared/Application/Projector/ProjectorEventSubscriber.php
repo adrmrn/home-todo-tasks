@@ -31,12 +31,7 @@ class ProjectorEventSubscriber implements EventSubscriber
         $this->projections = $projections;
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     *
-     * @return void
-     */
-    public function handle(Event $event)
+    public function handle(Event $event): void
     {
         foreach ($this->projections as $projection) {
             if (TRUE === $projection->isSubscribedTo($event)) {
@@ -45,11 +40,6 @@ class ProjectorEventSubscriber implements EventSubscriber
         }
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     *
-     * @return bool
-     */
     public function isSubscribedTo(Event $event): bool
     {
         foreach ($this->projections as $projection) {

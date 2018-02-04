@@ -16,12 +16,7 @@ use Shared\Application\Projector\Projection\AbstractProjection;
 
 class TokenCreatedProjection extends AbstractProjection
 {
-    /**
-     * @param \Shared\Application\Event\Event $event
-     *
-     * @return void
-     */
-    public function project(Event $event)
+    public function project(Event $event): void
     {
         $this->client()->save('token', [
             'user_id'   => $event->data()['user_id'],
@@ -39,11 +34,6 @@ class TokenCreatedProjection extends AbstractProjection
         );
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     *
-     * @return bool
-     */
     public function isSubscribedTo(Event $event): bool
     {
         return $event->name() === EventName::TOKEN_CREATED;

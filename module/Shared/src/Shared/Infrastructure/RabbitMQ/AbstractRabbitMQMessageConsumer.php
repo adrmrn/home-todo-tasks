@@ -44,10 +44,7 @@ abstract class AbstractRabbitMQMessageConsumer extends AbstractRabbitMQMessaging
         $this->channel()->queue_bind(sprintf('%s.events', $this->domain()), 'events');
     }
 
-    /**
-     * @return void
-     */
-    public function listen()
+    public function listen(): void
     {
         $channel = $this->channel();
 
@@ -60,29 +57,23 @@ abstract class AbstractRabbitMQMessageConsumer extends AbstractRabbitMQMessaging
         $this->close();
     }
 
-    /**
-     * @param $msg
-     */
-    public function handleCallback(AMQPMessage $msg)
+    public function handleCallback(AMQPMessage $message): void
     {
-        echo sprintf(" [ %s - DOMAIN HANDLER ] %s \n", strtoupper($this->domain()), $msg->body);
+        echo sprintf(" [ %s - DOMAIN HANDLER ] %s \n", strtoupper($this->domain()), $message->body);
 
-        $msg = json_decode($msg->body, TRUE);
+        $message = json_decode($message->body, TRUE);
 
         // build event from body
         $event = new Event(
-            $msg['data']['domain'],
-            $msg['data']['name'],
-            Uuid::fromString($msg['data']['entity_id']),
-            $msg['data']['data'],
-            new \DateTimeImmutable($msg['data']['occurred_at'])
+            $message['data']['domain'],
+            $message['data']['name'],
+            Uuid::fromString($message['data']['entity_id']),
+            $message['data']['data'],
+            new \DateTimeImmutable($message['data']['occurred_at'])
         );
 
         $this->eventSubscriberAggregate->handle($event);
     }
 
-    /**
-     * @return string
-     */
     abstract protected function domain(): string;
 }

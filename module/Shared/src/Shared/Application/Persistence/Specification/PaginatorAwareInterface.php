@@ -16,12 +16,12 @@ interface PaginatorAwareInterface
      *
      * @return void
      */
-    public function setOffset(int $offset);
+    public function setOffset(int $offset): void;
 
     /**
      * @param int $limit
      *
      * @return void
      */
-    public function setLimit(int $limit);
+    public function setLimit(int $limit): void;
 }

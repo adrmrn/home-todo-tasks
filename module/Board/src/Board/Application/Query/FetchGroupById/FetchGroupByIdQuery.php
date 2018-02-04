@@ -34,9 +34,6 @@ class FetchGroupByIdQuery implements QueryInterface
         $this->groupId = $groupId;
     }
 
-    /**
-     * @return \Ramsey\Uuid\UuidInterface
-     */
     public function groupId(): UuidInterface
     {
         return Uuid::fromString($this->groupId);

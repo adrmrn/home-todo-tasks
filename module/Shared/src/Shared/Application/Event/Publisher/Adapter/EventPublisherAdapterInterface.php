@@ -18,5 +18,5 @@ interface EventPublisherAdapterInterface
      *
      * @return void
      */
-    public function publish(Event $event);
+    public function publish(Event $event): void;
 }

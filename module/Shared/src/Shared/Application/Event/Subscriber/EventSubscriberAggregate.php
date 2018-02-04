@@ -28,10 +28,7 @@ class EventSubscriberAggregate implements EventSubscriberAggregateInterface
         $this->eventSubscribers = $eventSubscribers;
     }
 
-    /**
-     * @param \Shared\Application\Event\Event $event
-     */
-    public function handle(Event $event)
+    public function handle(Event $event): void
     {
         foreach ($this->eventSubscribers as $eventSubscriber) {
             if ($eventSubscriber->isSubscribedTo($event)) {

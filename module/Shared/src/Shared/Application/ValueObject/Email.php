@@ -30,17 +30,11 @@ class Email
         $this->value = $email;
     }
 
-    /**
-     * @return string
-     */
     public function toString(): string
     {
         return $this->value;
     }
 
-    /**
-     * @return string
-     */
     public function localPart(): string
     {
         $emailParts = explode('@', $this->value, 2);
@@ -48,9 +42,6 @@ class Email
         return $emailParts[0];
     }
 
-    /**
-     * @return string
-     */
     public function domain(): string
     {
         $emailParts = explode('@', $this->value, 2);
@@ -58,12 +49,7 @@ class Email
         return $emailParts[1];
     }
 
-    /**
-     * @param string $email
-     *
-     * @return static
-     */
-    public static function fromString(string $email)
+    public static function fromString(string $email): self
     {
         return new self($email);
     }

@@ -38,12 +38,7 @@ class UserCreatorService implements EventManagerAwareInterface
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * @param string $name
-     * @param string $email
-     * @param string $password
-     */
-    public function createUser(string $name, string $email, string $password)
+    public function createUser(string $name, string $email, string $password): void
     {
         $email = new Email($email);
 

@@ -28,9 +28,6 @@ class FetchGroupsBySpecificationQuery implements QueryInterface
         $this->params = $params;
     }
 
-    /**
-     * @return array
-     */
     public function params(): array
     {
         return $this->params;

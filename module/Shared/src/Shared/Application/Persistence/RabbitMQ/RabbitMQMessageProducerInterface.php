@@ -18,5 +18,5 @@ interface RabbitMQMessageProducerInterface
      *
      * @return void
      */
-    public function send(Event $event);
+    public function send(Event $event): void;
 }

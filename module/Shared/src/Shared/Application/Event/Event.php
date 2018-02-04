@@ -57,25 +57,16 @@ class Event implements \JsonSerializable
         $this->occurredAt = NULL === $occurredAt ? new \DateTimeImmutable() : $occurredAt;
     }
 
-    /**
-     * @return string
-     */
     public function name(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function domain(): string
     {
         return $this->domain;
     }
 
-    /**
-     * @return array
-     */
     public function data(): array
     {
         return $this->data;

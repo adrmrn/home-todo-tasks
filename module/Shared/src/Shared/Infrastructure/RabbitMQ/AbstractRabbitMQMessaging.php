@@ -35,18 +35,12 @@ abstract class AbstractRabbitMQMessaging implements RabbitMQMessagingInterface
         $this->channel    = $this->connection->channel();
     }
 
-    /**
-     * @return \PhpAmqpLib\Channel\AMQPChannel
-     */
     public function channel(): AMQPChannel
     {
         return $this->channel;
     }
 
-    /**
-     * @return void
-     */
-    public function close()
+    public function close(): void
     {
         $this->channel()->close();
         $this->connection->close();

@@ -32,11 +32,6 @@ class CredentialsDataSource implements CredentialsDataSourceInterface
         $this->mongoDBClient = $mongoDBClient;
     }
 
-    /**
-     * @param \Shared\Application\ValueObject\Email $email
-     *
-     * @return \Shared\Application\Persistence\Model\CredentialsViewInterface
-     */
     public function fetchByEmail(Email $email): CredentialsViewInterface
     {
         $result = $this->mongoDBClient->findOne('credentials', ['email' => $email->toString()]);
