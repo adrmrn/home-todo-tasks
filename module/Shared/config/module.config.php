@@ -8,6 +8,7 @@
 
 namespace Shared;
 
+use Board\Infrastructure\DataSource\GroupDataSourceFactory;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Shared\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
@@ -17,6 +18,7 @@ use Shared\Application\Event\Subscriber\EventStoreEventSubscriber;
 use Shared\Application\Event\Subscriber\EventStoreEventSubscriberFactory;
 use Shared\Application\Factory\DefaultAuthenticationListenerOverwriteFactory;
 use Shared\Application\Factory\RabbitMQConnectionFactory;
+use Shared\Application\Persistence\DataSource\GroupDataSourceInterface;
 use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
 use Shared\Application\Persistence\RabbitMQ\RabbitMQMessageProducerInterface;
 use Shared\Application\Persistence\Repository\EventStoreRepositoryInterface;
@@ -56,6 +58,9 @@ return [
 
             // Auth
             DefaultAuthenticationListener::class    => DefaultAuthenticationListenerOverwriteFactory::class,
+
+            // DataSource
+            GroupDataSourceInterface::class         => GroupDataSourceFactory::class,
         ],
     ],
     'doctrine'        => [

@@ -65,7 +65,6 @@ return [
             // DataSource
             UserDataSourceInterface::class               => UserDataSourceFactory::class,
             CredentialsDataSourceInterface::class        => CredentialsDataSourceFactory::class,
-            GroupDataSourceInterface::class              => GroupDataSourceFactory::class,
         ],
         'invokables' => [
         ],
