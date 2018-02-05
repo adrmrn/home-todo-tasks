@@ -6,7 +6,7 @@ Create own group and the board, add family members and start to manage your hous
 ## Back-end description
 The project main goal is to create and maintain application based on Domain Driven Design, SOLID and CQRS. Bounded Contexts have been divided as separated modules in the app.
 
-## Technology and tools
+## Tools
 - **Zend Framework 3**
 - **Apigility** - API service (REST/RPC)
 - **Doctrine**
