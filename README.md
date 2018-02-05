@@ -28,7 +28,7 @@ The project main goal is to create and maintain application based on Domain Driv
 1. Install Vagrant and VirtualBox
 2. Clone repository
 3. Run ```$ vagrant up```
-4. Install dependencies ```$ vagrant ssh -c 'composer install''```
+4. Install dependencies ```$ vagrant ssh -c 'composer install'```
 5. Enable development mode ```$ composer development-enable```
 6. Enjoy!
 
