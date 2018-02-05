@@ -7,14 +7,14 @@ Create own group and the board, add family members and start to manage your hous
 The project main goal is to create and maintain application based on Domain Driven Design, SOLID and CQRS. Bounded Contexts have been divided as separated modules in the app.
 
 ## Technology and tools
-- Zend Framework 3
-- Apigility - API service (REST/RPC)
-- Doctrine
-- PostgreSQL
-- MongoDB - logs projections for Read/View Models
-- RabbitMQ - message queuing - sending events
-- JWT - authentication
-- Vagrant - dev environment
+- **Zend Framework 3**
+- **Apigility** - API service (REST/RPC)
+- **Doctrine**
+- **PostgreSQL**
+- **MongoDB** - logs projections for Read/View Models
+- **RabbitMQ** - message queuing - sending events
+- **JWT** - authentication
+- **Vagrant** - dev environment
 
 ## Installation
 > #### Vagrant and VirtualBox
