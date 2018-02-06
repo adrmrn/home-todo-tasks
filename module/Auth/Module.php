@@ -13,10 +13,11 @@ use Auth\Application\Event\Listener\EventListenerAggregate;
 use Auth\Application\Event\Publisher\EventPublisher;
 use Shared\Application\Event\Publisher\Adapter\InMemoryEventPublisherAdapter;
 use Zend\EventManager\EventInterface;
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
-class Module implements ConfigProviderInterface, BootstrapListenerInterface
+class Module implements ConfigProviderInterface, BootstrapListenerInterface, AutoloaderProviderInterface
 {
     /**
      * Returns configuration to merge with application configuration
@@ -47,5 +48,21 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
         );
 
         return [];
+    }
+
+    /**
+     * Return an array for passing to Zend\Loader\AutoloaderFactory.
+     *
+     * @return array
+     */
+    public function getAutoloaderConfig()
+    {
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
+                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+                ],
+            ],
+        ];
     }
 }

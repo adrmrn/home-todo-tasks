@@ -49,7 +49,11 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "ApplicationTest\\": "module/Application/test/"
+            "ApplicationTest\\": "module/Application/test/",
+            "Shared\\": "module/Shared/tests/Shared/",
+            "User\\": "module/User/tests/User/",
+            "Board\\": "module/Board/tests/Board",
+            "Auth\\": "module/Auth/tests/Auth/"
         }
     },
     "extra": [],

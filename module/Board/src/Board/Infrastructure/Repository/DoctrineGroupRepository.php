@@ -47,7 +47,7 @@ class DoctrineGroupRepository implements GroupRepositoryInterface
         $group = $this->repository->find($id);
 
         if ($group === NULL) {
-            throw new \RuntimeException('User not found', 404);
+            throw new \RuntimeException('Group not found', 404);
         }
 
         /** @var Group $group */

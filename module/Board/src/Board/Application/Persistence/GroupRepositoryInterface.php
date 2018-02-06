@@ -19,7 +19,7 @@ interface GroupRepositoryInterface
      *
      * @return void
      */
-    public function store(Group $group);
+    public function store(Group $group): void;
 
     /**
      * @param \Ramsey\Uuid\UuidInterface $id

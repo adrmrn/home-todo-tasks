@@ -67,6 +67,11 @@ class Event implements \JsonSerializable
         return $this->domain;
     }
 
+    public function entityId(): UuidInterface
+    {
+        return $this->entityId;
+    }
+
     public function data(): array
     {
         return $this->data;
