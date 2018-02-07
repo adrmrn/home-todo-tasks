@@ -55,4 +55,41 @@ class Group
     {
         $this->memberships->add($membership);
     }
+
+    public function removeMembership(UuidInterface $userId): void
+    {
+        $this->memberships->removeElement(
+            $this->membership($userId)
+        );
+    }
+
+    /**
+     * @return Membership[]
+     */
+    public function memberships(): array
+    {
+        return $this->memberships->toArray();
+    }
+
+    public function membership(UuidInterface $userId): Membership
+    {
+        foreach ($this->memberships as $key => $membership) {
+            if ($membership->id()->equals($userId)) {
+                return $membership;
+            }
+        }
+
+        throw new \DomainException(sprintf('Membership does not exist with user_id: %s', $userId->toString()), 404);
+    }
+
+    public function hasMembership(UuidInterface $userId): bool
+    {
+        foreach ($this->memberships as $key => $membership) {
+            if ($membership->id()->equals($userId)) {
+                return TRUE;
+            }
+        }
+
+        return FALSE;
+    }
 }
