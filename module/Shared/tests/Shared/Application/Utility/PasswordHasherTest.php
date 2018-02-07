@@ -6,10 +6,9 @@
  * Time: 00:14
  */
 
-namespace User\Application\Utility;
+namespace Shared\Application\Utility;
 
 use PHPUnit\Framework\TestCase;
-use Shared\Application\Utility\PasswordHasher;
 use Shared\Application\ValueObject\HashedPassword;
 
 class PasswordHasherTest extends TestCase
