@@ -6,14 +6,14 @@
  * Time: 21:00
  */
 
-namespace Board\Application\Command\AddMember;
+namespace Board\Application\Command\AddMembership;
 
 
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Shared\Application\CommandQuery\CommandInterface;
 
-class AddMemberCommand implements CommandInterface
+class AddMembershipCommand implements CommandInterface
 {
     /**
      * @var string

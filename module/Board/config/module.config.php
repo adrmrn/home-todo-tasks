@@ -8,10 +8,10 @@
 
 namespace Board;
 
-use Board\Application\Command\AddMember\AddMemberCommand;
-use Board\Application\Command\AddMember\AddMemberCommandHandler;
-use Board\Application\Command\AddMember\AddMemberCommandHandlerFactory;
-use Board\Application\Command\AddMember\AddMemberCommandValidator;
+use Board\Application\Command\AddMembership\AddMembershipCommand;
+use Board\Application\Command\AddMembership\AddMembershipCommandHandler;
+use Board\Application\Command\AddMembership\AddMembershipCommandHandlerFactory;
+use Board\Application\Command\AddMembership\AddMembershipCommandValidator;
 use Board\Application\Event\Listener\EventListenerAggregate;
 use Board\Application\Event\Listener\EventListenerAggregateFactory;
 use Board\Application\Persistence\Repository\GroupRepositoryInterface;
@@ -44,7 +44,7 @@ return [
         'factories'          => [
             // Command
             CreateGroupCommandHandler::class              => CreateGroupCommandHandlerFactory::class,
-            AddMemberCommandHandler::class                => AddMemberCommandHandlerFactory::class,
+            AddMembershipCommandHandler::class            => AddMembershipCommandHandlerFactory::class,
 
             // Query
             FetchGroupByIdQueryHandler::class             => FetchGroupByIdQueryHandlerFactory::class,
@@ -75,21 +75,21 @@ return [
         'handler-map'     => [
             // Command
             CreateGroupCommand::class              => CreateGroupCommandHandler::class,
-            AddMemberCommand::class                => AddMemberCommandHandler::class,
+            AddMembershipCommand::class            => AddMembershipCommandHandler::class,
 
             // Query
             FetchGroupByIdQuery::class             => FetchGroupByIdQueryHandler::class,
             FetchGroupsBySpecificationQuery::class => FetchGroupsBySpecificationQueryHandler::class,
         ],
         'inputfilter-map' => [
-            CreateGroupCommand::class => CreateGroupCommandValidator::class,
-            AddMemberCommand::class   => AddMemberCommandValidator::class,
+            CreateGroupCommand::class   => CreateGroupCommandValidator::class,
+            AddMembershipCommand::class => AddMembershipCommandValidator::class,
         ],
     ],
     'input_filters'   => [
         'invokables' => [
             CreateGroupCommandValidator::class,
-            AddMemberCommandValidator::class,
+            AddMembershipCommandValidator::class,
         ],
         'factories'  => [],
     ],

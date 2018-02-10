@@ -6,7 +6,7 @@
  * Time: 21:01
  */
 
-namespace Board\Application\Command\AddMember;
+namespace Board\Application\Command\AddMembership;
 
 
 use Board\Application\Service\GroupMembershipManagerService;
@@ -16,7 +16,7 @@ use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class AddMemberCommandHandlerFactory implements FactoryInterface
+class AddMembershipCommandHandlerFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -33,7 +33,7 @@ class AddMemberCommandHandlerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL)
     {
-        return new AddMemberCommandHandler(
+        return new AddMembershipCommandHandler(
             $container->get(GroupMembershipManagerService::class)
         );
     }

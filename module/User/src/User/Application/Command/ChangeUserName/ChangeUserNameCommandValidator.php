@@ -9,20 +9,18 @@
 namespace User\Application\Command\ChangeUserName;
 
 
-use Shared\Application\InputFilter\StringInputFilterProvider;
-use Shared\Application\InputFilter\UuidInputFilterProvider;
-use Zend\InputFilter\InputFilter;
+use Shared\Application\InputFilter\AbstractCommandValidator;
+use Shared\Application\InputFilter\Provider\StringInputFilterProvider;
+use Shared\Application\InputFilter\Provider\UuidInputFilterProvider;
 
-class ChangeUserNameCommandValidator extends InputFilter
+class ChangeUserNameCommandValidator extends AbstractCommandValidator
 {
     /**
      * @return void
      */
     public function init()
     {
-        $id   = $this->getFactory()->createInput(new UuidInputFilterProvider('id'));
-        $name = $this->getFactory()->createInput(new StringInputFilterProvider('name'));
-
-        $this->add($id)->add($name);
+        $this->addInput(new UuidInputFilterProvider('id'));
+        $this->addInput(new StringInputFilterProvider('name'));
     }
 }

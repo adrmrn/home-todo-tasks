@@ -2,18 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 23.11.17
- * Time: 22:19
+ * Date: 14.11.17
+ * Time: 20:49
  */
 
-namespace Shared\Application\InputFilter;
+namespace Shared\Application\InputFilter\Provider;
 
 
 use Zend\Filter\StringTrim;
 use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\Uuid;
+use Zend\Validator\StringLength;
 
-class UuidInputFilterProvider implements InputProviderInterface
+class StringInputFilterProvider implements InputProviderInterface
 {
     /**
      * @var string
@@ -23,17 +23,23 @@ class UuidInputFilterProvider implements InputProviderInterface
      * @var bool
      */
     private $isRequired;
+    /**
+     * @var array
+     */
+    private $minMax;
 
     /**
-     * UuidInputFilterProvider constructor.
+     * StringInputFilterProvider constructor.
      *
      * @param string $inputName
      * @param bool   $isRequired
+     * @param array  $minMax
      */
-    public function __construct(string $inputName, bool $isRequired = TRUE)
+    public function __construct(string $inputName, bool $isRequired = TRUE, array $minMax = [])
     {
         $this->inputName  = $inputName;
         $this->isRequired = $isRequired;
+        $this->minMax     = $minMax;
     }
 
     /**
@@ -54,7 +60,8 @@ class UuidInputFilterProvider implements InputProviderInterface
             ],
             'validators' => [
                 [
-                    'name' => Uuid::class,
+                    'name'    => StringLength::class,
+                    'options' => $this->minMax,
                 ],
             ],
         ];

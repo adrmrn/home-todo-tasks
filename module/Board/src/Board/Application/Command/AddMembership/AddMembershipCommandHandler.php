@@ -6,14 +6,14 @@
  * Time: 21:01
  */
 
-namespace Board\Application\Command\AddMember;
+namespace Board\Application\Command\AddMembership;
 
 
 use Board\Application\Service\GroupMembershipManagerService;
 use Shared\Application\CommandQuery\CommandQueryInterface;
 use Shared\Application\CommandQuery\Handler\CommandHandlerInterface;
 
-class AddMemberCommandHandler implements CommandHandlerInterface
+class AddMembershipCommandHandler implements CommandHandlerInterface
 {
     /**
      * @var \Board\Application\Service\GroupMembershipManagerService
@@ -32,7 +32,7 @@ class AddMemberCommandHandler implements CommandHandlerInterface
 
     public function handle(CommandQueryInterface $commandQuery): void
     {
-        /** @var AddMemberCommand $commandQuery */
+        /** @var AddMembershipCommand $commandQuery */
         $this->groupMembershipManagerService->addMembershipToGroup(
             $commandQuery->groupId(),
             $commandQuery->userId(),

@@ -3,17 +3,16 @@
  * Created by PhpStorm.
  * User: adrian
  * Date: 14.11.17
- * Time: 20:49
+ * Time: 20:59
  */
 
-namespace Shared\Application\InputFilter;
+namespace Shared\Application\InputFilter\Provider;
 
 
-use Zend\Filter\StringTrim;
 use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator\StringLength;
 
-class StringInputFilterProvider implements InputProviderInterface
+class PasswordInputFilterProvider implements InputProviderInterface
 {
     /**
      * @var string
@@ -23,23 +22,17 @@ class StringInputFilterProvider implements InputProviderInterface
      * @var bool
      */
     private $isRequired;
-    /**
-     * @var array
-     */
-    private $minMax;
 
     /**
-     * StringInputFilterProvider constructor.
+     * PasswordInputFilterProvider constructor.
      *
      * @param string $inputName
      * @param bool   $isRequired
-     * @param array  $minMax
      */
-    public function __construct(string $inputName, bool $isRequired = TRUE, array $minMax = [])
+    public function __construct(string $inputName, bool $isRequired = TRUE)
     {
         $this->inputName  = $inputName;
         $this->isRequired = $isRequired;
-        $this->minMax     = $minMax;
     }
 
     /**
@@ -53,15 +46,13 @@ class StringInputFilterProvider implements InputProviderInterface
         return [
             'name'       => $this->inputName,
             'required'   => $this->isRequired,
-            'filters'    => [
-                [
-                    'name' => StringTrim::class,
-                ],
-            ],
+            'filters'    => [],
             'validators' => [
                 [
-                    'name'    => StringLength::class,
-                    'options' => $this->minMax,
+                    'name' => StringLength::class,
+                    'options' => [
+                        'min' => 8
+                    ]
                 ],
             ],
         ];

@@ -2,7 +2,7 @@
 
 namespace Api\V1\Rest\Group;
 
-use Board\Application\Command\AddMember\AddMemberCommand;
+use Board\Application\Command\AddMembership\AddMembershipCommand;
 use Board\Application\Command\CreateGroup\CreateGroupCommand;
 use Board\Application\EventManager\ApplicationEventName;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQuery;
@@ -43,7 +43,7 @@ class GroupResource extends AbstractResourceListener
         $this->commandBus          = $commandBus;
         $this->jsonPatchResolver   = $jsonPatchResolver;
 
-        $this->jsonPatchResolver->addAction('add', 'member', AddMemberCommand::class, ['id', 'user_id', 'role', 'creator_id']);
+        $this->jsonPatchResolver->addAction('add', 'member', AddMembershipCommand::class, ['id', 'user_id', 'role', 'creator_id']);
     }
 
     /**

@@ -9,8 +9,8 @@
 namespace Auth\Application\Command\AuthenticateUser;
 
 
-use Shared\Application\InputFilter\EmailInputFilterProvider;
-use Shared\Application\InputFilter\PasswordInputFilterProvider;
+use Shared\Application\InputFilter\Provider\EmailInputFilterProvider;
+use Shared\Application\InputFilter\Provider\PasswordInputFilterProvider;
 use Zend\InputFilter\InputFilter;
 
 class AuthenticateUserCommandValidator extends InputFilter

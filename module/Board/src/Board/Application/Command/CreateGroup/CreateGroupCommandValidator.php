@@ -9,20 +9,18 @@
 namespace Board\Application\Command\CreateGroup;
 
 
-use Shared\Application\InputFilter\StringInputFilterProvider;
-use Shared\Application\InputFilter\UuidInputFilterProvider;
-use Zend\InputFilter\InputFilter;
+use Shared\Application\InputFilter\AbstractCommandValidator;
+use Shared\Application\InputFilter\Provider\StringInputFilterProvider;
+use Shared\Application\InputFilter\Provider\UuidInputFilterProvider;
 
-class CreateGroupCommandValidator extends InputFilter
+class CreateGroupCommandValidator extends AbstractCommandValidator
 {
     /**
      * @return void
      */
     public function init()
     {
-        $name      = $this->getFactory()->createInput(new StringInputFilterProvider('name'));
-        $creatorId = $this->getFactory()->createInput(new UuidInputFilterProvider('creator_id'));
-
-        $this->add($name)->add($creatorId);
+        $this->addInput(new StringInputFilterProvider('name'));
+        $this->addInput(new UuidInputFilterProvider('creator_id'));
     }
 }

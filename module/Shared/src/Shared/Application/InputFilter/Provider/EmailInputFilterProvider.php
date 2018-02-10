@@ -6,7 +6,7 @@
  * Time: 20:53
  */
 
-namespace Shared\Application\InputFilter;
+namespace Shared\Application\InputFilter\Provider;
 
 
 use Zend\Filter\StringTrim;

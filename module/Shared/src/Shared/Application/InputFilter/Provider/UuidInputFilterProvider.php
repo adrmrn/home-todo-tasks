@@ -2,17 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 14.11.17
- * Time: 20:59
+ * Date: 23.11.17
+ * Time: 22:19
  */
 
-namespace Shared\Application\InputFilter;
+namespace Shared\Application\InputFilter\Provider;
 
 
+use Zend\Filter\StringTrim;
 use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\StringLength;
+use Zend\Validator\Uuid;
 
-class PasswordInputFilterProvider implements InputProviderInterface
+class UuidInputFilterProvider implements InputProviderInterface
 {
     /**
      * @var string
@@ -24,7 +25,7 @@ class PasswordInputFilterProvider implements InputProviderInterface
     private $isRequired;
 
     /**
-     * PasswordInputFilterProvider constructor.
+     * UuidInputFilterProvider constructor.
      *
      * @param string $inputName
      * @param bool   $isRequired
@@ -46,13 +47,14 @@ class PasswordInputFilterProvider implements InputProviderInterface
         return [
             'name'       => $this->inputName,
             'required'   => $this->isRequired,
-            'filters'    => [],
+            'filters'    => [
+                [
+                    'name' => StringTrim::class,
+                ],
+            ],
             'validators' => [
                 [
-                    'name' => StringLength::class,
-                    'options' => [
-                        'min' => 8
-                    ]
+                    'name' => Uuid::class,
                 ],
             ],
         ];
