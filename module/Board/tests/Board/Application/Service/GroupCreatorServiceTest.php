@@ -18,7 +18,7 @@ use Shared\Application\Event\Publisher\Adapter\Mock\InMemoryEventPublisherAdapte
 class GroupCreatorServiceTest extends TestCase
 {
     /**
-     * @var \Board\Application\Persistence\GroupRepositoryInterface|InMemoryGroupRepositoryMock
+     * @var \Board\Application\Persistence\Repository\GroupRepositoryInterface|InMemoryGroupRepositoryMock
      */
     private $groupRepository;
     /**
@@ -28,22 +28,30 @@ class GroupCreatorServiceTest extends TestCase
     /**
      * @var \Shared\Application\Event\Publisher\Adapter\EventPublisherAdapterInterface|InMemoryEventPublisherAdapterMock
      */
-    private $inMemoryEventPublisherAdapterMock;
+    private static $inMemoryEventPublisherAdapterMock;
+
+    public static function setUpBeforeClass()
+    {
+        static::$inMemoryEventPublisherAdapterMock = new InMemoryEventPublisherAdapterMock();
+        EventPublisher::initialize(static::$inMemoryEventPublisherAdapterMock);
+    }
 
     public function setUp()
     {
-        $this->inMemoryEventPublisherAdapterMock = new InMemoryEventPublisherAdapterMock();
-        EventPublisher::initialize($this->inMemoryEventPublisherAdapterMock);
-
         $this->groupRepository     = new InMemoryGroupRepositoryMock();
         $this->groupCreatorService = new GroupCreatorService($this->groupRepository);
+    }
+
+    public static function tearDownAfterClass()
+    {
+        EventPublisher::destroy();
     }
 
     public function testCreateNewGroup()
     {
         $creatorId = Uuid::uuid4();
         $this->groupCreatorService->createGroup('Test Group Name', $creatorId);
-        $publishedEvent = $this->inMemoryEventPublisherAdapterMock->lastPublishedEvent();
+        $publishedEvent = static::$inMemoryEventPublisherAdapterMock->lastPublishedEvent();
 
         $this->assertSame('group_created', $publishedEvent->name());
         $this->assertSame('board', $publishedEvent->domain());

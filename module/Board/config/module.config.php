@@ -8,17 +8,26 @@
 
 namespace Board;
 
+use Board\Application\Command\AddMember\AddMemberCommand;
+use Board\Application\Command\AddMember\AddMemberCommandHandler;
+use Board\Application\Command\AddMember\AddMemberCommandHandlerFactory;
+use Board\Application\Command\AddMember\AddMemberCommandValidator;
 use Board\Application\Event\Listener\EventListenerAggregate;
 use Board\Application\Event\Listener\EventListenerAggregateFactory;
-use Board\Application\Persistence\GroupRepositoryInterface;
-use Board\Application\Projector\Projection\BoardCreatedProjection;
-use Board\Application\Projector\Projection\BoardCreatedProjectionFactory;
+use Board\Application\Persistence\Repository\GroupRepositoryInterface;
+use Board\Application\Projector\Projection\GroupCreatedProjection;
+use Board\Application\Projector\Projection\GroupCreatedProjectionFactory;
+use Board\Application\Projector\Projection\GroupMembershipAddedProjection;
+use Board\Application\Projector\Projection\GroupMembershipAddedProjectionFactory;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQuery;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQueryHandler;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQueryHandlerFactory;
 use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQuery;
 use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQueryHandler;
 use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQueryHandlerFactory;
+use Board\Application\Service\GroupMembershipManagerService;
+use Board\Application\Service\GroupMembershipManagerServiceFactory;
+use Board\Domain\Service\GroupMembershipManagerPermissionService;
 use Board\Infrastructure\RabbitMQ\RabbitMQMessageConsumer;
 use Board\Infrastructure\RabbitMQ\RabbitMQMessageConsumerFactory;
 use Board\Infrastructure\Repository\DoctrineGroupRepositoryFactory;
@@ -35,6 +44,7 @@ return [
         'factories'          => [
             // Command
             CreateGroupCommandHandler::class              => CreateGroupCommandHandlerFactory::class,
+            AddMemberCommandHandler::class                => AddMemberCommandHandlerFactory::class,
 
             // Query
             FetchGroupByIdQueryHandler::class             => FetchGroupByIdQueryHandlerFactory::class,
@@ -42,6 +52,7 @@ return [
 
             // Service
             GroupCreatorService::class                    => GroupCreatorServiceFactory::class,
+            GroupMembershipManagerService::class          => GroupMembershipManagerServiceFactory::class,
 
             // Repository
             GroupRepositoryInterface::class               => DoctrineGroupRepositoryFactory::class,
@@ -51,17 +62,20 @@ return [
             RabbitMQMessageConsumer::class                => RabbitMQMessageConsumerFactory::class,
 
             // Projector
-            BoardCreatedProjection::class                 => BoardCreatedProjectionFactory::class,
+            GroupCreatedProjection::class                 => GroupCreatedProjectionFactory::class,
+            GroupMembershipAddedProjection::class         => GroupMembershipAddedProjectionFactory::class,
         ],
         'abstract_factories' => [
         ],
         'invokables'         => [
+            GroupMembershipManagerPermissionService::class,
         ],
     ],
     'tactician'       => [
         'handler-map'     => [
             // Command
             CreateGroupCommand::class              => CreateGroupCommandHandler::class,
+            AddMemberCommand::class                => AddMemberCommandHandler::class,
 
             // Query
             FetchGroupByIdQuery::class             => FetchGroupByIdQueryHandler::class,
@@ -69,11 +83,13 @@ return [
         ],
         'inputfilter-map' => [
             CreateGroupCommand::class => CreateGroupCommandValidator::class,
+            AddMemberCommand::class   => AddMemberCommandValidator::class,
         ],
     ],
     'input_filters'   => [
         'invokables' => [
             CreateGroupCommandValidator::class,
+            AddMemberCommandValidator::class,
         ],
         'factories'  => [],
     ],

@@ -35,11 +35,11 @@ class UserDataSource implements UserDataSourceInterface
 
     public function fetchById(UuidInterface $userId): UserViewInterface
     {
-        $result = $this->mongoDBClient->findOne('user', ['id' => $userId->toString()]);
-
-        if (TRUE === empty($result)) {
+        if (FALSE === $this->exists($userId)) {
             throw new \RuntimeException('User not found', 404);
         }
+
+        $result = $this->mongoDBClient->findOne('user', ['id' => $userId->toString()]);
 
         return UserView::fromArray($result);
     }
@@ -73,5 +73,12 @@ class UserDataSource implements UserDataSourceInterface
             $specification->filtersToClauses(),
             $specification->optionsToClauses()
         );
+    }
+
+    public function exists(UuidInterface $userId): bool
+    {
+        $result = $this->mongoDBClient->findOne('user', ['id' => $userId->toString()]);
+
+        return FALSE === empty($result);
     }
 }

@@ -6,7 +6,7 @@
  * Time: 22:59
  */
 
-namespace Board\Application\Persistence;
+namespace Board\Application\Persistence\Repository;
 
 
 use Board\Domain\Model\Group;

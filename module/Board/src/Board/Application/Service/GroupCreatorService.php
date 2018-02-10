@@ -11,7 +11,7 @@ namespace Board\Application\Service;
 
 use Board\Application\Event\EventName;
 use Board\Application\Event\Publisher\EventPublisher;
-use Board\Application\Persistence\GroupRepositoryInterface;
+use Board\Application\Persistence\Repository\GroupRepositoryInterface;
 use Board\Domain\Model\Group;
 use Board\Domain\Model\Membership\Membership;
 use Board\Domain\Model\Membership\Role as MembershipRole;
@@ -20,14 +20,14 @@ use Ramsey\Uuid\UuidInterface;
 class GroupCreatorService
 {
     /**
-     * @var \Board\Application\Persistence\GroupRepositoryInterface
+     * @var \Board\Application\Persistence\Repository\GroupRepositoryInterface
      */
     private $groupRepository;
 
     /**
      * GroupCreatorService constructor.
      *
-     * @param \Board\Application\Persistence\GroupRepositoryInterface $groupRepository
+     * @param \Board\Application\Persistence\Repository\GroupRepositoryInterface $groupRepository
      */
     public function __construct(GroupRepositoryInterface $groupRepository)
     {

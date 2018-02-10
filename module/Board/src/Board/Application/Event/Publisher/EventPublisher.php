@@ -14,11 +14,11 @@ use Shared\Application\Event\Event;
 use Shared\Application\Event\Publisher\Adapter\EventPublisherAdapterInterface;
 use Shared\Application\Event\Publisher\EventPublisherAggregateInterface;
 
-class EventPublisher implements EventPublisherAggregateInterface
+final class EventPublisher implements EventPublisherAggregateInterface
 {
     const DOMAIN_NAME = 'board';
 
-    private static $instance = null;
+    private static $instance = NULL;
     /**
      * @var \Shared\Application\Event\Publisher\Adapter\EventPublisherAdapterInterface[]
      */
@@ -29,7 +29,8 @@ class EventPublisher implements EventPublisherAggregateInterface
      *
      * @param \Shared\Application\Event\Publisher\Adapter\EventPublisherAdapterInterface[] ...$publishers
      */
-    private function __construct(EventPublisherAdapterInterface ...$publishers) {
+    private function __construct(EventPublisherAdapterInterface ...$publishers)
+    {
         $this->publishers = $publishers;
     }
 
@@ -63,6 +64,11 @@ class EventPublisher implements EventPublisherAggregateInterface
         }
 
         static::$instance = new static(...$publishers);
+    }
+
+    public static function destroy(): void
+    {
+        static::$instance = NULL;
     }
 
     public function __clone()

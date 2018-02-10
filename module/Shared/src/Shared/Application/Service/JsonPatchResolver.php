@@ -59,18 +59,18 @@ class JsonPatchResolver
         ];
     }
 
-    public function resolveActionsForRequest(array $request, string $entityId): void
+    public function resolveActionsForRequest(array $request, string $entityId, string $creatorId = NULL): void
     {
         if (FALSE === isset($request['actions'])) {
             throw new \RuntimeException('Provided PATCH data seems to be malformed. Provide "actions" array', 501);
         }
 
         foreach ($request['actions'] as $action) {
-            $this->executeAction($action, $entityId);
+            $this->executeAction($action, $entityId, $creatorId);
         }
     }
 
-    private function executeAction(array $actionData, string $entityId): void
+    private function executeAction(array $actionData, string $entityId, string $creatorId = NULL): void
     {
         if (FALSE === $this->isRequestValid($actionData)) {
             throw new \RuntimeException('Provided PATCH request seems to be invalid. Provide "op", "path" and "value"', 422);
@@ -83,7 +83,10 @@ class JsonPatchResolver
         $action = $this->actionsList[$actionData['path']][$actionData['op']];
 
         $actionData['value']['id'] = $entityId;
-        $command                   = $this->commandQueryService->prepareCommandQuery(
+        if (NULL !== $creatorId) {
+            $actionData['value']['creator_id'] = $creatorId;
+        }
+        $command = $this->commandQueryService->prepareCommandQuery(
             $action['command'],
             $this->prepareArgumentsForPatch($action['value'], $actionData['value'])
         );

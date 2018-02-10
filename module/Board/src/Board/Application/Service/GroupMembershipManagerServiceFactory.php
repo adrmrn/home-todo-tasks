@@ -2,25 +2,23 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 01.02.18
- * Time: 23:24
+ * Date: 08.02.18
+ * Time: 22:19
  */
 
-namespace Board\Application\Event\Listener;
+namespace Board\Application\Service;
 
 
-use Board\Application\Projector\Projection\GroupCreatedProjection;
-use Board\Application\Projector\Projection\GroupMembershipAddedProjection;
+use Board\Application\Persistence\Repository\GroupRepositoryInterface;
+use Board\Domain\Service\GroupMembershipManagerPermissionService;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use Shared\Application\EventManager\EventStoreEventSubscriber;
-use Shared\Application\Event\Subscriber\EventSubscriberAggregate;
-use Shared\Application\Projector\ProjectorEventSubscriber;
+use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class EventListenerAggregateFactory implements FactoryInterface
+class GroupMembershipManagerServiceFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -37,14 +35,10 @@ class EventListenerAggregateFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL)
     {
-        return new EventListenerAggregate(
-            new EventSubscriberAggregate(
-                $container->get(EventStoreEventSubscriber::class),
-                new ProjectorEventSubscriber(
-                    $container->get(GroupCreatedProjection::class),
-                    $container->get(GroupMembershipAddedProjection::class)
-                )
-            )
+        return new GroupMembershipManagerService(
+            $container->get(GroupRepositoryInterface::class),
+            $container->get(GroupMembershipManagerPermissionService::class),
+            $container->get(UserDataSourceInterface::class)
         );
     }
 }

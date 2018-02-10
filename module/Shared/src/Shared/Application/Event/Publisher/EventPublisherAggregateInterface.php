@@ -29,4 +29,9 @@ interface EventPublisherAggregateInterface
      * @return void
      */
     public static function publish(string $eventName, UuidInterface $entityId, array $data = []): void;
+
+    /**
+     * @return void
+     */
+    public static function destroy(): void;
 }

@@ -2,22 +2,21 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 03.02.18
- * Time: 10:23
+ * Date: 07.02.18
+ * Time: 21:01
  */
 
-namespace Board\Application\Projector\Projection;
+namespace Board\Application\Command\AddMember;
 
 
+use Board\Application\Service\GroupMembershipManagerService;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
-use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class BoardCreatedProjectionFactory implements FactoryInterface
+class AddMemberCommandHandlerFactory implements FactoryInterface
 {
     /**
      * Create an object
@@ -34,9 +33,8 @@ class BoardCreatedProjectionFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL)
     {
-        return new BoardCreatedProjection(
-            $container->get(MongoDBClientInterface::class),
-            $container->get(UserDataSourceInterface::class)
+        return new AddMemberCommandHandler(
+            $container->get(GroupMembershipManagerService::class)
         );
     }
 }

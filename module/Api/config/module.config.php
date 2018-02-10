@@ -179,6 +179,7 @@ return array(
             'collection_name' => 'group',
             'entity_http_methods' => array(
                 0 => 'GET',
+                1 => 'PATCH',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
@@ -282,7 +283,7 @@ return array(
                     'GET' => true,
                     'POST' => false,
                     'PUT' => false,
-                    'PATCH' => false,
+                    'PATCH' => true,
                     'DELETE' => false,
                 ),
             ),

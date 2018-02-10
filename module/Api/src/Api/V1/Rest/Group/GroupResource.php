@@ -2,6 +2,7 @@
 
 namespace Api\V1\Rest\Group;
 
+use Board\Application\Command\AddMember\AddMemberCommand;
 use Board\Application\Command\CreateGroup\CreateGroupCommand;
 use Board\Application\EventManager\ApplicationEventName;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQuery;
@@ -41,6 +42,8 @@ class GroupResource extends AbstractResourceListener
         $this->commandQueryService = $commandQueryService;
         $this->commandBus          = $commandBus;
         $this->jsonPatchResolver   = $jsonPatchResolver;
+
+        $this->jsonPatchResolver->addAction('add', 'member', AddMemberCommand::class, ['id', 'user_id', 'role', 'creator_id']);
     }
 
     /**
@@ -137,13 +140,17 @@ class GroupResource extends AbstractResourceListener
      * Patch (partial in-place update) a resource
      *
      * @param  mixed $id
-     * @param  mixed $data
+     * @param  mixed $request
      *
      * @return ApiProblem|mixed
      */
-    public function patch($id, $data)
+    public function patch($id, $request)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        $creatorId = $this->getIdentity()->getAuthenticationIdentity();
+
+        $this->jsonPatchResolver->resolveActionsForRequest((array)$request, (string)$id, $creatorId);
+
+        return $this->fetch((string)$id);
     }
 
     /**

@@ -35,4 +35,11 @@ interface UserDataSourceInterface
      * @return int
      */
     public function countBySpecification(MongoDBSpecification $specification): int;
+
+    /**
+     * @param \Ramsey\Uuid\UuidInterface $userId
+     *
+     * @return bool
+     */
+    public function exists(UuidInterface $userId): bool;
 }

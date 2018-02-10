@@ -50,6 +50,13 @@ class MongoDBClient implements MongoDBClientInterface
         $collection->updateMany($filter, ['$set' => $data]);
     }
 
+    public function push(string $collectionName, array $filter, array $data): void
+    {
+        $collection = $this->grabCollection($collectionName);
+
+        $collection->updateMany($filter, ['$push' => $data]);
+    }
+
     public function findOne(string $collectionName, array $filter): array
     {
         $collection = $this->grabCollection($collectionName);

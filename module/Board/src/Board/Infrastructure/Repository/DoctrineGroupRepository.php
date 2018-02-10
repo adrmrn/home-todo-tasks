@@ -9,7 +9,7 @@
 namespace Board\Infrastructure\Repository;
 
 
-use Board\Application\Persistence\GroupRepositoryInterface;
+use Board\Application\Persistence\Repository\GroupRepositoryInterface;
 use Board\Domain\Model\Group;
 use Doctrine\ORM\EntityManager;
 use Ramsey\Uuid\UuidInterface;

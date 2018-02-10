@@ -17,7 +17,7 @@ interface MongoDBClientInterface
      *
      * @return void
      */
-    public function save(string $collectionName, array $data);
+    public function save(string $collectionName, array $data): void;
 
     /**
      * @param string $collectionName
@@ -26,7 +26,14 @@ interface MongoDBClientInterface
      *
      * @return void
      */
-    public function update(string $collectionName, array $filter, array $data);
+    public function update(string $collectionName, array $filter, array $data): void;
+
+    /**
+     * @param string $collectionName
+     * @param array  $filter
+     * @param array  $data
+     */
+    public function push(string $collectionName, array $filter, array $data): void;
 
     /**
      * @param string $collectionName

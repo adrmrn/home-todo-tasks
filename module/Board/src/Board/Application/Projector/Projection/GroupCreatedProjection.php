@@ -17,7 +17,7 @@ use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
 use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
 use Shared\Application\Projector\Projection\AbstractProjection;
 
-class BoardCreatedProjection extends AbstractProjection
+class GroupCreatedProjection extends AbstractProjection
 {
     /**
      * @var \Shared\Application\Persistence\DataSource\UserDataSourceInterface

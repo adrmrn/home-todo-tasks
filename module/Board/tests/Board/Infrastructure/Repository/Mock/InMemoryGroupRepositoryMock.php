@@ -9,7 +9,7 @@
 namespace Board\Infrastructure\Repository\Mock;
 
 
-use Board\Application\Persistence\GroupRepositoryInterface;
+use Board\Application\Persistence\Repository\GroupRepositoryInterface;
 use Board\Domain\Model\Group;
 use Ramsey\Uuid\UuidInterface;
 
@@ -20,19 +20,29 @@ class InMemoryGroupRepositoryMock implements GroupRepositoryInterface
      */
     private $storage = [];
 
+    /**
+     * InMemoryGroupRepositoryMock constructor.
+     *
+     * @param \Board\Domain\Model\Group[] ...$groups
+     */
+    public function __construct(Group ...$groups)
+    {
+        foreach ($groups as $group) {
+            $this->store($group);
+        }
+    }
+
     public function store(Group $group): void
     {
-        $this->storage[] = $group;
+        $this->storage[$group->id()->toString()] = $group;
     }
 
     public function fetchById(UuidInterface $id): Group
     {
-        foreach ($this->storage as $group) {
-            if ($group->id()->compareTo($id)) {
-                return $group;
-            }
+        if (FALSE === isset($this->storage[$id->toString()])) {
+            throw new \RuntimeException('Group not found', 404);
         }
 
-        throw new \RuntimeException('Group not found', 404);
+        return $this->storage[$id->toString()];
     }
 }
