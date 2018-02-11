@@ -14,4 +14,5 @@ use MabeEnum\Enum;
 class ApplicationEventName extends Enum
 {
     const GROUP_VIEW_CREATED = 'group_view_created';
+    const BOARD_VIEW_CREATED = 'board_view_created';
 }

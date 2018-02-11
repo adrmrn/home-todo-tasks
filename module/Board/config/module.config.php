@@ -12,24 +12,39 @@ use Board\Application\Command\AddMembership\AddMembershipCommand;
 use Board\Application\Command\AddMembership\AddMembershipCommandHandler;
 use Board\Application\Command\AddMembership\AddMembershipCommandHandlerFactory;
 use Board\Application\Command\AddMembership\AddMembershipCommandValidator;
+use Board\Application\Command\CreateBoard\CreateBoardCommand;
+use Board\Application\Command\CreateBoard\CreateBoardCommandHandler;
+use Board\Application\Command\CreateBoard\CreateBoardCommandHandlerFactory;
+use Board\Application\Command\CreateBoard\CreateBoardCommandValidator;
 use Board\Application\Event\Listener\EventListenerAggregate;
 use Board\Application\Event\Listener\EventListenerAggregateFactory;
+use Board\Application\Persistence\Repository\BoardRepositoryInterface;
 use Board\Application\Persistence\Repository\GroupRepositoryInterface;
 use Board\Application\Projector\Projection\GroupCreatedProjection;
 use Board\Application\Projector\Projection\GroupCreatedProjectionFactory;
 use Board\Application\Projector\Projection\GroupMembershipAddedProjection;
 use Board\Application\Projector\Projection\GroupMembershipAddedProjectionFactory;
+use Board\Application\Projector\Projection\UserRenamedProjection;
+use Board\Application\Query\FetchBoardById\FetchBoardByIdQuery;
+use Board\Application\Query\FetchBoardById\FetchBoardByIdQueryHandler;
+use Board\Application\Query\FetchBoardById\FetchBoardByIdQueryHandlerFactory;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQuery;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQueryHandler;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQueryHandlerFactory;
 use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQuery;
 use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQueryHandler;
 use Board\Application\Query\FetchGroupsBySpecification\FetchGroupsBySpecificationQueryHandlerFactory;
+use Board\Application\Service\BoardCreatorService;
+use Board\Application\Service\BoardCreatorServiceFactory;
 use Board\Application\Service\GroupMembershipManagerService;
 use Board\Application\Service\GroupMembershipManagerServiceFactory;
+use Board\Domain\Service\GroupBoardManagerPermissionService;
 use Board\Domain\Service\GroupMembershipManagerPermissionService;
+use Board\Infrastructure\DataSource\BoardDataSourceFactory;
+use Board\Infrastructure\DataSource\GroupDataSourceFactory;
 use Board\Infrastructure\RabbitMQ\RabbitMQMessageConsumer;
 use Board\Infrastructure\RabbitMQ\RabbitMQMessageConsumerFactory;
+use Board\Infrastructure\Repository\DoctrineBoardRepositoryFactory;
 use Board\Infrastructure\Repository\DoctrineGroupRepositoryFactory;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use Board\Application\Command\CreateGroup\CreateGroupCommand;
@@ -38,6 +53,8 @@ use Board\Application\Command\CreateGroup\CreateGroupCommandHandlerFactory;
 use Board\Application\Command\CreateGroup\CreateGroupCommandValidator;
 use Board\Application\Service\GroupCreatorService;
 use Board\Application\Service\GroupCreatorServiceFactory;
+use Shared\Application\Persistence\DataSource\BoardDataSourceInterface;
+use Shared\Application\Persistence\DataSource\GroupDataSourceInterface;
 
 return [
     'service_manager' => [
@@ -45,17 +62,21 @@ return [
             // Command
             CreateGroupCommandHandler::class              => CreateGroupCommandHandlerFactory::class,
             AddMembershipCommandHandler::class            => AddMembershipCommandHandlerFactory::class,
+            CreateBoardCommandHandler::class              => CreateBoardCommandHandlerFactory::class,
 
             // Query
             FetchGroupByIdQueryHandler::class             => FetchGroupByIdQueryHandlerFactory::class,
             FetchGroupsBySpecificationQueryHandler::class => FetchGroupsBySpecificationQueryHandlerFactory::class,
+            FetchBoardByIdQueryHandler::class             => FetchBoardByIdQueryHandlerFactory::class,
 
             // Service
             GroupCreatorService::class                    => GroupCreatorServiceFactory::class,
             GroupMembershipManagerService::class          => GroupMembershipManagerServiceFactory::class,
+            BoardCreatorService::class                    => BoardCreatorServiceFactory::class,
 
             // Repository
             GroupRepositoryInterface::class               => DoctrineGroupRepositoryFactory::class,
+            BoardRepositoryInterface::class               => DoctrineBoardRepositoryFactory::class,
 
             // Event
             EventListenerAggregate::class                 => EventListenerAggregateFactory::class,
@@ -64,11 +85,16 @@ return [
             // Projector
             GroupCreatedProjection::class                 => GroupCreatedProjectionFactory::class,
             GroupMembershipAddedProjection::class         => GroupMembershipAddedProjectionFactory::class,
+
+            // DataSource
+            GroupDataSourceInterface::class               => GroupDataSourceFactory::class,
+            BoardDataSourceInterface::class               => BoardDataSourceFactory::class,
         ],
         'abstract_factories' => [
         ],
         'invokables'         => [
             GroupMembershipManagerPermissionService::class,
+            GroupBoardManagerPermissionService::class,
         ],
     ],
     'tactician'       => [
@@ -76,20 +102,24 @@ return [
             // Command
             CreateGroupCommand::class              => CreateGroupCommandHandler::class,
             AddMembershipCommand::class            => AddMembershipCommandHandler::class,
+            CreateBoardCommand::class              => CreateBoardCommandHandler::class,
 
             // Query
             FetchGroupByIdQuery::class             => FetchGroupByIdQueryHandler::class,
             FetchGroupsBySpecificationQuery::class => FetchGroupsBySpecificationQueryHandler::class,
+            FetchBoardByIdQuery::class             => FetchBoardByIdQueryHandler::class,
         ],
         'inputfilter-map' => [
             CreateGroupCommand::class   => CreateGroupCommandValidator::class,
             AddMembershipCommand::class => AddMembershipCommandValidator::class,
+            CreateBoardCommand::class   => CreateBoardCommandValidator::class,
         ],
     ],
     'input_filters'   => [
         'invokables' => [
             CreateGroupCommandValidator::class,
             AddMembershipCommandValidator::class,
+            CreateBoardCommandValidator::class,
         ],
         'factories'  => [],
     ],

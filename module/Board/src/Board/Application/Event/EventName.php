@@ -15,4 +15,6 @@ class EventName extends Enum
 {
     const GROUP_CREATED          = 'group_created';
     const GROUP_MEMBERSHIP_ADDED = 'group_membership_added';
+
+    const BOARD_CREATED = 'board_created';
 }

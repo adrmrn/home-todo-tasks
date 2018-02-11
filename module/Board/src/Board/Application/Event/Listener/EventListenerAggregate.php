@@ -60,6 +60,12 @@ class EventListenerAggregate extends AbstractListenerAggregate implements Listen
             [$this, 'onEvent'],
             $priority
         );
+        $this->listeners[] = $events->getSharedManager()->attach(
+            '*',
+            EventName::BOARD_CREATED,
+            [$this, 'onEvent'],
+            $priority
+        );
     }
 
     public function onEvent(EventInterface $event): void

@@ -24,6 +24,7 @@ class Version20180131174835 extends AbstractMigration
         $memberTable->addColumn('user_id', 'uuid');
         $memberTable->addColumn('role', 'string', ['notnull' => TRUE, 'length' => 70, 'default' => 'member']);
         $memberTable->setPrimaryKey(['group_id', 'user_id']);
+        $memberTable->addForeignKeyConstraint($groupTable, ["group_id"], ["id"], ["onDelete" => "CASCADE"], 'group_id_fkey');
     }
 
     public function down(Schema $schema)

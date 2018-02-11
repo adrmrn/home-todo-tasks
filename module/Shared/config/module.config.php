@@ -58,9 +58,6 @@ return [
 
             // Auth
             DefaultAuthenticationListener::class    => DefaultAuthenticationListenerOverwriteFactory::class,
-
-            // DataSource
-            GroupDataSourceInterface::class         => GroupDataSourceFactory::class,
         ],
     ],
     'doctrine'        => [

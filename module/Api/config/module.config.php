@@ -44,6 +44,15 @@ return array(
                     ),
                 ),
             ),
+            'api.rest.board' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/group/:group_id/board[/:board_id]',
+                    'defaults' => array(
+                        'controller' => 'Api\\V1\\Rest\\Board\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -52,6 +61,7 @@ return array(
             1 => 'api.rest.user',
             2 => 'api.rest.authentication',
             3 => 'api.rest.group',
+            4 => 'api.rest.board',
         ),
     ),
     'zf-rpc' => array(
@@ -69,6 +79,7 @@ return array(
             'Api\\V1\\Rest\\User\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\Authentication\\Controller' => 'HalJson',
             'Api\\V1\\Rest\\Group\\Controller' => 'HalJson',
+            'Api\\V1\\Rest\\Board\\Controller' => 'HalJson',
         ),
         'accept_whitelist' => array(
             'Api\\V1\\Rpc\\Health\\Controller' => array(
@@ -94,6 +105,11 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'Api\\V1\\Rest\\Board\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Api\\V1\\Rpc\\Health\\Controller' => array(
@@ -114,6 +130,10 @@ return array(
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ),
+            'Api\\V1\\Rest\\Board\\Controller' => array(
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ),
         ),
     ),
     'service_manager' => array(
@@ -121,6 +141,7 @@ return array(
             'Api\\V1\\Rest\\User\\UserResource' => 'Api\\V1\\Rest\\User\\UserResourceFactory',
             'Api\\V1\\Rest\\Authentication\\AuthenticationResource' => 'Api\\V1\\Rest\\Authentication\\AuthenticationResourceFactory',
             'Api\\V1\\Rest\\Group\\GroupResource' => 'Api\\V1\\Rest\\Group\\GroupResourceFactory',
+            'Api\\V1\\Rest\\Board\\BoardResource' => 'Api\\V1\\Rest\\Board\\BoardResourceFactory',
         ),
     ),
     'zf-rest' => array(
@@ -196,6 +217,25 @@ return array(
             'collection_class' => 'Api\\V1\\Rest\\Group\\GroupCollection',
             'service_name' => 'Group',
         ),
+        'Api\\V1\\Rest\\Board\\Controller' => array(
+            'listener' => 'Api\\V1\\Rest\\Board\\BoardResource',
+            'route_name' => 'api.rest.board',
+            'route_identifier_name' => 'board_id',
+            'collection_name' => 'board',
+            'entity_http_methods' => array(
+                0 => 'GET',
+            ),
+            'collection_http_methods' => array(
+                0 => 'POST',
+                1 => 'GET',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Api\\V1\\Rest\\Board\\BoardEntity',
+            'collection_class' => 'Api\\V1\\Rest\\Board\\BoardCollection',
+            'service_name' => 'Board',
+        ),
     ),
     'zf-hal' => array(
         'metadata_map' => array(
@@ -233,6 +273,18 @@ return array(
                 'entity_identifier_name' => 'id',
                 'route_name' => 'api.rest.group',
                 'route_identifier_name' => 'group_id',
+                'is_collection' => true,
+            ),
+            'Api\\V1\\Rest\\Board\\BoardEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'api.rest.board',
+                'route_identifier_name' => 'board_id',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
+            ),
+            'Api\\V1\\Rest\\Board\\BoardCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'api.rest.board',
+                'route_identifier_name' => 'board_id',
                 'is_collection' => true,
             ),
         ),
@@ -284,6 +336,22 @@ return array(
                     'POST' => false,
                     'PUT' => false,
                     'PATCH' => true,
+                    'DELETE' => false,
+                ),
+            ),
+            'Api\\V1\\Rest\\Board\\Controller' => array(
+                'collection' => array(
+                    'GET' => true,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
                     'DELETE' => false,
                 ),
             ),

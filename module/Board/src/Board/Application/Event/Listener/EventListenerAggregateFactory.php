@@ -9,6 +9,7 @@
 namespace Board\Application\Event\Listener;
 
 
+use Board\Application\Projector\Projection\BoardCreatedProjection;
 use Board\Application\Projector\Projection\GroupCreatedProjection;
 use Board\Application\Projector\Projection\GroupMembershipAddedProjection;
 use Interop\Container\ContainerInterface;
@@ -42,7 +43,8 @@ class EventListenerAggregateFactory implements FactoryInterface
                 $container->get(EventStoreEventSubscriber::class),
                 new ProjectorEventSubscriber(
                     $container->get(GroupCreatedProjection::class),
-                    $container->get(GroupMembershipAddedProjection::class)
+                    $container->get(GroupMembershipAddedProjection::class),
+                    $container->get(BoardCreatedProjection::class)
                 )
             )
         );

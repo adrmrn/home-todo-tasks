@@ -8,10 +8,8 @@
 
 namespace User;
 
-use Board\Infrastructure\DataSource\GroupDataSourceFactory;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use Shared\Application\Persistence\DataSource\CredentialsDataSourceInterface;
-use Shared\Application\Persistence\DataSource\GroupDataSourceInterface;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommand;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandler;
 use User\Application\Command\ChangeUserName\ChangeUserNameCommandHandlerFactory;

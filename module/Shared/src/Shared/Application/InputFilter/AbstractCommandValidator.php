@@ -12,7 +12,7 @@ namespace Shared\Application\InputFilter;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputProviderInterface;
 
-class AbstractCommandValidator extends InputFilter
+abstract class AbstractCommandValidator extends InputFilter
 {
     public function addInput(InputProviderInterface $inputProvider): void
     {
