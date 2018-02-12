@@ -25,4 +25,9 @@ interface GroupViewInterface
      * @return array
      */
     public function memberships(): array;
+
+    /**
+     * @return array
+     */
+    public function boards(): array;
 }

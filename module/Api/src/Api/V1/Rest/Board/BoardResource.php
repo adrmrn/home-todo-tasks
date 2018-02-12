@@ -5,6 +5,7 @@ namespace Api\V1\Rest\Board;
 use Board\Application\Command\CreateBoard\CreateBoardCommand;
 use Board\Application\EventManager\ApplicationEventName;
 use Board\Application\Query\FetchBoardById\FetchBoardByIdQuery;
+use Board\Application\Query\FetchBoardsBySpecification\FetchBoardsBySpecificationQuery;
 use League\Tactician\CommandBus;
 use Shared\Application\Service\CommandQueryService;
 use Zend\EventManager\EventInterface;
@@ -108,7 +109,15 @@ class BoardResource extends AbstractResourceListener
      */
     public function fetchAll($params = [])
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $query  = $this->commandQueryService->prepareCommandQuery(
+            FetchBoardsBySpecificationQuery::class,
+            [
+                'params' => (array)$params,
+            ]
+        );
+        $groups = $this->commandBus->handle($query);
+
+        return new BoardCollection($groups);
     }
 
     /**

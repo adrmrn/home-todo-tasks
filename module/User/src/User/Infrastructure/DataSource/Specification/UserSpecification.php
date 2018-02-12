@@ -10,10 +10,10 @@ namespace User\Infrastructure\DataSource\Specification;
 
 
 use MongoDB\BSON\Regex;
-use Shared\Application\Persistence\Specification\MongoDBSpecification;
+use Shared\Application\Persistence\Specification\MongoDBSpecificationInterface;
 use Shared\Application\Persistence\Specification\PaginatorAwareInterface;
 
-class UserSpecification implements MongoDBSpecification, PaginatorAwareInterface
+class UserSpecification implements MongoDBSpecificationInterface, PaginatorAwareInterface
 {
     /**
      * @var array

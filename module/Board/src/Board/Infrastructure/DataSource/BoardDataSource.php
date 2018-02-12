@@ -14,6 +14,7 @@ use Ramsey\Uuid\UuidInterface;
 use Shared\Application\Persistence\DataSource\BoardDataSourceInterface;
 use Shared\Application\Persistence\Model\BoardViewInterface;
 use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
+use Shared\Application\Persistence\Specification\MongoDBSpecificationInterface;
 
 class BoardDataSource implements BoardDataSourceInterface
 {
@@ -41,6 +42,39 @@ class BoardDataSource implements BoardDataSourceInterface
         }
 
         return BoardView::fromArray($this->prepareRawArray($result));
+    }
+
+    /**
+     * @param \Shared\Application\Persistence\Specification\MongoDBSpecificationInterface $specification
+     *
+     * @return BoardViewInterface[]
+     */
+    public function fetchBySpecification(MongoDBSpecificationInterface $specification): array
+    {
+        $results = $this->mongoDBClient->find(
+            'board',
+            $specification->filtersToClauses(),
+            $specification->optionsToClauses()
+        );
+
+        $boards = [];
+        /** @var \MongoDB\Model\BSONDocument $row */
+        foreach ($results as $row) {
+            $boards[] = BoardView::fromArray(
+                $this->prepareRawArray($row->getArrayCopy())
+            );
+        }
+
+        return $boards;
+    }
+
+    public function countBySpecification(MongoDBSpecificationInterface $specification): int
+    {
+        return $this->mongoDBClient->count(
+            'board',
+            $specification->filtersToClauses(),
+            $specification->optionsToClauses()
+        );
     }
 
     private function prepareRawArray(array $data): array

@@ -11,6 +11,7 @@ namespace Shared\Application\Persistence\DataSource;
 
 use Ramsey\Uuid\UuidInterface;
 use Shared\Application\Persistence\Model\BoardViewInterface;
+use Shared\Application\Persistence\Specification\MongoDBSpecificationInterface;
 
 interface BoardDataSourceInterface
 {
@@ -20,4 +21,18 @@ interface BoardDataSourceInterface
      * @return \Shared\Application\Persistence\Model\BoardViewInterface
      */
     public function fetchById(UuidInterface $boardId): BoardViewInterface;
+
+    /**
+     * @param \Shared\Application\Persistence\Specification\MongoDBSpecificationInterface $specification
+     *
+     * @return BoardViewInterface[]
+     */
+    public function fetchBySpecification(MongoDBSpecificationInterface $specification): array;
+
+    /**
+     * @param \Shared\Application\Persistence\Specification\MongoDBSpecificationInterface $specification
+     *
+     * @return int
+     */
+    public function countBySpecification(MongoDBSpecificationInterface $specification): int;
 }

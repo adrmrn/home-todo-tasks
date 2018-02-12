@@ -11,7 +11,7 @@ namespace Shared\Application\Persistence\DataSource;
 
 use Ramsey\Uuid\UuidInterface;
 use Shared\Application\Persistence\Model\GroupViewInterface;
-use Shared\Application\Persistence\Specification\MongoDBSpecification;
+use Shared\Application\Persistence\Specification\MongoDBSpecificationInterface;
 
 interface GroupDataSourceInterface
 {
@@ -23,16 +23,16 @@ interface GroupDataSourceInterface
     public function fetchById(UuidInterface $groupId): GroupViewInterface;
 
     /**
-     * @param \Shared\Application\Persistence\Specification\MongoDBSpecification $specification
+     * @param \Shared\Application\Persistence\Specification\MongoDBSpecificationInterface $specification
      *
-     * @return array
+     * @return GroupViewInterface[]
      */
-    public function fetchBySpecification(MongoDBSpecification $specification): array;
+    public function fetchBySpecification(MongoDBSpecificationInterface $specification): array;
 
     /**
-     * @param \Shared\Application\Persistence\Specification\MongoDBSpecification $specification
+     * @param \Shared\Application\Persistence\Specification\MongoDBSpecificationInterface $specification
      *
      * @return int
      */
-    public function countBySpecification(MongoDBSpecification $specification): int;
+    public function countBySpecification(MongoDBSpecificationInterface $specification): int;
 }

@@ -24,10 +24,12 @@ use Board\Application\Projector\Projection\GroupCreatedProjection;
 use Board\Application\Projector\Projection\GroupCreatedProjectionFactory;
 use Board\Application\Projector\Projection\GroupMembershipAddedProjection;
 use Board\Application\Projector\Projection\GroupMembershipAddedProjectionFactory;
-use Board\Application\Projector\Projection\UserRenamedProjection;
 use Board\Application\Query\FetchBoardById\FetchBoardByIdQuery;
 use Board\Application\Query\FetchBoardById\FetchBoardByIdQueryHandler;
 use Board\Application\Query\FetchBoardById\FetchBoardByIdQueryHandlerFactory;
+use Board\Application\Query\FetchBoardsBySpecification\FetchBoardsBySpecificationQuery;
+use Board\Application\Query\FetchBoardsBySpecification\FetchBoardsBySpecificationQueryHandler;
+use Board\Application\Query\FetchBoardsBySpecification\FetchBoardsBySpecificationQueryHandlerFactory;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQuery;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQueryHandler;
 use Board\Application\Query\FetchGroupById\FetchGroupByIdQueryHandlerFactory;
@@ -68,6 +70,7 @@ return [
             FetchGroupByIdQueryHandler::class             => FetchGroupByIdQueryHandlerFactory::class,
             FetchGroupsBySpecificationQueryHandler::class => FetchGroupsBySpecificationQueryHandlerFactory::class,
             FetchBoardByIdQueryHandler::class             => FetchBoardByIdQueryHandlerFactory::class,
+            FetchBoardsBySpecificationQueryHandler::class => FetchBoardsBySpecificationQueryHandlerFactory::class,
 
             // Service
             GroupCreatorService::class                    => GroupCreatorServiceFactory::class,
@@ -108,6 +111,7 @@ return [
             FetchGroupByIdQuery::class             => FetchGroupByIdQueryHandler::class,
             FetchGroupsBySpecificationQuery::class => FetchGroupsBySpecificationQueryHandler::class,
             FetchBoardByIdQuery::class             => FetchBoardByIdQueryHandler::class,
+            FetchBoardsBySpecificationQuery::class => FetchBoardsBySpecificationQueryHandler::class,
         ],
         'inputfilter-map' => [
             CreateGroupCommand::class   => CreateGroupCommandValidator::class,

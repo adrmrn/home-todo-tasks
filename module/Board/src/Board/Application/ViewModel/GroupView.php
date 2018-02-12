@@ -25,6 +25,10 @@ class GroupView implements GroupViewInterface
      * @var array
      */
     private $memberships;
+    /**
+     * @var array
+     */
+    private $boards;
 
     /**
      * GroupView constructor.
@@ -32,12 +36,14 @@ class GroupView implements GroupViewInterface
      * @param string $id
      * @param string $name
      * @param array  $memberships
+     * @param array  $boards
      */
-    private function __construct(string $id, string $name, array $memberships)
+    private function __construct(string $id, string $name, array $memberships, array $boards)
     {
         $this->id          = $id;
         $this->name        = $name;
         $this->memberships = $memberships;
+        $this->boards      = $boards;
     }
 
     public static function fromArray(array $data): self
@@ -45,7 +51,8 @@ class GroupView implements GroupViewInterface
         return new static(
             $data['id'],
             $data['name'],
-            $data['memberships']
+            $data['memberships'],
+            $data['boards']
         );
     }
 
@@ -62,5 +69,10 @@ class GroupView implements GroupViewInterface
     public function memberships(): array
     {
         return $this->memberships;
+    }
+
+    public function boards(): array
+    {
+        return $this->boards;
     }
 }

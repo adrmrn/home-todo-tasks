@@ -12,7 +12,7 @@ namespace User\Infrastructure\DataSource;
 use Ramsey\Uuid\UuidInterface;
 use Shared\Application\Persistence\Model\UserViewInterface;
 use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
-use Shared\Application\Persistence\Specification\MongoDBSpecification;
+use Shared\Application\Persistence\Specification\MongoDBSpecificationInterface;
 use User\Application\ViewModel\UserView;
 use Shared\Application\Persistence\DataSource\UserDataSourceInterface;
 
@@ -45,11 +45,11 @@ class UserDataSource implements UserDataSourceInterface
     }
 
     /**
-     * @param \Shared\Application\Persistence\Specification\MongoDBSpecification $specification
+     * @param \Shared\Application\Persistence\Specification\MongoDBSpecificationInterface $specification
      *
      * @return UserViewInterface[]
      */
-    public function fetchBySpecification(MongoDBSpecification $specification): array
+    public function fetchBySpecification(MongoDBSpecificationInterface $specification): array
     {
         $results = $this->mongoDBClient->find(
             'user',
@@ -66,7 +66,7 @@ class UserDataSource implements UserDataSourceInterface
         return $users;
     }
 
-    public function countBySpecification(MongoDBSpecification $specification): int
+    public function countBySpecification(MongoDBSpecificationInterface $specification): int
     {
         return $this->mongoDBClient->count(
             'user',

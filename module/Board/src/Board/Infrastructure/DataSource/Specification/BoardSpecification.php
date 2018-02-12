@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: adrian
- * Date: 03.02.18
- * Time: 22:21
+ * Date: 12.02.18
+ * Time: 18:57
  */
 
 namespace Board\Infrastructure\DataSource\Specification;
@@ -13,7 +13,7 @@ use MongoDB\BSON\Regex;
 use Shared\Application\Persistence\Specification\MongoDBSpecificationInterface;
 use Shared\Application\Persistence\Specification\PaginatorAwareInterface;
 
-class GroupSpecification implements MongoDBSpecificationInterface, PaginatorAwareInterface
+class BoardSpecification implements MongoDBSpecificationInterface, PaginatorAwareInterface
 {
     /**
      * @var array

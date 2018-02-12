@@ -14,7 +14,7 @@ use Ramsey\Uuid\UuidInterface;
 use Shared\Application\Persistence\DataSource\GroupDataSourceInterface;
 use Shared\Application\Persistence\Model\GroupViewInterface;
 use Shared\Application\Persistence\MongoDB\MongoDBClientInterface;
-use Shared\Application\Persistence\Specification\MongoDBSpecification;
+use Shared\Application\Persistence\Specification\MongoDBSpecificationInterface;
 
 class GroupDataSource implements GroupDataSourceInterface
 {
@@ -45,11 +45,11 @@ class GroupDataSource implements GroupDataSourceInterface
     }
 
     /**
-     * @param \Shared\Application\Persistence\Specification\MongoDBSpecification $specification
+     * @param \Shared\Application\Persistence\Specification\MongoDBSpecificationInterface $specification
      *
      * @return GroupViewInterface[]
      */
-    public function fetchBySpecification(MongoDBSpecification $specification): array
+    public function fetchBySpecification(MongoDBSpecificationInterface $specification): array
     {
         $results = $this->mongoDBClient->find(
             'group',
@@ -68,7 +68,7 @@ class GroupDataSource implements GroupDataSourceInterface
         return $groups;
     }
 
-    public function countBySpecification(MongoDBSpecification $specification): int
+    public function countBySpecification(MongoDBSpecificationInterface $specification): int
     {
         return $this->mongoDBClient->count(
             'group',

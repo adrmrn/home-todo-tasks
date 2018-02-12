@@ -9,7 +9,7 @@
 namespace Shared\Application\Persistence\Specification;
 
 
-interface MongoDBSpecification
+interface MongoDBSpecificationInterface
 {
     /**
      * @return array
