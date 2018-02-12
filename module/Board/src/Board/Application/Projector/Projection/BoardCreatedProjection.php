@@ -33,6 +33,18 @@ class BoardCreatedProjection extends AbstractProjection
             'tasks' => [],
         ]);
 
+        $this->client()->push('group',
+            [
+                'id' => $event->data()['group']['id'],
+            ],
+            [
+                'boards' => [
+                    'id'   => $event->data()['id'],
+                    'name' => $event->data()['name'],
+                ],
+            ]
+        );
+
         $this->getEventManager()->trigger(
             ApplicationEventName::BOARD_VIEW_CREATED,
             $event->domain(),

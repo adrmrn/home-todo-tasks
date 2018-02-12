@@ -54,6 +54,7 @@ class GroupCreatedProjection extends AbstractProjection
             'id'          => $event->data()['id'],
             'name'        => $event->data()['name'],
             'memberships' => [$membership],
+            'boards'      => [],
         ]);
 
         $this->getEventManager()->trigger(
