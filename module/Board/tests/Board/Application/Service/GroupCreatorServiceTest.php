@@ -56,6 +56,7 @@ class GroupCreatorServiceTest extends TestCase
         $this->assertSame('group_created', $publishedEvent->name());
         $this->assertSame('board', $publishedEvent->domain());
         $this->assertInstanceOf(UuidInterface::class, $publishedEvent->entityId());
+        $this->assertSame('Test Group Name', $publishedEvent->data()['name']);
         $this->assertSame([
             'user_id' => $creatorId->toString(),
             'role'    => 'admin',
