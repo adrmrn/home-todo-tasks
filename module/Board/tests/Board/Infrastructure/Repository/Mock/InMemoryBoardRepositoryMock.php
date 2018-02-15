@@ -18,7 +18,7 @@ class InMemoryBoardRepositoryMock implements BoardRepositoryInterface
     /**
      * @var Board[]
      */
-    private $storage;
+    private $storage = [];
 
     /**
      * InMemoryBoardRepositoryMock constructor.
